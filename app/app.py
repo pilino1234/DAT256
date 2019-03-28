@@ -15,9 +15,11 @@ screen_manager.add_widget(SettingsScreen(name='settings'))
 screen_manager.add_widget(MathScreen(name='math'))
 screen_manager.current = 'main_menu'
 
+
 class Carrepsa(App):
     def build(self):
         return screen_manager
+
 
 if __name__ == '__main__':
     Carrepsa().run()
