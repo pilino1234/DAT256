@@ -4,6 +4,7 @@ from presenter.widget.calculator import CalculatorWidget
 
 Builder.load_file("view/math.kv")
 
+
 class MathScreen(Screen):
     def __init__(self, **kwargs):
         super(MathScreen, self).__init__(**kwargs)

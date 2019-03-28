@@ -4,6 +4,7 @@ from model.calculator import Calculator
 
 Builder.load_file("view/calculator.kv")
 
+
 class CalculatorWidget(GridLayout):
 
     calcy = Calculator()
