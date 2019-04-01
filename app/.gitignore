@@ -1,2 +1,10 @@
+# Python
 env
 __pycache__
+*.pyc
+
+# virtualenv directory
+venv/
+
+# PyCharm stuff
+.idea/
