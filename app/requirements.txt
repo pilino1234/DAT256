@@ -2,3 +2,4 @@ cython
 pygame
 kivy
 sphinx
+buildozer
