@@ -1,29 +1,56 @@
-language: generic
+dist: xenial
+
+language: python
+
+python: "3.7"
 
 services:
   - docker
 
-script:
-  - ci/build_apk.sh
+stages:
+  - tests
+  - name: build
+    if: branch = proposal/carrepsa
+  - name: deploy
+    if: branch = proposal/carrepsa
 
-before_deploy:
-  - git config --local user.name "pilino1234"
-  - git config --local user.email "marhilg@student.chalmers.se"
-  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+jobs:
+  include:
+    - stage: tests
+      name: "YAPF"
+      script:
+        - ci/run_yapf.sh
+    - script:
+        - echo "todo"
+        - exit 0
+      name: "Unit tests"
+    - stage: build
+      name: "Build Android APK"
+      script: ci/build_apk.sh
+    - stage: deploy
+      name: "Deploy to GitHub Release"
+      script: skip
+      deploy:
+        provider: releases
+        api_key: $GITHUB_RELEASE_TOKEN
+        file_glob: true
+        file: app/bin/*
+        skip_cleanup: true
+        on:
+          tags: true
+        draft: true
 
-deploy:
-  provider: releases
-  api_key: $GITHUB_RELEASE_TOKEN
-  file_glob: true
-  file: app/bin/*
-  skip_cleanup: true
-  on:
-    branch: master
+install:
+  - pip install cython==0.28.6
+  - pip install -r app/requirements.txt
+
+script: ignore
 
 notifications:
   email: false
   slack:
-    secure: JmU0DEkRTL0yqu1jJtyZc0LIWHM+U6eq6r907iKDYfNJQ2vDY95TmdW+lWHeFixMo6DkMaWgX1XST8qqDZp3lLNButgvYAMwfbKDj29wMVyBOG8ji/sZI8hoTHqxfnKxnLwkXvLCPHMF8T++reglCd/0d3130xRfraod3H1i532M6QvnCsLZJbyy/4V20arkz38oRvXLPaGMFSbUAktBOM5bthAT7iYh0AXgD9PO11ShsAATGjxGUqPvC8yrF6DQdODbH7sVwJskFT631lxC6Mn82Nx9TnqEQPvuF7zafClC87PTHvzHtre+GsSa1OfdRolXJXEEh0nhhtvNpnlKaYOL8+IdRVYIELyglatinhjg9vxnAYqLSWsxXX3Wg6Osbmhqvdc1xpioc/o02W9Er+NjdmDUWeA4XUSJv6XTUFtLS7cs9V0r+B+DRte5sAinTxiHJNYe/9/fBlzJY78tXoC3L3DLy3EHuZLH69KyS+B38W3zSENy3P8p/4b536TX7DB7E8U4YZr6uzVFwfPbJLu8DHw+BwyT0zQuXlFMhaQ0hrlBSSehLWPsEIwQA/oAEWwlXCWHp3NcEXNhqEAJ24Y9Kx66ThyfXJaNuj4tWzonNw6WNs166l0zeW5wmHJuTUT1O7sRM/H7GsQZPccVj7RsukNBqWaxjyPWvAgKAQY=
+    rooms:
+      - secure: JmU0DEkRTL0yqu1jJtyZc0LIWHM+U6eq6r907iKDYfNJQ2vDY95TmdW+lWHeFixMo6DkMaWgX1XST8qqDZp3lLNButgvYAMwfbKDj29wMVyBOG8ji/sZI8hoTHqxfnKxnLwkXvLCPHMF8T++reglCd/0d3130xRfraod3H1i532M6QvnCsLZJbyy/4V20arkz38oRvXLPaGMFSbUAktBOM5bthAT7iYh0AXgD9PO11ShsAATGjxGUqPvC8yrF6DQdODbH7sVwJskFT631lxC6Mn82Nx9TnqEQPvuF7zafClC87PTHvzHtre+GsSa1OfdRolXJXEEh0nhhtvNpnlKaYOL8+IdRVYIELyglatinhjg9vxnAYqLSWsxXX3Wg6Osbmhqvdc1xpioc/o02W9Er+NjdmDUWeA4XUSJv6XTUFtLS7cs9V0r+B+DRte5sAinTxiHJNYe/9/fBlzJY78tXoC3L3DLy3EHuZLH69KyS+B38W3zSENy3P8p/4b536TX7DB7E8U4YZr6uzVFwfPbJLu8DHw+BwyT0zQuXlFMhaQ0hrlBSSehLWPsEIwQA/oAEWwlXCWHp3NcEXNhqEAJ24Y9Kx66ThyfXJaNuj4tWzonNw6WNs166l0zeW5wmHJuTUT1O7sRM/H7GsQZPccVj7RsukNBqWaxjyPWvAgKAQY=
     on_success: never
     on_failure: always
 
