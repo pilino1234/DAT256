@@ -29,9 +29,9 @@ addons:
 stages:
   - tests
   - name: build
-    if: branch = proposal/carrepsa
+    if: branch = travis
   - name: deploy
-    if: branch = proposal/carrepsa
+    if: branch = travis
 
 jobs:
   include:
@@ -54,9 +54,9 @@ jobs:
         file_glob: true
         file: app/bin/*
         skip_cleanup: true
-        on:
-          tags: true
         draft: true
+        on:
+          branch: travis
 
 install:
   - pip -qq install cython==0.28.6
