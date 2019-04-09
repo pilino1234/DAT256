@@ -7,6 +7,23 @@ python: "3.7"
 services:
   - docker
 
+addons:
+  apt:
+    update: true
+    packages:
+      - build-essential
+      - git
+      - ffmpeg
+      - libsdl2-dev
+      - libsdl2-image-dev
+      - libsdl2-mixer-dev
+      - libsdl2-ttf-dev
+      - libportmidi-dev
+      - libswscale-dev
+      - libavformat-dev
+      - libavcodec-dev
+      - zlib1g-dev
+
 stages:
   - tests
   - name: build
@@ -41,8 +58,8 @@ jobs:
         draft: true
 
 install:
-  - pip install cython==0.28.6
-  - pip install -r app/requirements.txt
+  - pip -qq install cython==0.28.6
+  - pip -qq install -r app/requirements.txt
 
 script: ignore
 
