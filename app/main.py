@@ -1,32 +1,23 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import ScreenManager
 from kivymd.label import MDLabel
 from kivymd.theming import ThemeManager
 
-from presenter.screen.main_menu import MainMenuScreen
-from presenter.screen.math import MathScreen
-from presenter.screen.settings import SettingsScreen
-# App screens
 from presenter.widget.navbar import NavBar
-
-screen_manager = ScreenManager()
-screen_manager.add_widget(MainMenuScreen(name='main_menu'))
-screen_manager.add_widget(SettingsScreen(name='settings'))
-screen_manager.add_widget(MathScreen(name='math'))
-screen_manager.current = 'main_menu'
 
 root = BoxLayout()
 
 
 class Carrepsa(App):
-    theme_cls = ThemeManager()
+    theme_cls = ThemeManager(
+        primary_palette="Blue"
+    )
 
     def build(self):
         nav_bar = NavBar(
-            fab_icon='package',
+            fab_icon='package-variant',
             fab_callback=lambda x: print("FAB pressed!"),
-            fab_color=self.theme_cls.bg_light,
+            fab_color=[0.85, 0.85, 0.85, 1],
             tabs=[
                 {
                     'title': "Map",
@@ -38,11 +29,7 @@ class Carrepsa(App):
                     'icon': "package",
                     'widget': MDLabel(text="List of my packages", halign='center')
                 },
-                {  # TODO Find a way to get spacing here without a dummy tab
-                    'title': " ",
-                    'icon': "box",
-                    'widget': screen_manager
-                },
+                None,
                 {
                     'title': "Deliver",
                     'icon': "car",
