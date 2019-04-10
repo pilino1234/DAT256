@@ -1,8 +1,54 @@
+<PackageButton@ButtonBehavior+Widget>:
+    canvas:
+        Color:
+            rgb: 1, 1, 1
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
 <MainMenuScreen>:
-    BoxLayout:
-        Button:
-            text: "Go to Settings"
-            on_press:
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
-                root.manager.current = 'settings'
+
+    FloatLayout:
+
+    AnchorLayout:
+        anchor_y: 'bottom'
+
+        canvas:
+            Color:
+                rgb: 96/255, 176/255, 244/255
+            Rectangle:
+                pos: 0, 0
+                size: root.width, 80
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 20
+            width: root.width
+            height: 80
+            size_hint: None, None
+
+            Widget:
+                Image:
+                    pos: self.parent.x + self.parent.width/2 - 70/2, self.y
+                    size: 90, self.parent.height
+                    source: 'res/img/car.png'
+
+            Button:
+
+            Widget:
+                PackageButton:
+                    on_release: print('Package!')
+                    pos: self.parent.x + self.parent.width/2 - 125/2, self.parent.y + self.parent.height - 125/2
+                    size: 125, 125
+
+                Image:
+                    pos: self.parent.x + self.parent.width/2 - 90/2, self.parent.y + self.parent.height - 90/2
+                    size: 90, 90
+                    source: 'res/img/package.png'
+
+            Button:
+            Button:
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.transition.duration = 0.5
+                    root.manager.current = 'settings'
