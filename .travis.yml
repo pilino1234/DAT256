@@ -10,23 +10,18 @@ services:
 stages:
   - tests
   - name: build
-    if: branch = proposal/carrepsa
+    if: branch = master OR tag is present
   - name: deploy
-    if: branch = proposal/carrepsa
+    if: branch = master OR tag is present
 
 jobs:
   include:
     - stage: tests
       name: "YAPF"
-      script:
-        - ci/run_yapf.sh
-    - script:
-        - echo "todo"
-        - exit 0
-      name: "Unit tests"
+      script: bash ci/run_yapf.sh
     - stage: build
       name: "Build Android APK"
-      script: ci/build_apk.sh
+      script: bash ci/build_apk.sh
     - stage: deploy
       name: "Deploy to GitHub Release"
       script: skip
@@ -36,13 +31,6 @@ jobs:
         file_glob: true
         file: app/bin/*
         skip_cleanup: true
-        on:
-          tags: true
-        draft: true
-
-install:
-  - pip install cython==0.28.6
-  - pip install -r app/requirements.txt
 
 script: ignore
 
