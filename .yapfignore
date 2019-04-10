@@ -2,3 +2,4 @@
 */venv/*
 */.cache/*
 */.local/*
+app/docs/conf.py
