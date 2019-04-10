@@ -7,41 +7,18 @@ python: "3.7"
 services:
   - docker
 
-cache: pip
-
-addons:
-  apt:
-    update: true
-    packages:
-      - build-essential
-      - git
-      - ffmpeg
-      - libsdl2-dev
-      - libsdl2-image-dev
-      - libsdl2-mixer-dev
-      - libsdl2-ttf-dev
-      - libportmidi-dev
-      - libswscale-dev
-      - libavformat-dev
-      - libavcodec-dev
-      - zlib1g-dev
-
 stages:
   - tests
   - name: build
-    if: branch = travis
+    if: branch = master OR tag is present
   - name: deploy
-    if: branch = travis
+    if: branch = master OR tag is present
 
 jobs:
   include:
     - stage: tests
       name: "YAPF"
       script: bash ci/run_yapf.sh
-    - script:
-        - echo "todo"
-        - exit 0
-      name: "Unit tests"
     - stage: build
       name: "Build Android APK"
       script: bash ci/build_apk.sh
@@ -54,13 +31,6 @@ jobs:
         file_glob: true
         file: app/bin/*
         skip_cleanup: true
-        draft: true
-        on:
-          branch: travis
-
-install:
-  - pip -qq install cython==0.28.6
-  - pip -qq install -r app/requirements.txt
 
 script: ignore
 
