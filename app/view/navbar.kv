@@ -1,0 +1,55 @@
+#:import CalculatorWidget presenter.calculator
+#:import BlankNavItem presenter.navbar
+
+<NavBarWithFAB>:
+    fab_diameter: 64
+
+    FloatLayout:
+        MDBottomNavigation:
+            id: navbar
+
+            MDBottomNavigationItem:
+                name: 'map'
+                text: 'Map'
+                icon: 'map-marker'
+
+                MDLabel:
+                    text: "Show the map here"
+                    halign: 'center'
+
+            MDBottomNavigationItem:
+                name: 'my-packages'
+                text: 'My Packages'
+                icon: 'package'
+
+                MDLabel:
+                    text: "List of my packages"
+                    halign: 'center'
+
+            BlankNavItem:
+                icon: 'dots-horizontal'
+
+            MDBottomNavigationItem:
+                name: 'my-deliveries'
+                text: 'My Deliveries'
+                icon: 'car'
+
+                MDLabel:
+                    text: "Delivery stuff"
+                    halign: 'center'
+
+            MDBottomNavigationItem:
+                name: 'my-account'
+                text: 'My Account'
+                icon: 'account-circle'
+
+                CalculatorWidget:
+
+        MDFloatingActionButton:
+            id: fab
+            x: navbar.width // 2 - dp(root.fab_diameter) // 2
+            y: navbar.children[0].height // 2
+            size: (dp(root.fab_diameter), dp(root.fab_diameter))
+            elevation_normal: 8
+            md_bg_color: (217/255, 217/255, 217/255, 1)
+            icon: 'package-variant'
