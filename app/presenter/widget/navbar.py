@@ -9,57 +9,75 @@ from kivymd.tabs import MDBottomNavigation, MDBottomNavigationItem
 from kivymd.theming import ThemeManager, ThemableBehavior
 
 
-class NavBar(BoxLayout, ThemableBehavior):
-    tabs = ListProperty()
+class NavBarWithFAB(BoxLayout, ThemableBehavior):
+    '''
+    Widget that lets lets the user navigate between different tabs.
+    It features a circular Floating Action Button above the center of the bar.
+    Supports blank tab slots through BlankNavItem.
+    '''
+
+    nav_tabs = ListProperty()
     fab_icon = StringProperty('android')
     fab_callback = ObjectProperty(lambda x: None)
     fab_color = ListProperty([1, .7568627450980392, .027450980392156862, 1])
+    fab_diameter = 64
 
     def __init__(self, **kwargs):
-        super(NavBar, self).__init__(**kwargs)
+        super(NavBarWithFAB, self).__init__(**kwargs)
+
+        self.__init_navbar()
+        self.__init_fab()
 
         float_layout = FloatLayout()
-        self.nav_bar = MDBottomNavigation()
+        float_layout.add_widget(self.navbar)
+        float_layout.add_widget(self.fab)
+        self.add_widget(float_layout)
 
-        for tab in self.tabs:
+        Window.bind(on_resize=self._on_resize)
+
+    def __init_navbar(self):
+        self.navbar = MDBottomNavigation()
+
+        for tab in self.nav_tabs:
             if tab is None:
-                self.add_space()
+                self.__add_space()
             else:
-                self.add_tab(**tab)
+                self.__add_tab(**tab)
 
-        self.fab = MDFloatingActionButton(y=self.nav_bar.height // 2,
-                                          x=Window.width // 2 - dp(56) // 2, opacity=1, size=(dp(56), dp(56)),
+    def __init_fab(self):
+        x = self.navbar.height // 2
+        y = self.navbar.width // 2 - dp(self.fab_diameter) // 2
+        self.fab = MDFloatingActionButton(x=x,
+                                          y=y,
                                           on_release=self.fab_callback,
                                           icon=self.fab_icon)
 
         self.fab.md_bg_color = self.fab_color
         self.fab.elevation_normal = 8
 
-        float_layout.add_widget(self.nav_bar)
-        float_layout.add_widget(self.fab)
-        self.add_widget(float_layout)
-
-        Window.bind(on_resize=self.on_resize)
-
-    def on_resize(self, instance=None, width=None, do_again=True):
-        self.fab.x = Window.width // 2 - dp(56) // 2
-
-    def add_tab(self, title: str, icon: str, widget: Widget):
-        nav_item = MDBottomNavigationItem(
-            text=title,
-            icon=icon,
-            name=title.lower().replace(" ", "-")
-        )
+    def __add_tab(self, title: str, icon: str, widget: Widget):
+        nav_item = MDBottomNavigationItem(text=title,
+                                          icon=icon,
+                                          name=title.lower().replace(" ", "-"))
         nav_item.add_widget(widget)
-        self.nav_bar.add_widget(nav_item)
+        self.navbar.add_widget(nav_item)
 
-    def add_space(self):
-        self.nav_bar.add_widget(DummyNavItem())
+    def __add_space(self):
+        self.navbar.add_widget(BlankNavItem())
+
+    def _on_resize(self, instance=None, width=None, do_again=True):
+        self.fab.x = Window.width // 2 - dp(self.fab_diameter) // 2
+        self.fab.size = (dp(self.fab_diameter), dp(self.fab_diameter))
 
 
-class DummyNavItem(MDBottomNavigationItem):
+class BlankNavItem(MDBottomNavigationItem):
+    '''
+    Blank navigation tab.
+    This approach of getting a blank navigation tab is not ideal, but works for now.
+    '''
+
     def __init__(self):
-        self.icon='dots-horizontal'
+        self.icon = 'dots-horizontal'
         pass
 
     def on_tab_touch_down(self, *args):
