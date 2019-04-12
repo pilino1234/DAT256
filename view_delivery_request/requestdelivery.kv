@@ -1,0 +1,78 @@
+# Reference requestdelivery.py
+#: import main requestdelivery
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+
+RequestDelivery:
+
+<RequestDelivery>:
+    orientation: "vertical"
+    senders_loc_text_input: senders_loc
+    destination_loc_text_input: destination_loc
+    package_weight_text_input: package_weight
+    price_text_input: price
+    package_name_text_input: package_name
+    money_lock_text_input: money_lock
+    package_description_text_input: package_description
+    packinfo_list: packinfo_list_view
+    padding: 10
+    spacing: 10
+
+    BoxLayout:
+        size_hint_y: None
+        height: "30dp"
+        Label:
+            text: "Send from: "
+        TextInput:
+            id: senders_loc
+        Label:
+            text: "Send to: "
+        TextInput:
+            id: destination_loc
+    BoxLayout:
+        size_hint_y: None
+        height: "30dp"
+        Label:
+            text: "Package weight:"
+        TextInput:
+            id: package_weight
+        Label:
+            text: "Price: "
+        TextInput:
+            id: price
+    BoxLayout:
+        size_hint_y: None
+        height: "30dp"
+        Label:
+            text: "Money lock:"
+        TextInput:
+            id: money_lock
+        Label:
+            text: "Package name: "
+        TextInput:
+            id: package_name
+    BoxLayout:
+        size_hint_y: None
+        height: "100dp"
+        Label:
+            text: "Package description:"
+        TextInput:
+            id: package_description
+        Label:
+            text: "Image of package: "
+        AsyncImage:
+            source: "https://yt3.ggpht.com/a-/AAuE7mD6DYZhbyoY6NJ2eV-lkxkG3KEgAfD8uC2f4w=s900-mo-c-c0xffffffff-rj-k-no"
+
+    BoxLayout:
+        size_hint_y: None
+        height: "40dp"
+        Button:
+            text: "Request Delivery"
+            size_hint_x: 15
+            on_press: root.submit_package()
+
+
+    # Define starting data and point to the ListItemButton
+    # in the Python code
+    ListView:
+        id: packinfo_list_view
