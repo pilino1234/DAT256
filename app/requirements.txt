@@ -3,3 +3,4 @@ pygame
 kivy
 sphinx
 buildozer
+git+http://github.com/HeaTTheatR/KivyMD@035ddf6#egg=kivymd
