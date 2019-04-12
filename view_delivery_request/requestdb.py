@@ -8,7 +8,7 @@ class RequestListButton(ListItemButton):
     pass
 
 
-class RequestDelivery(BoxLayout):
+class RequestDB(BoxLayout):
     # Connects the value in the TextInput widget to these
     # fields
     senders_loc_text_input = ObjectProperty()
@@ -21,9 +21,8 @@ class RequestDelivery(BoxLayout):
     packinfo_list = ObjectProperty()
 
     def submit_package(self):
-
         # Add confirmation to ListView
-        self.packinfo_list_list.adapter.data.extend(["Your delivery was successfully requested"])
+        self.packinfo_list.adapter.data.extend(["Your delivery has been submitted"])
 
         # Reset the ListView
         self.packinfo_list._trigger_reset_populate()
@@ -52,10 +51,10 @@ class RequestDelivery(BoxLayout):
         package_description = self.destionation_loc_text_input.text
         return package_description
 
-class RequestDeliveryApp(App):
+class RequestDBApp(App):
     def build(self):
-        return RequestDelivery()
+        return RequestDB()
 
-dbApp = RequestDeliveryApp()
+dbApp = RequestDBApp()
 
 dbApp.run()
