@@ -45,8 +45,8 @@ class NavBarWithFAB(BoxLayout, ThemableBehavior):
                 self.__add_tab(**tab)
 
     def __init_fab(self):
-        x = self.navbar.height // 2
-        y = self.navbar.width // 2 - dp(self.fab_diameter) // 2
+        y = self.navbar.height // 2
+        x = Window.width // 2 - dp(self.fab_diameter) // 2
         self.fab = MDFloatingActionButton(x=x,
                                           y=y,
                                           on_release=self.fab_callback,
