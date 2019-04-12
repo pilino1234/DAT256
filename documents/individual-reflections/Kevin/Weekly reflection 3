@@ -1,0 +1,23 @@
+What do I want to learn or understand better?
+ A: I've started running Kivy as well as PyCharm / Python on my PC. I've started to play and understand most of the basics in
+ Kivy. So far I've started developing a view with different inputs and are hoping to be able to integrate the camera as soon as possible.
+ B: Get more experience with Kivy and being able to do more advanced things. I want to learn how to use the camera in Kivy. I haven't
+ really dived into Python yet, so there are a lot of room for improvement in understanding Python.
+ A->B: Keep practising and trying to finish new issues/tasks. Watch more tutorials on both Kivy and Python.
+
+How can I help someone else, or the entire team, to learn something new?
+ A: We are all new to Kivy, so hopefully I can help if any questions in the group emerge. Since I have no experience with GitHub/other 
+ tools we are using, there is not a lot I can do to help others with that.
+ B: Help out with what I've learned more efficiently.
+ A->B: Discuss what I have done on our weekly meeting and share everything that I learn.
+
+What is my contribution towards the team's use of Scrum?
+ A: I am active in the Slack channel, I make daily updates to our Scrum bot and attend our meetings and lectures. 
+ B: Now that we know how Scrum works I want to get more practical knowledge about it and see how it works out in reality.
+ A->B: See how our first sprint goes and if our estimates are reasonable.
+
+What is my contribution towards the team's deliveries?
+ A: I have attended our meetings and been active on Slack. I have also worked on my first issue which is almost finished. I'm hoping
+ to finish the next one over the weekend.
+ B: Finish more issues and doing something more advanced.
+ A->B: Spend more time on the project and adress new challenges. To do so I also need to learn more about Kivy and Python.
