@@ -12,7 +12,7 @@ class RequestDB(BoxLayout):
     # Connects the value in the TextInput widget to these
     # fields
     senders_loc_text_input = ObjectProperty()
-    destination_loc_input = ObjectProperty()
+    destination_loc_text_input = ObjectProperty()
     package_weight_text_input = ObjectProperty()
     price_text_input = ObjectProperty()
     package_name_text_input = ObjectProperty()
