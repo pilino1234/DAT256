@@ -27,27 +27,27 @@ class RequestDB(BoxLayout):
         # Reset the ListView
         self.packinfo_list._trigger_reset_populate()
 
-    def getSender():
+    def getSender(self):
         senders_loc = self.senders_loc_text_input.text
         return senders_loc
 
-    def getDestination():
+    def getDestination(self):
         destination_loc = self.destination_loc_text_input.text
         return destination_loc
 
-    def getWeight():
+    def getWeight(self):
         package_weight = self.package_weight_text_input.text
         return package_weight
 
-    def getPrice():
+    def getPrice(self):
         price = self.price_text_input.text
         return price
 
-    def getMoneyLock():
+    def getMoneyLock(self):
         money_lock = self.money_lock_text_input.text
         return money_lock
 
-    def getPackageDescription():
+    def getPackageDescription(self):
         package_description = self.package_description_text_input.text
         return package_description
 
