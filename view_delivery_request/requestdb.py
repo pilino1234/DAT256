@@ -32,23 +32,23 @@ class RequestDB(BoxLayout):
         return senders_loc
 
     def getDestination():
-        destination_loc = self.destionation_loc_text_input.text
+        destination_loc = self.destination_loc_text_input.text
         return destination_loc
 
     def getWeight():
-        package_weight = self.destionation_loc_text_input.text
+        package_weight = self.package_weight_text_input.text
         return package_weight
 
     def getPrice():
-        price = self.destionation_loc_text_input.text
+        price = self.price_text_input.text
         return price
 
     def getMoneyLock():
-        money_lock = self.destionation_loc_text_input.text
+        money_lock = self.money_lock_text_input.text
         return money_lock
 
     def getPackageDescription():
-        package_description = self.destionation_loc_text_input.text
+        package_description = self.package_description_text_input.text
         return package_description
 
 class RequestDBApp(App):
