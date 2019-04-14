@@ -1,0 +1,50 @@
+<ListItemView>:
+    orientation: "vertical"
+    Label:
+        text: app.get_name()
+        canvas.before:
+            Color:
+                rgb: 1, .4, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Label:
+        text: app.get_origin()
+        canvas.before:
+            Color:
+                rgb: .3, .4, .6
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Label:
+        text: app.get_destination()
+        canvas.before:
+            Color:
+                rgb: 1, .4, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Label:
+        text: app.get_price()
+        canvas.before:
+            Color:
+                rgb: .3, .4, .6
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Label:
+        text: app.get_weight()
+        canvas.before:
+            Color:
+                rgb: 1, .4, .9
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Label:
+        text: app.get_distance() + " kilometers distance"
+        canvas.before:
+            Color:
+                rgb: .3, .4, .6
+            Rectangle:
+                pos: self.pos
+                size: self.size
