@@ -10,9 +10,9 @@ services:
 stages:
   - tests
   - name: build
-    if: branch = master OR tag is present
+    if: branch IN (master, dev) OR tag is present
   - name: deploy
-    if: branch = master OR tag is present
+    if: branch IN (master, dev) OR tag is present
 
 jobs:
   include:
