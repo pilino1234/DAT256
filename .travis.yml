@@ -10,9 +10,9 @@ services:
 stages:
   - tests
   - name: build
-    if: branch IN (master, dev) OR tag is present
+    if: (branch IN (master, dev) AND type != pull_request) OR tag is present
   - name: deploy
-    if: branch IN (master, dev) OR tag is present
+    if: (branch IN (master, dev) AND type != pull_request) OR tag is present
 
 jobs:
   include:
