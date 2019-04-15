@@ -3,6 +3,8 @@ inherits:
 
 ignore-paths:
   - docs/
+  - tests/
+  - venv/
 
 pylint:
   run: false
