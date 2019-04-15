@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip install yapf
+pip --quiet install yapf
 
 yapf --diff --recursive --parallel -vv app/
