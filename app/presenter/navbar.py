@@ -1,12 +1,7 @@
-from kivy.core.window import Window
-from kivy.metrics import dp
-from kivy.properties import ListProperty, ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.widget import Widget
-from kivymd.button import MDFloatingActionButton
-from kivymd.tabs import MDBottomNavigation, MDBottomNavigationItem
-from kivymd.theming import ThemeManager, ThemableBehavior
+from kivymd.tabs import MDBottomNavigationItem
+from kivymd.theming import ThemableBehavior
 
 from kivy.lang import Builder
 Builder.load_file("view/navbar.kv")

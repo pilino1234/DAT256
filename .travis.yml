@@ -19,6 +19,8 @@ jobs:
     - stage: tests
       name: "YAPF"
       script: bash ci/run_yapf.sh
+    - script: bash ci/run_prospector.sh
+      name: "Prospector"
     - stage: build
       name: "Build Android APK"
       script: bash ci/build_apk.sh

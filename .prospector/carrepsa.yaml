@@ -1,0 +1,11 @@
+inherits:
+  - strictness_high
+
+ignore-paths:
+  - docs/
+
+pylint:
+  run: false
+
+mypy:
+  run: true
