@@ -11,3 +11,11 @@ pylint:
 
 mypy:
   run: true
+
+pep257:
+  run: true
+  disable:
+    - D100
+    - D104
+    - D203
+    - D212
