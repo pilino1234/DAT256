@@ -1,6 +1,5 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivymd.label import MDLabel
 from kivymd.theming import ThemeManager
 
 from presenter.navbar import NavBarWithFAB
