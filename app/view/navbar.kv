@@ -1,4 +1,5 @@
 #:import CalculatorWidget presenter.calculator
+#:import DeliveryList presenter.delivery_list
 #:import BlankNavItem presenter.navbar
 
 <NavBarWithFAB>:
@@ -13,9 +14,7 @@
                 text: 'Map'
                 icon: 'map-marker'
 
-                MDLabel:
-                    text: "Show the map here"
-                    halign: 'center'
+                DeliveryList:
 
             MDBottomNavigationItem:
                 name: 'my-packages'
@@ -35,7 +34,7 @@
                 icon: 'car'
 
                 MDLabel:
-                    text: "Delivery stuff"
+                    text: "Show my deliveries"
                     halign: 'center'
 
             MDBottomNavigationItem:
