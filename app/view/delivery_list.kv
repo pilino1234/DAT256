@@ -1,6 +1,4 @@
-#:import MDLabel kivymd.label.MDLabel
-
-<GoodButton>
+<WhiteCardButton>
     canvas.before:
         Color:
             rgba: 160/255, 160/255, 160/255, 1
@@ -13,10 +11,9 @@
     size_hint: (1, None)
     height: 180
 
-
     RelativeLayout:
         size: 40, 40
-        IconLeftSampleWidget:
+        HollowIcon:
             pos: self.parent.width-self.width, self.parent.height/3
             icon: 'chevron-right'
 
@@ -34,7 +31,7 @@
             IconWithText:
                 text: "Brunnsparken"
 
-                IconLeftSampleWidget:
+                HollowIcon:
                     icon: 'map-marker'
                     theme_text_color: 'Custom'
                     text_color: 243/255, 179/255, 42/255, 1
@@ -42,7 +39,7 @@
             IconWithText:
                 text: "Frölunda Torg"
 
-                IconLeftSampleWidget:
+                HollowIcon:
                     icon: 'map-marker'
                     theme_text_color: 'Custom'
                     text_color: 152/255, 224/255, 232/255, 1
@@ -54,7 +51,7 @@
             IconWithText:
                 text: "20 kr"
 
-                IconLeftSampleWidget:
+                HollowIcon:
                     icon: 'currency-usd'
                     theme_text_color: 'Custom'
                     text_color: 212/255, 144/255, 0/255, 1
@@ -62,13 +59,13 @@
             IconWithText:
                 text: "8 km"
 
-                IconLeftSampleWidget:
+                HollowIcon:
                     icon: 'ruler'
 
             IconWithText:
                 text: "Small"
 
-                IconLeftSampleWidget:
+                HollowIcon:
                     icon: 'walk'
                     theme_text_color: 'Custom'
                     text_color: 107/255, 200/255, 187/255, 1
