@@ -1,0 +1,121 @@
+#:import MDLabel kivymd.label.MDLabel
+
+<GoodButton>
+    canvas.before:
+        Color:
+            rgba: 160/255, 160/255, 160/255, 1
+        Line:
+            width: 1
+            rounded_rectangle:
+                (self.x, self.y, self.width, self.height,\
+                root._radius, root._radius, root._radius, root._radius,\
+                self.height)
+    theme_text_color: 'Custom'
+    text_color: root.theme_cls.primary_color
+
+<ListItem>:
+    size_hint: (1, None)
+    height: 180
+
+
+    RelativeLayout:
+        size: 40, 40
+        IconLeftSampleWidget:
+            pos: self.parent.width-self.width, self.parent.height/3
+            icon: 'chevron-right'
+
+    RelativeLayout:
+        MDLabel:
+            pos: 20, self.parent.height/4
+            font_style: 'Title'
+            theme_text_color: 'Primary'
+            text: "Small Cardboard Box"
+
+        BoxLayout:
+            pos: 0, 70
+            orientation: 'horizontal'
+
+            IconWithText:
+                text: "Brunnsparken"
+
+                IconLeftSampleWidget:
+                    icon: 'map-marker'
+                    theme_text_color: 'Custom'
+                    text_color: 243/255, 179/255, 42/255, 1
+
+            IconWithText:
+                text: "Frölunda Torg"
+
+                IconLeftSampleWidget:
+                    icon: 'map-marker'
+                    theme_text_color: 'Custom'
+                    text_color: 152/255, 224/255, 232/255, 1
+
+        BoxLayout:
+            pos: 0, 20
+            orientation: 'horizontal'
+
+            IconWithText:
+                text: "20 kr"
+
+                IconLeftSampleWidget:
+                    icon: 'currency-usd'
+                    theme_text_color: 'Custom'
+                    text_color: 212/255, 144/255, 0/255, 1
+
+            IconWithText:
+                text: "8 km"
+
+                IconLeftSampleWidget:
+                    icon: 'ruler'
+
+            IconWithText:
+                text: "Small"
+
+                IconLeftSampleWidget:
+                    icon: 'walk'
+                    theme_text_color: 'Custom'
+                    text_color: 107/255, 200/255, 187/255, 1
+
+
+<DeliveryList>:
+    MDTabbedPanel:
+        MDTab:
+            name: 'list'
+            text: "List"
+
+            BoxLayout:
+                ScrollView:
+                    do_scroll_x: False
+                    do_scroll_y: True
+
+                    BoxLayout:
+                        size_hint_y: None
+                        height: self.minimum_height
+                        orientation: 'vertical'
+                        padding: 30
+                        spacing: 30
+
+                        ListItem:
+                            on_release: print("item1")
+                        ListItem:
+                            on_release: print("item2")
+                        ListItem:
+                            on_release: print("item3")
+                        ListItem:
+                            on_release: print("item4")
+                        ListItem:
+                            on_release: print("item5")
+                        ListItem:
+                            on_release: print("item6")
+                        ListItem:
+                            on_release: print("item7")
+                        ListItem:
+                            on_release: print("item8")
+
+        MDTab:
+            name: 'map'
+            text: "Map"
+
+            MDLabel:
+                text: "Show map here"
