@@ -4,14 +4,10 @@
     canvas.before:
         Color:
             rgba: 160/255, 160/255, 160/255, 1
-        Line:
-            width: 1
-            rounded_rectangle:
-                (self.x, self.y, self.width, self.height,\
-                root._radius, root._radius, root._radius, root._radius,\
-                self.height)
     theme_text_color: 'Custom'
     text_color: root.theme_cls.primary_color
+    md_bg_color: 255/255, 255/255, 255/255, 1
+    elevation_normal: 4
 
 <ListItem>:
     size_hint: (1, None)
