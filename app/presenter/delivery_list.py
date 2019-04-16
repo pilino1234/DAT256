@@ -2,7 +2,7 @@ from kivy.lang import Builder
 from kivy.properties import NumericProperty, OptionProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.elevationbehavior import RectangularElevationBehavior
-from kivymd.button import MDIconButton, MDRoundFlatButton, MDFlatButton
+from kivymd.button import MDIconButton, MDRoundFlatButton, MDRaisedButton
 from kivymd.list import ILeftBody, ILeftBodyTouch, IRightBodyTouch, OneLineIconListItem
 from kivy.metrics import dp
 
@@ -10,7 +10,7 @@ from kivy.metrics import dp
 Builder.load_file("view/delivery_list.kv")
 
 
-class GoodButton(MDFlatButton):
+class GoodButton(MDRaisedButton):
     _radius = NumericProperty(dp(18))
 
     def lay_canvas_instructions(self):
