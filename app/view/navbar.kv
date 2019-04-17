@@ -1,6 +1,7 @@
+#:import BlankNavItem presenter.navbar
 #:import CalculatorWidget presenter.calculator
 #:import DeliveryList presenter.delivery_list
-#:import BlankNavItem presenter.navbar
+#:import MyPostedRequests presenter.my_posted_requests
 
 <NavBarWithFAB>:
     fab_diameter: 64
@@ -33,9 +34,7 @@
                 text: 'My Deliveries'
                 icon: 'car'
 
-                MDLabel:
-                    text: "Show my deliveries"
-                    halign: 'center'
+                MyPostedRequests:
 
             MDBottomNavigationItem:
                 name: 'my-account'

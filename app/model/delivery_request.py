@@ -12,17 +12,26 @@ class DeliveryRequest():
         _weight_prop('truck', "Huge")
     ]
 
-    def __init__(self, origin: str, destination: str, reward: int,
-                 weight: int):
+    _status_types = ["available", "accepted", "travelling", "delivered"]
+
+    def __init__(self, origin: str, destination: str, reward: int, weight: int,
+                 fragile: bool, status: int):
         """Initializes the delivery list"""
         self.origin = origin
         self.destination = destination
         self.reward = reward
         self.weight = weight
+        self.fragile = fragile
+        self.status = status
 
         self.weight_text = self._weight_props[weight].text
         self.weight_icon = self._weight_props[weight].icon
+        self.status_text = self._status_types[status]
 
     def get_distance_pretty(self):
         """Computes distance between origin and destination in kilo meters"""
         return "7 km"
+
+    def get_reward_pretty(self):
+        """Pretty formats reward in local currency."""
+        return str(self.reward) + " kr"
