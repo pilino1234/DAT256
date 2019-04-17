@@ -15,7 +15,7 @@ class RequestDB(BoxLayout):
     destination_loc_text_input = ObjectProperty()
     package_weight_text_input = ObjectProperty()
     price_text_input = ObjectProperty()
-    package_name_text_input = ObjectProperty()
+    package_item_text_input = ObjectProperty()
     money_lock_text_input = ObjectProperty()
     package_description_text_input = ObjectProperty()
     packinfo_list = ObjectProperty()
@@ -30,6 +30,9 @@ class RequestDB(BoxLayout):
     def getSender(self):
         senders_loc = self.senders_loc_text_input.text
         return senders_loc
+    def getItem(self):
+        package_item = self.package_item_text_input.text
+        return package_item
 
     def getDestination(self):
         destination_loc = self.destination_loc_text_input.text
