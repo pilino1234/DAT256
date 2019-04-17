@@ -20,10 +20,7 @@ class NavBarWithFAB(BoxLayout, ThemableBehavior):
     def __init__(self, **kwargs):
         """Initialize the navigation bar"""
         super(NavBarWithFAB, self).__init__(**kwargs)
-        self.navbar = self.ids.navbar
-        self.fab = self.ids.fab
-
-        self.fab.on_release = self.fab_callback
+        self.ids.fab.on_release = self.fab_callback
 
 
 class BlankNavItem(MDBottomNavigationItem):
