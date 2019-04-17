@@ -11,7 +11,7 @@ RequestDB:
     destination_loc_text_input: destination_loc
     package_weight_text_input: package_weight
     price_text_input: price
-    package_name_text_input: package_name
+    package_item_text_input: package_item
     money_lock_text_input: money_lock
     package_description_text_input: package_description
     packinfo_list: packinfos_list_view
@@ -48,9 +48,9 @@ RequestDB:
         TextInput:
             id: money_lock
         Label:
-            text: "Package name: "
+            text: "Item: "
         TextInput:
-            id: package_name
+            id: package_item
     BoxLayout:
         size_hint_y: None
         height: "100dp"
