@@ -2,6 +2,7 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.tabs import MDBottomNavigationItem
 from kivymd.theming import ThemableBehavior
+from presenter.my_posted_requests import MyPostedRequests
 
 from kivy.lang import Builder
 Builder.load_file("view/navbar.kv")
@@ -16,11 +17,17 @@ class NavBarWithFAB(BoxLayout, ThemableBehavior):
     """
 
     fab_callback = ObjectProperty(lambda: None)
+    __tab_loaded = set()  # type: set
 
     def __init__(self, **kwargs):
         """Initialize the navigation bar"""
         super(NavBarWithFAB, self).__init__(**kwargs)
         self.ids.fab.on_release = self.fab_callback
+
+    def _load_posted_requests(self, tab):
+        if tab not in self.__tab_loaded:
+            self.__tab_loaded.add(tab)
+            tab.add_widget(MyPostedRequests())
 
 
 class BlankNavItem(MDBottomNavigationItem):
