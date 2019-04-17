@@ -13,7 +13,7 @@ class SlidingPopup(FloatLayout):
     def __init__(self, **kwargs):
         """Initializes the sliding popup"""
         super(SlidingPopup, self).__init__(**kwargs)
-        self.bg: "BackgroundDim" = self.ids.background_dim
+        self.bg: BackgroundDim = self.ids.background_dim
         self.bg.on_release = lambda: self.hide()
         self.card: Widget = self.ids.popup_card
         self._visible = False
