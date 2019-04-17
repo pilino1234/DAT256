@@ -1,5 +1,7 @@
 #:import CalculatorWidget presenter.calculator
 #:import DeliveryList presenter.delivery_list
+#:import UserProfileView presenter.user_profile_view
+
 #:import BlankNavItem presenter.navbar
 
 <NavBarWithFAB>:
@@ -42,7 +44,7 @@
                 text: 'My Account'
                 icon: 'account-circle'
 
-                CalculatorWidget:
+                UserProfileView:
 
         MDFloatingActionButton:
             id: fab
