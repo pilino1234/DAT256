@@ -28,10 +28,10 @@ class DeliveryRequest():
         self.weight_icon = self._weight_props[weight].icon
         self.status_text = self._status_types[status]
 
-    def get_distance_pretty(self):
+    def get_distance_pretty(self) -> str:
         """Computes distance between origin and destination in kilo meters"""
         return "7 km"
 
-    def get_reward_pretty(self):
+    def get_reward_pretty(self) -> str:
         """Pretty formats reward in local currency."""
         return str(self.reward) + " kr"
