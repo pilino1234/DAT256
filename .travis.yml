@@ -35,6 +35,7 @@ jobs:
         file_glob: true
         file: app/bin/*
         skip_cleanup: true
+        all_branches: true # This stage is only triggered for certain branches anyway
 
 script: ignore
 
