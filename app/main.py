@@ -1,10 +1,11 @@
 """The entry point of the Carrepsa app"""
 
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivymd.theming import ThemeManager
 
 from presenter.navbar import NavBarWithFAB
+from presenter.sliding_popup import SlidingPopup
 
 
 class Carrepsa(App):
@@ -16,15 +17,17 @@ class Carrepsa(App):
 
     theme_cls = ThemeManager(primary_palette="Blue")
 
-    def build(self) -> BoxLayout:
+    def build(self) -> FloatLayout:
         """
         Builds the root view of the application window
 
         :return: The root BoxLayout of the window
         """
-        root = BoxLayout()
-        root.add_widget(
-            NavBarWithFAB(fab_callback=lambda: print("FAB pressed!")))
+        root = FloatLayout()
+        sp = SlidingPopup()
+        root.add_widget(NavBarWithFAB(fab_callback=lambda: sp.show()))
+        root.add_widget(sp)
+
         return root
 
 
