@@ -1,40 +1,18 @@
-<DeliveryList>:
-    MDTabbedPanel:
-        MDTab:
-            name: 'list'
-            text: "List"
+<MyPostedRequests>:
+    BoxLayout:
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
 
             BoxLayout:
-                ScrollView:
-                    do_scroll_x: False
-                    do_scroll_y: True
+                id: my_requests
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                padding: 30
+                spacing: 30
 
-                    BoxLayout:
-                        id: available_requests
-                        size_hint_y: None
-                        height: self.minimum_height
-                        orientation: 'vertical'
-                        padding: 30
-                        spacing: 30
-
-        MDTab:
-            name: 'map'
-            text: "Map"
-
-            MDLabel:
-                text: "Show map here"
-
-
-<WhiteCardButton>
-    canvas.before:
-        Color:
-            rgba: 160/255, 160/255, 160/255, 1
-    theme_text_color: 'Custom'
-    text_color: root.theme_cls.primary_color
-    md_bg_color: 255/255, 255/255, 255/255, 1
-    elevation_normal: 4
-
-<ListItem>:
+<MyPostedRequest>:
     size_hint: (1, None)
     height: 180
 
@@ -45,7 +23,6 @@
             icon: 'chevron-right'
 
     RelativeLayout:
-
         MDLabel:
             id: item
             pos: 20, self.parent.height/4
@@ -89,18 +66,10 @@
                     text_color: 212/255, 144/255, 0/255, 1
 
             IconWithText:
-                id: distance
-                text: "8 km"
+                id: status
+                text: "Status: "
 
                 HollowIcon:
-                    icon: 'ruler'
-
-            IconWithText:
-                id: weight
-                text: "Small"
-
-                HollowIcon:
-                    id: weight_icon
-                    icon: 'walk'
+                    icon: 'truck-delivery'
                     theme_text_color: 'Custom'
                     text_color: 107/255, 200/255, 187/255, 1
