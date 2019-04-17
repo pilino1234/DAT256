@@ -9,9 +9,7 @@ services:
 
 stages:
   - tests
-  - name: build
-    if: (branch IN (master, dev) AND type != pull_request) OR tag is present
-  - name: deploy
+  - name: buildeploy
     if: (branch IN (master, dev) AND type != pull_request) OR tag is present
 
 jobs:
@@ -23,12 +21,9 @@ jobs:
       name: "Prospector"
     - script: bash ci/run_nose.sh
       name: "Unit tests"
-    - stage: build
-      name: "Build Android APK"
+    - stage: buildeploy
+      name: "Build Android APK and Deploy to GitHub Release"
       script: bash ci/build_apk.sh
-    - stage: deploy
-      name: "Deploy to GitHub Release"
-      script: skip
       deploy:
         provider: releases
         api_key: $GITHUB_RELEASE_TOKEN
