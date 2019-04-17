@@ -37,19 +37,8 @@ class BackgroundDim(ButtonBehavior, Widget):
 
     def fade_in(self):
         """Darken the background"""
-        self.__show()
         Animation(opacity=0.75, transition="out_elastic").start(self)
 
     def fade_out(self):
         """Stop dimming the background"""
-        anim = Animation(opacity=0, transition="out_cubic")
-        anim.bind(on_complete=lambda *args: self.__hide())
-        anim.start(self)
-
-    def __show(self):
-        self.top_hint = 1
-        self.visible = True
-
-    def __hide(self):
-        self.top_hint = 0
-        self.visible = False
+        Animation(opacity=0, transition="out_cubic").start(self)
