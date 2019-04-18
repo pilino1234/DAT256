@@ -2,6 +2,8 @@
 #:import CalculatorWidget presenter.calculator
 #:import DeliveryList presenter.delivery_list
 #:import MyPostedRequests presenter.my_posted_requests
+#:import BlankNavItem presenter.navbar
+#:import DetailView presenter.detail_view
 
 <NavBarWithFAB>:
     fab_diameter: 64
@@ -22,9 +24,7 @@
                 text: 'My Packages'
                 icon: 'package'
 
-                MDLabel:
-                    text: "List of my packages"
-                    halign: 'center'
+                DetailView:
 
             BlankNavItem:
                 icon: 'dots-horizontal'

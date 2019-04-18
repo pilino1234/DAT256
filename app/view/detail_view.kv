@@ -1,0 +1,61 @@
+#:import MDIconButton kivymd.button.MDIconButton
+
+<DetailView>:
+    id: detailView
+    orientation: "vertical"
+    MDIconButton:
+        size_hint: None, None
+        size: 50, 50
+        icon: 'chevron-left'
+        theme_text_color: 'Custom'
+        text_color: 0.5, 0.5, 0.5, 1
+        on_release: root.back_button_callback()
+    ScrollView:
+        id: detailScrollView
+        StackLayout:
+            id: stack
+            size_hint_y: None
+            height: self.minimum_height
+            padding: [20, 10]
+            spacing: 25
+
+
+<DetailLabel>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: 7
+
+    MDLabel:
+        id: title
+        font_style: 'Title'
+        text_size: self.width, None
+        color: 0, 0, 0, 1
+        size_hint_y: None
+        height: self.texture_size[1]
+    MDLabel:
+        id: description
+        font_style: 'Body1'
+        font_size: 16
+        text_size: root.width, None
+        color: 0, 0, 0, 1
+        size_hint_y: None
+        height: self.texture_size[1]
+
+<DetailIcon>:
+    orientation: "vertical"
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: -5
+
+    MDLabel:
+        id: title
+        font_style: 'Title'
+        text_size: self.width, None
+        color: 0, 0, 0, 1
+        size_hint_y: None
+        height: self.texture_size[1]
+    HollowIcon:
+        size_hint: None, None
+        id: icon
+        theme_text_color: 'Custom'
