@@ -1,17 +1,18 @@
 <UserProfileView>:
+    id: user_profile_view
     BoxLayout:
         orientation: 'vertical'
         padding: 30
         spacing: 30
         AsyncImage:
-            source: "https://i.kym-cdn.com/entries/icons/original/000/013/564/doge.jpg"
+            source: user_profile_view.user_me.get_avatar()
         MDLabel:
-            text: "Name Surname"
+            text: user_profile_view.user_me.get_name()
             font_style: "Title"
             halign: 'center'
         MDLabel:
-            text: "0706123123"
+            text: user_profile_view.user_me.get_phone()
             halign: 'center'
         MDLabel:
-            text: "asdf@example.com"
+            text: user_profile_view.user_me.get_email()
             halign: 'center'
