@@ -42,6 +42,10 @@ class DeliveryRequestForm(BoxLayout):
             text_field: MDTextField = self.ids[text_id]
             text_field.bind(text=self._verify_entries)
 
+    def _set_photo_path(self, path):
+        """Set the file path used by the preview image."""
+        self.photo_path = path
+
     def _set_weight_cb(self, button_id: str, _button: MDIconButton):
         self._set_weight(button_id)
 

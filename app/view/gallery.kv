@@ -1,0 +1,15 @@
+#:import Toolbar kivymd.toolbar.Toolbar
+#:import MDRoundFlatIconButton kivymd.button.MDRoundFlatIconButton
+
+
+<Gallery>:
+    orientation: 'vertical'
+    spacing: dp(5)
+
+    FloatLayout:
+
+        MDRoundFlatIconButton:
+            id: gallerybtn
+            text: "Select Photo"
+            icon: "camera"
+            pos_hint: {'center_x': .5, 'center_y': .6}
