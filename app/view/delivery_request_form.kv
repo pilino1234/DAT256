@@ -6,7 +6,7 @@
 #:import MDTextFieldRect kivymd.textfields.MDTextFieldRect
 #:import MDTextFieldRound kivymd.textfields.MDTextFieldRound
 #:import MDSwitch kivymd.selectioncontrols.MDSwitch
-
+#:import GalleryButton presenter.gallery_button
 
 
 
@@ -14,6 +14,9 @@
 <DeliveryRequestForm>:
     orientation: "vertical"
     padding: (0, 0, 0, 20)
+    spacing: 10
+
+    photo_path: None
 
     GridLayout:
         cols: 3
@@ -189,32 +192,31 @@
                 width: 40
                 height: 60
 
-    AnchorLayout:
-        anchor_x: 'right'
-        anchor_y: 'bottom'
-        padding: (0, 20, 20, 0)
+    MDTextField:
+        id: description_text
+        required: True
+        helper_text_mode: 'on_error'
+        hint_text: 'Package Description'
+        max_text_length: 300
+        icon: 'lock-outline'
+        multiline: True
+        foreground_color: 212/255, 144/255, 0/255, 1
+        size_hint_x: 0.8
 
-        AnchorLayout:
-            anchor_x: 'left'
-            anchor_y: 'bottom'
-            padding: (15, 0, 0, 15)
+    RelativeLayout:
+        AsyncImage:
+            id: photo_preview
+            source: root.photo_path
 
-            MDTextField:
-                id: description_text
-                helper_text_mode: 'on_error'
-                hint_text: 'Package Description'
-                max_text_length: 300
-                icon: 'lock-outline'
-                multiline: True
-                foreground_color: 212/255, 144/255, 0/255, 1
-                size_hint_x: 0.8
-
-        MDFloatingActionButton:
+        GalleryButton:
+            id: 'gallery_button'
             icon: 'camera'
+            path_selected_callback: root._set_photo_path
             text_color: app.theme_cls.primary_color
             opposite_colors: True
             elevation_normal: 8
             md_bg_color: 255/255, 255/255, 255/255, 1
+            pos_hint: {'right':.95}
 
     MDRaisedButton:
         id: request_button
