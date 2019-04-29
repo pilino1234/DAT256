@@ -1,6 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 from kivy.lang import Builder
+from kivymd.button import MDRaisedButton
 
 from model.delivery_request import DeliveryRequest
 
@@ -10,7 +11,7 @@ dummyRequest = DeliveryRequest("Package 2",
                                "Brunnsparken",
                                "Frölunda Torg",
                                reward=20,
-                               weight=1,
+                               weight=0,
                                fragile=False,
                                status=0,
                                money_lock=0)
@@ -25,9 +26,17 @@ class DetailView(BoxLayout):
         self.request = request
         Clock.schedule_once(self._init_content)
 
+    def accept_delivery_button_callback(self, button):
+        """Callback function for the Show On Map button."""
+        print("Got a callback from the accept delivery button!")
+
+    def show_on_map_button_callback(self, button):
+        """Callback function for the Show On Map button."""
+        print("Got a callback from the show on map button!")
+
     def back_button_callback(self):
         """Callback function for the Back button."""
-        print("Got a callback from the back button")
+        print("Got a callback from the back button!")
 
     def _init_content(self, delta_time):
         """Initializes all the views content after it's been loaded."""
@@ -60,6 +69,14 @@ class DetailView(BoxLayout):
         self.ids.stack.add_widget(
             DetailLabel(title="Description",
                         description="Some weird ass description!!!"))
+        self.ids.stack.add_widget(
+            MDRaisedButton(text="Show On Map",
+                           size_hint=[0.5, None],
+                           on_release=self.show_on_map_button_callback))
+        self.ids.stack.add_widget(
+            MDRaisedButton(text="Accept Delivery",
+                           size_hint=[0.5, None],
+                           on_release=self.accept_delivery_button_callback))
 
 
 class DetailLabel(BoxLayout):
