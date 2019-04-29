@@ -46,7 +46,7 @@
     orientation: "vertical"
     size_hint_y: None
     height: self.minimum_height
-    spacing: -5
+    spacing: -8
 
     MDLabel:
         id: title
@@ -57,5 +57,6 @@
         height: self.texture_size[1]
     HollowIcon:
         size_hint: None, None
+        padding: -20, 0, 0, 0
         id: icon
         theme_text_color: 'Custom'
