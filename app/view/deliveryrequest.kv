@@ -4,6 +4,9 @@
 #:import MDTextFieldClear kivymd.textfields.MDTextFieldClear
 #:import MDFillRoundFlatButton kivymd.button.MDFillRoundFlatButton
 #:import MDTextFieldRect kivymd.textfields.MDTextFieldRect
+#:import MDTextFieldRound kivymd.textfields.MDTextFieldRound
+
+
 
 <DeliveryRequest>:
     orientation: "vertical"
@@ -26,45 +29,51 @@
             text_color: 212/255, 144/255, 0/255, 1
             width: 100
 
-
-
         Label:
             text: "From: "
             color: (0,0,0,1)
         MDTextField:
-
             width: 200
+            height: 10
         HollowIcon:
-            icon: 'currency-usd'
+            icon: 'camera'
             theme_text_color: 'Custom'
             text_color: 212/255, 144/255, 0/255, 1
             width: 100
-
-
-
         Label:
             text: "To: "
             color: (0,0,0,1)
-
         MDTextField:
-
-            vertical:
+            width: 200
+            height: 10
         HollowIcon:
             icon: 'currency-usd'
             theme_text_color: 'Custom'
             text_color: 212/255, 144/255, 0/255, 1
+        Label:
+            text: "Weight: "
+            color: (0,0,0,1)
+        MDTextField:
+            width: 200
+            height: 10
+        HollowIcon:
+            icon: 'currency-usd'
+            theme_text_color: 'Custom'
+            text_color: 212/255, 144/255, 0/255, 1
+
     AnchorLayout:
         anchor_x: 'right'
         anchor_y: 'bottom'
-        padding: 10, 10, 10, 10
-        MDTextFieldRect:
 
-            size: root.width - dp(0), dp(80)
-
+        MDTextField:
+            hint_text: 'E.g. small brown package, pick it up by the mailbox'
+            icon: 'lock-outline'
+            multiline: True
+            foreground_color: 212/255, 144/255, 0/255, 1
 
         MDFloatingActionButton:
-
             icon: 'camera'
+            color: 212/255, 144/255, 0/255, 1
 
 
 
