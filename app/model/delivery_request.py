@@ -22,8 +22,8 @@ class DeliveryRequest():
         self.description = description
         self.origin = origin
         self.destination = destination
-        self.reward = reward
-        self.weight = weight
+        self.reward = str(reward)
+        self.weight = str(weight)
         self.fragile = fragile
         self.status = status
         self.money_lock = money_lock
