@@ -1,0 +1,81 @@
+#:import MDRoundFlatButton kivymd.button.MDRoundFlatButton
+#:import MDTextFieldRect kivymd.textfields.MDTextFieldRect
+#:import MDTextField kivymd.textfields.MDTextField
+#:import MDTextFieldClear kivymd.textfields.MDTextFieldClear
+#:import MDFillRoundFlatButton kivymd.button.MDFillRoundFlatButton
+#:import MDTextFieldRect kivymd.textfields.MDTextFieldRect
+
+<DeliveryRequest>:
+    orientation: "vertical"
+    padding: 10
+    spacing: 10
+
+    GridLayout:
+        cols: 3
+        Label:
+            text: "Item: "
+            color: (0,0,0,1)
+            width: 200
+        MDTextField:
+
+            width: 200
+            height:10
+        HollowIcon:
+            icon: 'currency-usd'
+            theme_text_color: 'Custom'
+            text_color: 212/255, 144/255, 0/255, 1
+            width: 100
+
+
+
+        Label:
+            text: "From: "
+            color: (0,0,0,1)
+        MDTextField:
+
+            width: 200
+        HollowIcon:
+            icon: 'currency-usd'
+            theme_text_color: 'Custom'
+            text_color: 212/255, 144/255, 0/255, 1
+            width: 100
+
+
+
+        Label:
+            text: "To: "
+            color: (0,0,0,1)
+
+        MDTextField:
+
+            vertical:
+        HollowIcon:
+            icon: 'currency-usd'
+            theme_text_color: 'Custom'
+            text_color: 212/255, 144/255, 0/255, 1
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        padding: 10, 10, 10, 10
+        MDTextFieldRect:
+
+            size: root.width - dp(0), dp(80)
+
+
+        MDFloatingActionButton:
+
+            icon: 'camera'
+
+
+
+
+    MDFillRoundFlatButton:
+        text: "Request Delivery"
+        pos_hint: {'center_x': 0.5, 'center_y': .15}
+
+
+
+
+
+
+
