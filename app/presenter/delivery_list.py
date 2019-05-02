@@ -7,82 +7,9 @@ from kivy.metrics import dp
 from kivy.clock import Clock
 from model.delivery_request import DeliveryRequest
 
-Builder.load_file("view/delivery_list.kv")
+from model.firebase.firestore import *
 
-_delivery_requests = [
-    DeliveryRequest("Package1",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=0,
-                    fragile=False,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package2",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=1,
-                    fragile=False,
-                    status=1,
-                    money_lock=0),
-    DeliveryRequest("Package3",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=2,
-                    fragile=True,
-                    status=2,
-                    money_lock=0),
-    DeliveryRequest("Package4",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=3,
-                    fragile=False,
-                    status=3,
-                    money_lock=0),
-    DeliveryRequest("Package5",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=30,
-                    weight=1,
-                    fragile=False,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package6",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=40,
-                    weight=1,
-                    fragile=True,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package7",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=50,
-                    weight=1,
-                    fragile=True,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package8",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=60,
-                    weight=1,
-                    fragile=False,
-                    status=0,
-                    money_lock=0),
-]
+Builder.load_file("view/delivery_list.kv")
 
 
 class DeliveryList(BoxLayout):
@@ -99,8 +26,25 @@ class DeliveryList(BoxLayout):
 
     def _init_content(self, delta_time):
         """Fill delivery list"""
-        for req in _delivery_requests:
-            self.ids.available_requests.add_widget(ListItem(req))
+        Firestore.subscribe("packages", self._update_content)
+
+    def _update_content(self, collection_snapshot, collection_change_snapshot,
+                        timestamp):
+        self.ids.available_requests.clear_widgets()
+
+        for doc in collection_snapshot:
+            doc_dict = doc.to_dict()
+
+            self.ids.available_requests.add_widget(
+                ListItem(
+                    DeliveryRequest(
+                        doc_dict.get('origin'),
+                        doc_dict.get('destination'),
+                        doc_dict.get('reward'),
+                        doc_dict.get('weight'),
+                        doc_dict.get('fragile'),
+                        doc_dict.get('status'),
+                    )))
 
 
 class WhiteCardButton(MDRaisedButton):
@@ -115,11 +59,12 @@ class ListItem(WhiteCardButton):
     def __init__(self, delivery_request, **kwargs):
         """Initializes the delivery list"""
         super(ListItem, self).__init__(**kwargs)
+
         self.ids.origin.text = delivery_request.origin
         self.ids.destination.text = delivery_request.destination
         self.ids.distance.text = delivery_request.get_distance_pretty()
-        self.ids.reward.text = delivery_request.get_reward_pretty()
-        self.ids.weight.text = delivery_request.weight_text
+        self.ids.reward.text = delivery_request.reward
+        self.ids.weight.text = delivery_request.weight
         self.ids.weight_icon.icon = delivery_request.weight_icon
 
 
