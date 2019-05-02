@@ -14,10 +14,12 @@ class DeliveryRequest():
 
     _status_types = ["available", "accepted", "travelling", "delivered"]
 
-    def __init__(self, item: str, origin: str, destination: str, reward: int,
-                 weight: int, fragile: bool, status: int, money_lock: int):
+    def __init__(self, item: str, description: str, origin: str,
+                 destination: str, reward: int, weight: int, fragile: bool,
+                 status: int, money_lock: int):
         """Initializes the delivery list"""
         self.item = item
+        self.description = description
         self.origin = origin
         self.destination = destination
         self.reward = reward
