@@ -1,18 +1,41 @@
 <UserProfileView>:
     id: user_profile_view
-    BoxLayout:
+
+    RelativeLayout:
+        id: user_view
         orientation: 'vertical'
         padding: 30
         spacing: 30
         AsyncImage:
             source: user_profile_view.user_me.get_avatar()
-        MDLabel:
-            text: user_profile_view.user_me.get_name()
-            font_style: "Title"
-            halign: 'center'
-        MDLabel:
-            text: user_profile_view.user_me.get_phone()
-            halign: 'center'
-        MDLabel:
-            text: user_profile_view.user_me.get_email()
-            halign: 'center'
+            size_hint: 1, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+
+        BoxLayout:
+            size_hint: 1, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+            orientation: 'vertical'
+            padding: 30
+            spacing: 30
+            MDLabel:
+                id: name_label
+                text: user_profile_view.user_me.get_name()
+                font_style: "Display3"
+                halign: 'center'
+            MDLabel:
+                id: phone_label
+                text: user_profile_view.user_me.get_phone()
+                font_style: "Display1"
+                halign: 'center'
+            MDLabel:
+                id: email_label
+                text: user_profile_view.user_me.get_email()
+                font_style: "Display1"
+                halign: 'center'
+
+        MDFloatingActionButton:
+            id: 'edit_button'
+            icon: 'border-color'
+            size_hint: None,None
+            pos_hint: {'center_x': 0.9, 'center_y': 0.1}
+            opposite_colors: False
