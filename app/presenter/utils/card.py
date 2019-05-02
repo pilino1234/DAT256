@@ -3,9 +3,9 @@ from kivy.metrics import dp
 from kivy.properties import ListProperty, NumericProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
-from kivymd.elevationbehavior import RectangularElevationBehavior
+from kivymd.elevation import RectangularElevationBehavior
 
-Builder.load_file("view/card.kv")
+Builder.load_file("view/utils/card.kv")
 
 
 class Card(ButtonBehavior, RectangularElevationBehavior, BoxLayout):
