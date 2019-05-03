@@ -6,6 +6,16 @@
     opposite_colors: False
     on_release: self.parent.parent.parent.edit_button_callback(self.field_editing)
 
+<TextInputPopup@MDDialog>:
+
+    size_hint: 1,1
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+    MDTextField:
+
+        hint_text: "Persistent helper text"
+        helper_text: "Text is always here"
+        helper_text_mode: "persistent"
+
 <UserProfileView>:
     id: user_profile_view
     orientation: 'vertical'

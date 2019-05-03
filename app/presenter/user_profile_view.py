@@ -5,6 +5,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from model.user import User
 from kivy.clock import Clock
 
+from kivymd.dialog import MDDialog
 from kivymd.button import MDFloatingActionButton
 from kivy.uix.behaviors import ButtonBehavior
 
@@ -16,6 +17,10 @@ class EditButton(MDFloatingActionButton):
     def __init__(self, field_editing, **kwargs):
         super(MDFloatingActionButton, self).__init__(**kwargs)
         self.field_editing = field_editing
+
+
+class TextInputPopup(MDDialog):
+    pass
 
 
 class UserProfileView(RelativeLayout):
@@ -44,6 +49,7 @@ class UserProfileView(RelativeLayout):
             self.ids.user_phone_box.add_widget(EditButton("phone"))
             self.ids.user_email_box.add_widget(EditButton("email"))
 
-    def edit_button_callback(self, name):
-        print(name)
+    def edit_button_callback(self, field):
+        print(field)
+        self.add_widget(TextInputPopup())
 
