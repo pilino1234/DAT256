@@ -6,26 +6,46 @@
     opposite_colors: False
     on_release: self.parent.parent.parent.edit_button_callback(self.field_editing)
 
-<TextInputPopup@MDDialog>:
+<GetTextDialog@MDInputDialog>:
+    id: text_input
+    result: ""
+    on_touch_up: self.parent.do_edit(self.text_field)
+    events_callback: self.parent.test_callback
 
-    size_hint: 1,1
+<AnswerInput>:
+    id: input_box
+    size_hint: 0.6, 0.5
     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-    MDTextField:
-
-        hint_text: "Persistent helper text"
-        helper_text: "Text is always here"
-        helper_text_mode: "persistent"
+    MDCard:
+        BoxLayout:
+            orientation: "vertical"
+            padding: 30
+            spacing: 30
+            MDTextField:
+                size_hint: 0.8, None
+                multiline: False
+                pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+                id: text_input
+            MDRaisedButton:
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+                text: "Change"
+                on_release: self.parent.parent.parent.parent.do_edit(text_input.text)
 
 <UserProfileView>:
     id: user_profile_view
     orientation: 'vertical'
     padding: 30
     spacing: 30
-    AsyncImage:
-        id: user_avatar_image
-        source: user_profile_view.user_viewing.get_avatar()
-        size_hint: 1, 0.4
-        pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+    BoxLayout:
+        id: dummy
+        RelativeLayout:
+            id: user_avatar_box
+            AsyncImage:
+                id: user_avatar_image
+                source: user_profile_view.user_viewing.get_avatar()
+                size_hint: 1, 0.4
+                pos_hint: {'center_x': 0.5, 'center_y': 0.7}
 
     BoxLayout:
         size_hint: 1, 0.4
