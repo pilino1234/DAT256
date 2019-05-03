@@ -1,41 +1,47 @@
+<EditButton@MDFloatingActionButton>:
+    id: 'edit_button'
+    icon: 'border-color'
+    size_hint: self.size_hint
+    pos_hint: {'center_x': 0.9, 'center_y': 0.5}
+    opposite_colors: False
+    on_release: self.parent.parent.parent.edit_button_callback(self.field_editing)
+
 <UserProfileView>:
     id: user_profile_view
+    orientation: 'vertical'
+    padding: 30
+    spacing: 30
+    AsyncImage:
+        id: user_avatar_image
+        source: user_profile_view.user_viewing.get_avatar()
+        size_hint: 1, 0.4
+        pos_hint: {'center_x': 0.5, 'center_y': 0.7}
 
-    RelativeLayout:
-        id: user_view
+    BoxLayout:
+        size_hint: 1, 0.4
+        pos_hint: {'center_x': 0.5, 'center_y': 0.25}
         orientation: 'vertical'
         padding: 30
         spacing: 30
-        AsyncImage:
-            source: user_profile_view.user_me.get_avatar()
-            size_hint: 1, 0.4
-            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
-
-        BoxLayout:
-            size_hint: 1, 0.4
-            pos_hint: {'center_x': 0.5, 'center_y': 0.25}
-            orientation: 'vertical'
-            padding: 30
-            spacing: 30
+        RelativeLayout:
+            id: user_name_box
             MDLabel:
-                id: name_label
-                text: user_profile_view.user_me.get_name()
+                id: user_name_label
+                text: user_profile_view.user_viewing.get_name()
                 font_style: "Display3"
                 halign: 'center'
+        RelativeLayout:
+            id: user_phone_box
             MDLabel:
-                id: phone_label
-                text: user_profile_view.user_me.get_phone()
+                id: user_phone_label
+                text: user_profile_view.user_viewing.get_phone()
                 font_style: "Display1"
                 halign: 'center'
+        RelativeLayout:
+            id: user_email_box
             MDLabel:
-                id: email_label
-                text: user_profile_view.user_me.get_email()
+                id: user_email_label
+                text: user_profile_view.user_viewing.get_email()
                 font_style: "Display1"
                 halign: 'center'
 
-        MDFloatingActionButton:
-            id: 'edit_button'
-            icon: 'border-color'
-            size_hint: None,None
-            pos_hint: {'center_x': 0.9, 'center_y': 0.1}
-            opposite_colors: False

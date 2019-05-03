@@ -12,6 +12,9 @@ class User:
         self.phone = phone
         self.avatar = avatar
 
+    def equals(self, user):
+        return self.email == user.email
+
     def get_name(self):
         return self.name
 
