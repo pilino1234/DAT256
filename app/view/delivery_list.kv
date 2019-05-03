@@ -1,3 +1,5 @@
+#:import MDUpdateSpinner kivymd.updatespinner.MDUpdateSpinner
+
 <DeliveryList>:
     MDTabbedPanel:
         MDTab:
@@ -16,6 +18,10 @@
                         orientation: 'vertical'
                         padding: 30
                         spacing: 30
+
+            FloatLayout:
+                MDUpdateSpinner:
+                    event_update: lambda x: root._update_content(self)
 
         MDTab:
             name: 'map'
