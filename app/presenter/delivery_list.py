@@ -7,7 +7,7 @@ from kivy.metrics import dp
 from kivy.clock import Clock
 from model.delivery_request import DeliveryRequest
 
-from model.firebase.firestore import *
+from model.firebase.firestore import Firestore
 
 Builder.load_file("view/delivery_list.kv")
 
@@ -22,29 +22,36 @@ class DeliveryList(BoxLayout):
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
-        Clock.schedule_once(self._init_content)
+        Clock.schedule_once(self._fill_content)
 
-    def _init_content(self, delta_time):
-        """Fill delivery list"""
-        Firestore.subscribe("packages", self._update_content)
-
-    def _update_content(self, collection_snapshot, collection_change_snapshot,
-                        timestamp):
-        self.ids.available_requests.clear_widgets()
-
-        for doc in collection_snapshot:
-            doc_dict = doc.to_dict()
+    def _fill_content(self, delta_time):
+        docs = Firestore.batch("packages").collection.get()
+        for doc in docs:
+            data = doc.to_dict()
 
             self.ids.available_requests.add_widget(
                 ListItem(
                     DeliveryRequest(
-                        doc_dict.get('origin'),
-                        doc_dict.get('destination'),
-                        doc_dict.get('reward'),
-                        doc_dict.get('weight'),
-                        doc_dict.get('fragile'),
-                        doc_dict.get('status'),
+                        item=data.get('item'),
+                        description=data.get('description'),
+                        origin=data.get('origin'),
+                        destination=data.get('destination'),
+                        reward=data.get('reward'),
+                        weight=data.get('weight'),
+                        fragile=data.get('fragile'),
+                        status=data.get('status'),
+                        money_lock=data.get('money_lock'),
                     )))
+
+    def _update_content(self, spinner):
+        self.tick = 0
+
+        def close_spinner(interval):
+            spinner.update = True
+
+        Clock.schedule_once(close_spinner, 2)
+        self.ids.available_requests.clear_widgets()
+        self._fill_content(0)
 
 
 class WhiteCardButton(MDRaisedButton):
@@ -60,6 +67,7 @@ class ListItem(WhiteCardButton):
         """Initializes the delivery list"""
         super(ListItem, self).__init__(**kwargs)
 
+        self.ids.item.text = delivery_request.item
         self.ids.origin.text = delivery_request.origin
         self.ids.destination.text = delivery_request.destination
         self.ids.distance.text = delivery_request.get_distance_pretty()
