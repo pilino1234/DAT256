@@ -32,46 +32,47 @@
                 text: "Change"
                 on_release: self.parent.parent.parent.parent.do_edit(text_input.text)
 
+<MenuField>:
+    on_release: self.parent.parent.parent.request_edit(self.ids.field_title.text)
+    size_hint: (1, None)
+    height: 100
+
+    RelativeLayout:
+        id: edit_button_container
+        size: 40, 40
+        HollowIcon:
+            pos: self.parent.width-self.width, self.parent.height/3
+            icon: 'chevron-right'
+
+    RelativeLayout:
+        MDLabel:
+            id: field_title
+            pos: 20, self.parent.height/5
+            font_style: 'Title'
+            theme_text_color: 'Primary'
+            text: "Namn"
+
+        MDLabel:
+            id: field_data
+            pos: 20, -self.parent.height/5
+            font_style: 'Subhead'
+            theme_text_color: 'Primary'
+            text: "Förnamn Efternamn"
+
+<RoundImage>:
+    size: 100, 100
+
 <UserProfileView>:
     id: user_profile_view
-    orientation: 'vertical'
     padding: 30
     spacing: 30
-    BoxLayout:
-        id: dummy
-        RelativeLayout:
-            id: user_avatar_box
-            AsyncImage:
-                id: user_avatar_image
-                source: user_profile_view.user_viewing.get_avatar()
-                size_hint: 1, 0.4
-                pos_hint: {'center_x': 0.5, 'center_y': 0.7}
-
-    BoxLayout:
-        size_hint: 1, 0.4
-        pos_hint: {'center_x': 0.5, 'center_y': 0.25}
-        orientation: 'vertical'
-        padding: 30
-        spacing: 30
-        RelativeLayout:
-            id: user_name_box
-            MDLabel:
-                id: user_name_label
-                text: user_profile_view.user_viewing.get_name()
-                font_style: "Display3"
-                halign: 'center'
-        RelativeLayout:
-            id: user_phone_box
-            MDLabel:
-                id: user_phone_label
-                text: user_profile_view.user_viewing.get_phone()
-                font_style: "Display1"
-                halign: 'center'
-        RelativeLayout:
-            id: user_email_box
-            MDLabel:
-                id: user_email_label
-                text: user_profile_view.user_viewing.get_email()
-                font_style: "Display1"
-                halign: 'center'
-
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        BoxLayout:
+            id: scroll_view_container
+            do_scroll_x: False
+            do_scroll_y: True
+            padding: 30
+            spacing: 30
+            orientation: 'vertical'
