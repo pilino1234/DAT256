@@ -1,7 +1,7 @@
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
-from model.delivery_request import DeliveryRequest
+from model.delivery_request import DeliveryRequest, Status
 from presenter.delivery_list import WhiteCardButton
 
 Builder.load_file("view/my_posted_requests.kv")
@@ -14,7 +14,7 @@ _delivery_requests = [
                     reward=20,
                     weight=0,
                     fragile=False,
-                    status=0,
+                    status=Status.AVAILABLE,
                     money_lock=0),
     DeliveryRequest("Package2",
                     "Some description.",
@@ -23,7 +23,7 @@ _delivery_requests = [
                     reward=20,
                     weight=1,
                     fragile=False,
-                    status=1,
+                    status=Status.ACCEPTED,
                     money_lock=0),
     DeliveryRequest("Package3",
                     "Some description.",
@@ -32,7 +32,7 @@ _delivery_requests = [
                     reward=20,
                     weight=2,
                     fragile=True,
-                    status=2,
+                    status=Status.TRAVELLING,
                     money_lock=0),
     DeliveryRequest("Package4",
                     "Some description.",
@@ -41,7 +41,7 @@ _delivery_requests = [
                     reward=20,
                     weight=3,
                     fragile=False,
-                    status=3,
+                    status=Status.DELIVERED,
                     money_lock=0),
     DeliveryRequest("Package5",
                     "Some description.",
@@ -50,7 +50,7 @@ _delivery_requests = [
                     reward=30,
                     weight=1,
                     fragile=False,
-                    status=0,
+                    status=Status.AVAILABLE,
                     money_lock=0),
     DeliveryRequest("Package6",
                     "Some description.",
@@ -59,7 +59,7 @@ _delivery_requests = [
                     reward=40,
                     weight=1,
                     fragile=True,
-                    status=0,
+                    status=Status.AVAILABLE,
                     money_lock=0),
     DeliveryRequest("Package7",
                     "Some description.",
@@ -68,7 +68,7 @@ _delivery_requests = [
                     reward=50,
                     weight=1,
                     fragile=True,
-                    status=0,
+                    status=Status.AVAILABLE,
                     money_lock=0),
     DeliveryRequest("Package8",
                     "Some description.",
@@ -77,7 +77,7 @@ _delivery_requests = [
                     reward=60,
                     weight=1,
                     fragile=False,
-                    status=0,
+                    status=Status.AVAILABLE,
                     money_lock=0),
 ]
 
