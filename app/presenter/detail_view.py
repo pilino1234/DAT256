@@ -1,7 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 
-from model.delivery_request import DeliveryRequest
+from model.delivery_request import DeliveryRequest, Status
 
 Builder.load_file("view/detail_view.kv")
 
@@ -13,7 +13,7 @@ dummyRequest = DeliveryRequest(
     reward=20,
     weight=0,
     fragile=False,
-    status=0,
+    status=Status.AVAILABLE,
     money_lock=0)
 
 
