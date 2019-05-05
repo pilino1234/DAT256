@@ -49,10 +49,12 @@ class DeliveryRequest:
                                             weight=self.weight, fragile=self.fragile,
                                             status=self.status, description=self.description)
 
-    def get_distance_pretty(self) -> str:
+    @property
+    def distance_pretty(self) -> str:
         """Computes distance between origin and destination in kilometers"""
         return "7 km"
 
-    def get_reward_pretty(self) -> str:
+    @property
+    def reward_pretty(self) -> str:
         """Pretty formats reward in local currency."""
         return str(self.reward) + " kr"
