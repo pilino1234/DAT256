@@ -108,5 +108,5 @@ class MyPostedRequest(WhiteCardButton):
         super(MyPostedRequest, self).__init__(**kwargs)
         self.ids.origin.text = delivery_request.origin
         self.ids.destination.text = delivery_request.destination
-        self.ids.reward.text = delivery_request.get_reward_pretty()
+        self.ids.reward.text = delivery_request.reward_pretty
         self.ids.status.text = "Status: " + delivery_request.status_text
