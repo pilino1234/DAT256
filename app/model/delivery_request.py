@@ -39,8 +39,18 @@ class DeliveryRequest:
         self.weight_icon = self._weight_props[weight].icon
         self.status_text = self.status.name.title()
 
+    def __str__(self):
+        """Format a delivery request for printing"""
+        return "Delivery request {name}, from: {from_} -> to: {to}, " \
+               "reward: {reward}, money_lock: {money_lock}, " \
+               "weight: {weight}, fragile: {fragile}, status: {status}, " \
+               "desc: {description}".format(name=self.item, from_=self.origin, to=self.destination,
+                                            reward=self.reward, money_lock=self.money_lock,
+                                            weight=self.weight, fragile=self.fragile,
+                                            status=self.status, description=self.description)
+
     def get_distance_pretty(self) -> str:
-        """Computes distance between origin and destination in kilo meters"""
+        """Computes distance between origin and destination in kilometers"""
         return "7 km"
 
     def get_reward_pretty(self) -> str:
