@@ -4,7 +4,7 @@ from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.theming import ThemeManager
 
-from presenter.delivery_request import DeliveryRequest
+from presenter.delivery_request_form import DeliveryRequestForm
 from presenter.navbar import NavBarWithFAB
 from presenter.sliding_popup import SlidingPopup
 
@@ -26,7 +26,7 @@ class Carrepsa(App):
         """
         root = FloatLayout()
         sp = SlidingPopup()
-        sp.card.add_widget(DeliveryRequest())
+        sp.card.add_widget(DeliveryRequestForm())
         root.add_widget(NavBarWithFAB(fab_callback=lambda: sp.show()))
         root.add_widget(sp)
 
