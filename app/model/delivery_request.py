@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 
-class DeliveryRequest():
+class DeliveryRequest:
     """Represents a request for a delivery of items from point A to B."""
 
     _weight_prop = namedtuple('_weight_prop', ['icon', 'text'])
