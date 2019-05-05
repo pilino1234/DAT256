@@ -7,12 +7,12 @@ from kivy.clock import Clock
 from kivy.metrics import dp
 from kivy.properties import NumericProperty
 
-from kivy.geometry import Circumcircle
 
 from kivymd.cards import MDCard
 from kivymd.textfields import MDTextField
 from kivymd.button import MDFloatingActionButton, MDRaisedButton
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import AsyncImage
 
 
@@ -28,53 +28,65 @@ class WhiteCardButton(MDRaisedButton):
 class MenuField(WhiteCardButton):
     """Widget that represents the content of a menu field."""
 
-    def __init__(self, title, data, **kwargs):
+    editable = False  # Whether this field is editable
+
+    def __init__(self, title, data, editable, **kwargs):
         """Initializes the delivery list"""
         super(WhiteCardButton, self).__init__(**kwargs)
         self.ids.field_title.text = title
         self.ids.field_data.text = data
+        self.editable = editable
+        if not editable:
+            self.remove_widget(self.ids.edit_button_container)
 
     def set(self, title, data):
         self.ids.field_title.text = title
         self.ids.field_data.text = data
 
 
-class EditButton(MDFloatingActionButton):
-
-    def __init__(self, field_editing, **kwargs):
-        super(MDFloatingActionButton, self).__init__(**kwargs)
-        self.field_editing = field_editing
-
-
 class AnswerInput(BoxLayout):
+    """A widget that asks the user for input"""
     pass
 
 
-class RoundImage(AsyncImage):
+class AvatarEditPrompt(BoxLayout):
+    """A widget that displays different ways of changing your avatar"""
+    pass
 
-    def __init__(self, image_source, **kwargs):
-        super(AsyncImage, self).__init__(**kwargs)
-        self.source = image_source
+
+class AccountButtons(RelativeLayout):
+    """A widget that displays the deposit and withdraw buttons"""
+    pass
+
+
+class RoundImage(FloatLayout):
+    """A cropped round image"""
+    pass
 
 
 class UserProfileView(RelativeLayout):
-
+    """The main view for viewing and editing the user profile."""
     field_editing = ""  # Keep track of which field is being edited (if any)
     widget_input = ""  # Keep track of widget for getting input in order to be able to delete it.
+    avatar_edit_widget = ""
 
     user_me = User(
-        "Name Surname",
-        "asdf@example.com",
+        "Jiggly Puff",
+        "jiggly@puff.com",
         "0706123123",
-        "https://vignette.wikia.nocookie.net/jamesbond/images/8/81/James_Bond_%28Daniel_Craig%29_-_Profile.jpg/revision/latest?cb=20150405210952"
+        "something image related here, not used atm",
+        1498,
+        4.3
     )
 
     '''
     user_viewing = User(
-        "Name Surname2",
-        "asdf@example.com",
+        "Jiggly Puff",
+        "totally_definitely_absolutely_jigglypuff@gmail.com",
         "0706123123",
-        "https://vignette.wikia.nocookie.net/jamesbond/images/8/81/James_Bond_%28Daniel_Craig%29_-_Profile.jpg/revision/latest?cb=20150405210952"
+        "something image related here, not used atm",
+        1498,
+        4.3
     )
     '''
     user_viewing = user_me
@@ -84,30 +96,39 @@ class UserProfileView(RelativeLayout):
         Clock.schedule_once(self._init_content)
 
     def _init_content(self, wtf):  # If viewing my own profile, add edit buttons
-        if self.user_viewing.equals(self.user_me):
-            #self.avatar_image = AsyncImage()
-            #self.ids.scroll_view_container.add_widget(self.avatar_image)
-            self.name_field = MenuField("Name", self.user_viewing.get_name())
-            self.ids.scroll_view_container.add_widget(self.name_field)
-            self.phone_field = MenuField("Phone", self.user_viewing.get_phone())
-            self.ids.scroll_view_container.add_widget(self.phone_field)
-            self.email_field = MenuField("E-mail", self.user_viewing.get_email())
-            self.ids.scroll_view_container.add_widget(self.email_field)
-            '''self.ids.user_name_box.add_widget(EditButton("name"))
-            self.ids.user_phone_box.add_widget(EditButton("phone"))
-            self.ids.user_email_box.add_widget(EditButton("email"))
-            self.ids.user_avatar_box.add_widget(EditButton("avatar"))'''
+        self.name_field = MenuField("Name", self.user_viewing.get_name(), self.user_viewing.equals(self.user_me) and True)
+        self.ids.scroll_view_container.add_widget(self.name_field)
+        self.phone_field = MenuField("Phone", self.user_viewing.get_phone(), self.user_viewing.equals(self.user_me) and True)
+        self.ids.scroll_view_container.add_widget(self.phone_field)
+        self.email_field = MenuField("E-mail", self.user_viewing.get_email(), self.user_viewing.equals(self.user_me) and True)
+        self.ids.scroll_view_container.add_widget(self.email_field)
 
-    def request_edit(self, field):  # Called when any of the edit buttons are released
-        self.field_editing = field  # Which edit button was pressed. name, email or phone.
-        self.widget_input = AnswerInput()
-        self.add_widget(self.widget_input)
+        if self.user_viewing.equals(self.user_me):
+            self.account_balance_field = MenuField(
+                "Account Balance",
+                str(self.user_viewing.get_account_balance()) + " SEK",
+                self.user_viewing.equals(self.user_me) and False
+            )
+            self.ids.scroll_view_container.add_widget(self.account_balance_field)
+            self.account_balance_field.add_widget(AccountButtons())
+
+        self.rating_field = MenuField(
+            "Rating", str(self.user_viewing.get_rating()) + "/5",
+            self.user_viewing.equals(self.user_me) and False
+        )
+        self.ids.scroll_view_container.add_widget(self.rating_field)
 
     def update_fields(self):
         self.name_field.ids.field_data.text = self.user_viewing.get_name()
         self.phone_field.ids.field_data.text = self.user_viewing.get_phone()
         self.email_field.ids.field_data.text = self.user_viewing.get_email()
-        #self.name_field.text = self.user_viewing.get_avatar()
+        self.account_balance_field.ids.field_data.text = str(self.user_viewing.get_account_balance())
+        self.rating_field.ids.field_data.text = str(self.user_viewing.get_rating()) + "/5"
+
+    def request_edit(self, field):  # Called when any of the edit buttons are released
+        self.field_editing = field  # Which edit button was pressed. name, email or phone.
+        self.widget_input = AnswerInput()
+        self.add_widget(self.widget_input)
 
     def do_edit(self, text):  # Called when the edit button in the edit widget is released.
 
@@ -122,6 +143,17 @@ class UserProfileView(RelativeLayout):
             self.user_me.set_email(text)
         if self.field_editing == "avatar":
             self.user_me.set_avatar(text)
+        if self.field_editing == "deposit":
+            self.user_me.set_account_balance(self.user_me.get_account_balance()+int(text))
+        if self.field_editing == "withdraw" and int(text) <= self.user_me.get_account_balance():
+            self.user_me.set_account_balance(self.user_me.get_account_balance()-int(text))
 
         self.update_fields()
         self.remove_widget(self.widget_input)  # Remove the edit widget
+
+    def request_avatar_edit(self):  # Called when any of the edit buttons are released
+        self.avatar_edit_widget = AvatarEditPrompt()
+        self.add_widget(self.avatar_edit_widget)
+
+    def do_avatar_edit(self, type):
+        self.remove_widget(self.avatar_edit_widget)

@@ -41,7 +41,6 @@ class DeliveryList(BoxLayout):
 
 class WhiteCardButton(MDRaisedButton):
     """Widget that alters MDRaisedButton to a blank card-looking button with a drop shadow."""
-
     _radius = NumericProperty(dp(14))
 
 
