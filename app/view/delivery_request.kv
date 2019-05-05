@@ -10,7 +10,8 @@
 
 
 
-<DeliveryRequest>:
+
+<DeliveryRequestForm>:
     orientation: "vertical"
     padding: (0, 0, 0, 20)
 
@@ -30,6 +31,10 @@
         BoxLayout:
             padding: (20, 0)
             MDTextField:
+                id: package_name
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
         Widget:
             size_hint_x: None
             width: 60
@@ -45,6 +50,10 @@
         BoxLayout:
             padding: (20, 0)
             MDTextField:
+                id: from_text
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
         HollowIcon:
             icon: 'map-marker'
             theme_text_color: 'Custom'
@@ -61,6 +70,10 @@
         BoxLayout:
             padding: (20, 0)
             MDTextField:
+                id: dest_text
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
         HollowIcon:
             icon: 'map-marker'
             theme_text_color: 'Custom'
@@ -81,30 +94,30 @@
             spacing: 10
 
             MDIconButton:
+                id: weight_walk_button
                 icon: 'walk'
                 theme_text_color: 'Custom'
                 text_color: 128/255, 128/255, 128/255, 1
 
             MDIconButton:
+                id: weight_bike_button
                 icon: 'motorbike'
                 theme_text_color: 'Custom'
                 text_color: 128/255, 128/255, 128/255, 1
 
             MDIconButton:
-                canvas.before:
-                    Color:
-                        rgba: 50/255, 205/255, 50/255, 1
-                    Line:
-                        width: 0.5
-                        rectangle: self.x, self.y, self.width, 0
+                id: weight_car_button
                 icon: 'car'
                 theme_text_color: 'Custom'
-                text_color: 50/255, 205/255, 50/255, 1
+                text_color: 128/255, 128/255, 128/255, 1
+
 
             MDIconButton:
+                id: weight_truck_button
                 icon: 'truck'
                 theme_text_color: 'Custom'
                 text_color: 128/255, 128/255, 128/255, 1
+
 
         HollowIcon:
             icon: 'dumbbell'
@@ -122,13 +135,16 @@
         BoxLayout:
             padding: (20, 0)
             MDTextField:
+                id: payment_amount
+                required: True
+                helper_text_mode: 'on_error'
+                input_filter: 'float'
         MDIconButton:
             theme_text_color: 'Custom'
             text_color: 255/255, 255/255, 255/255, 1
             Label:
                 text: 'SEK'
                 color: (0,0,0,1)
-
 
         RelativeLayout:
             size_hint: (None, None)
@@ -141,6 +157,8 @@
         BoxLayout:
             padding: (20, 0)
             MDTextField:
+                id: money_lock_amount
+                input_filter: 'float'
         MDIconButton:
             theme_text_color: 'Custom'
             text_color: 255/255, 255/255, 255/255, 1
@@ -162,6 +180,7 @@
             padding: (30, 0)
 
             MDSwitch:
+                id: fragile_bool
                 size_hint: (None, None)
                 width: 40
                 height: 60
@@ -177,6 +196,9 @@
             padding: (15, 0, 0, 15)
 
             MDTextField:
+                id: description_text
+                required: True
+                helper_text_mode: 'on_error'
                 hint_text: 'Package Description'
                 max_text_length: 300
                 icon: 'lock-outline'
@@ -192,5 +214,6 @@
             md_bg_color: 255/255, 255/255, 255/255, 1
 
     MDFillRoundFlatButton:
+        id: request_button
         text: "Request Delivery"
         pos_hint: {'center_x': 0.5, 'center_y': .15}
