@@ -6,8 +6,9 @@ from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
 from kivy.metrics import dp
 from kivy.clock import Clock
-from model.delivery_request import DeliveryRequest
 from kivy.animation import Animation
+
+from model.delivery_request import DeliveryRequest, Status
 
 from model.firebase.firestore import Firestore
 
@@ -41,7 +42,7 @@ class DeliveryList(BoxLayout):
                         reward=data.get('reward'),
                         weight=data.get('weight'),
                         fragile=data.get('fragile'),
-                        status=data.get('status'),
+                        status=Status(data.get('status')),
                         money_lock=data.get('money_lock'),
                     )))
 
