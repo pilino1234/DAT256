@@ -8,6 +8,7 @@
 
             BoxLayout:
                 ScrollView:
+                    id: scroll_view
                     do_scroll_x: False
                     do_scroll_y: True
 
@@ -21,6 +22,7 @@
 
             FloatLayout:
                 UpdateSpinner:
+                    scroll: scroll_view
                     event_update: lambda x: root._update_content(self)
 
 
