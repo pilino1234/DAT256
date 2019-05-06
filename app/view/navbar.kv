@@ -4,6 +4,8 @@
 #:import MyPostedRequests presenter.my_posted_requests
 #:import BlankNavItem presenter.navbar
 #:import DetailView presenter.detail_view
+#:import UserProfileView presenter.user_profile_view
+
 
 <NavBarWithFAB>:
     fab_diameter: 64
@@ -39,7 +41,7 @@
                 text: 'My Account'
                 icon: 'account-circle'
 
-                CalculatorWidget:
+                UserProfileView:
 
         MDFloatingActionButton:
             id: fab
