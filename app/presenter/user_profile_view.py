@@ -103,6 +103,8 @@ class UserProfileView(RelativeLayout):
         self.email_field = MenuField("E-mail", self.user_viewing.get_email(), self.user_viewing.equals(self.user_me) and True)
         self.ids.scroll_view_container.add_widget(self.email_field)
 
+        self.widget_input = AnswerInput()
+
         if self.user_viewing.equals(self.user_me):
             self.account_balance_field = MenuField(
                 "Account Balance",
@@ -122,12 +124,28 @@ class UserProfileView(RelativeLayout):
         self.name_field.ids.field_data.text = self.user_viewing.get_name()
         self.phone_field.ids.field_data.text = self.user_viewing.get_phone()
         self.email_field.ids.field_data.text = self.user_viewing.get_email()
-        self.account_balance_field.ids.field_data.text = str(self.user_viewing.get_account_balance())
+        self.account_balance_field.ids.field_data.text = str(self.user_viewing.get_account_balance()) + " SEK"
         self.rating_field.ids.field_data.text = str(self.user_viewing.get_rating()) + "/5"
 
     def request_edit(self, field):  # Called when any of the edit buttons are released
         self.field_editing = field  # Which edit button was pressed. name, email or phone.
-        self.widget_input = AnswerInput()
+        if field=="Name":
+            self.widget_input.ids.title.text = field
+            self.widget_input.ids.text_input.text = self.user_viewing.get_name()
+        if field=="E-mail":
+            self.widget_input.ids.title.text = field
+            self.widget_input.ids.text_input.text = self.user_viewing.get_email()
+        if field=="Phone":
+            self.widget_input.ids.title.text = field
+            self.widget_input.ids.text_input.text = self.user_viewing.get_phone()
+        if field=="deposit":
+            self.widget_input.ids.title.text = "Deposit Money"
+            self.widget_input.ids.text_input.text = "0"
+        if field=="withdraw":
+            self.widget_input.ids.title.text = "Withdraw Money"
+            self.widget_input.ids.text_input.text = "0"
+
+
         self.add_widget(self.widget_input)
 
     def do_edit(self, text):  # Called when the edit button in the edit widget is released.
