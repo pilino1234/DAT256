@@ -66,7 +66,7 @@ class WhiteCardButton(MDRaisedButton):
 class ListItem(WhiteCardButton):
     """Widget that represents all the content of a list item."""
 
-    def __init__(self, delivery_request, **kwargs):
+    def __init__(self, delivery_request: DeliveryRequest, **kwargs):
         """Initializes the delivery list"""
         super(ListItem, self).__init__(**kwargs)
 
@@ -75,7 +75,7 @@ class ListItem(WhiteCardButton):
         self.ids.destination.text = delivery_request.destination
         self.ids.distance.text = delivery_request.distance_pretty
         self.ids.reward.text = delivery_request.reward
-        self.ids.weight.text = delivery_request.weight
+        self.ids.weight.text = delivery_request.weight_text
         self.ids.weight_icon.icon = delivery_request.weight_icon
 
 
