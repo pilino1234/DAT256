@@ -3,9 +3,11 @@ from kivy.properties import NumericProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
+from kivymd.updatespinner import MDUpdateSpinner
 from kivy.metrics import dp
 from kivy.clock import Clock
 from model.delivery_request import DeliveryRequest
+from kivy.animation import Animation
 
 from model.firebase.firestore import Firestore
 
@@ -112,3 +114,31 @@ class IconWithText(OneLineIconListItem):
 
     def on_touch_up(self, *args):  # noqa: D102
         pass
+
+
+class UpdateSpinner(MDUpdateSpinner):
+    """MDUpdateSpinner, but only shows up when pulling downwards."""
+
+    def on_touch_move(self, touch):
+        """Modifies the base method so that the user must pull downards."""
+        dy = touch.push_attrs_stack[0][1][4]
+        if touch.grab_current is self and not self._spinner_work and dy < 0.0:
+            self._step += 18
+            if self._step > dp(210):
+                self._spinner_work = True
+                self.start_anim_spinner()
+                return
+            self.ids.body_spinner.y -= 18
+
+    def start_anim_spinner(self):
+        """Modifies the base method so that the spinner stays a bit lower when updating."""
+
+        def wait_updates(interval):
+            if self.update:
+                self.transform_hide_anim_spinner()
+                Clock.unschedule(wait_updates)
+
+        spinner = self.ids.body_spinner
+        Animation(y=spinner.y + 35, d=.8, t='out_elastic').start(spinner)
+        Clock.schedule_interval(wait_updates, .1)
+        self.event_update(self)
