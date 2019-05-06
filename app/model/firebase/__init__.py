@@ -2,8 +2,6 @@ from google.cloud import firestore, storage  # type: ignore
 
 import random
 
-import six
-
 import string
 
 _AUTO_ID_CHARS = string.ascii_letters + string.digits
@@ -40,5 +38,4 @@ class Firebase:
             lowercase and letters.
 
         """
-        return "".join(
-            random.choice(_AUTO_ID_CHARS) for _ in six.moves.xrange(20))
+        return "".join(random.choice(_AUTO_ID_CHARS) for _ in range(20))
