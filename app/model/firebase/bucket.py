@@ -1,5 +1,6 @@
 from model.firebase import Firebase
 
+from typing import Optional
 
 class Bucket:
     """Carrepsa Cloud Storage Bucket interface"""
@@ -11,11 +12,11 @@ class Bucket:
         blob.delete()
 
     @staticmethod
-    def download(path: str) -> str:
+    def download(path: str) -> Optional[str]:
         """Downloads file from Firebase Storage"""
         blob = Firebase.bucket.get_blob(path)
         if blob is None:
-            return ""
+            return None
         return blob.download_as_string()
 
     @staticmethod
