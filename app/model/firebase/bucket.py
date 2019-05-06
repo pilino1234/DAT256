@@ -2,9 +2,7 @@ import random
 import string
 
 from model.firebase import Firebase
-
 from typing import Optional
-
 
 _AUTO_ID_CHARS = string.ascii_letters + string.digits
 

@@ -1,6 +1,7 @@
 from google.cloud import firestore, storage  # type: ignore
 
 import os
+from google.cloud.storage import Bucket
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
 
