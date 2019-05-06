@@ -132,13 +132,13 @@ class UpdateSpinner(MDUpdateSpinner):
 
     def start_anim_spinner(self):
         """Modifies the base method so that the spinner stays a bit lower when updating."""
+        spinner = self.ids.body_spinner
+        Animation(y=spinner.y + 35, d=.8, t='out_elastic').start(spinner)
 
         def wait_updates(interval):
             if self.update:
                 self.transform_hide_anim_spinner()
                 Clock.unschedule(wait_updates)
 
-        spinner = self.ids.body_spinner
-        Animation(y=spinner.y + 35, d=.8, t='out_elastic').start(spinner)
         Clock.schedule_interval(wait_updates, .1)
         self.event_update(self)
