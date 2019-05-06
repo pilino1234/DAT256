@@ -15,7 +15,7 @@ class Bucket:
         """Downloads file from Firebase Storage"""
         blob = Firebase.bucket.get_blob(path)
         if blob is None:
-            return None
+            return ""
         return blob.download_as_string()
 
     @staticmethod
