@@ -4,7 +4,9 @@ import random
 
 import six
 
-_AUTO_ID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+import string
+
+_AUTO_ID_CHARS = string.ascii_letters + string.digits
 
 import os
 
