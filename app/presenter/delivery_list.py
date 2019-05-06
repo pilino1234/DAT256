@@ -7,6 +7,7 @@ from kivymd.updatespinner import MDUpdateSpinner
 from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.animation import Animation
+from kivy.properties import ObjectProperty
 
 from model.delivery_request import DeliveryRequest, Status
 
@@ -120,8 +121,13 @@ class IconWithText(OneLineIconListItem):
 class UpdateSpinner(MDUpdateSpinner):
     """MDUpdateSpinner, but only shows up when pulling downwards."""
 
+    scroll = ObjectProperty()
+
     def on_touch_move(self, touch):
         """Modifies the base method so that the user must pull downards."""
+        if self.scroll.scroll_y < 1:
+            return
+
         dy = touch.push_attrs_stack[0][1][4]
         if touch.grab_current is self and not self._spinner_work and dy < 0.0:
             self._step += 18
