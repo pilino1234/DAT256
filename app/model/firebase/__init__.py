@@ -4,6 +4,8 @@ import random
 
 import string
 
+from model.firebase.bucket import Bucket
+
 _AUTO_ID_CHARS = string.ascii_letters + string.digits
 
 import os
@@ -23,7 +25,7 @@ class Firebase:
         return Firebase.db
 
     @staticmethod
-    def get_bucket():
+    def get_bucket() -> Bucket:
         """Fetch the common firebase storage bucket instance"""
         return Firebase.bucket
 
