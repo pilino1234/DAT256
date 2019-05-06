@@ -6,6 +6,8 @@ import os
 
 _AUTO_ID_CHARS = string.ascii_letters + string.digits
 
+from google.cloud.firestore_v1 import Client
+
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
 
 
@@ -16,7 +18,7 @@ class Firebase:
     bucket = storage.Client().get_bucket("carrepsa.appspot.com")
 
     @staticmethod
-    def get_db():
+    def get_db() -> Client:
         """Fetch the common firebase db instance."""
         return Firebase.db
 

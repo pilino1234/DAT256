@@ -1,3 +1,9 @@
+from typing import Callable, Dict
+
+from google.cloud.firestore_v1.batch import WriteBatch
+from google.cloud.firestore_v1.collection import CollectionReference
+from google.cloud.firestore_v1.document import DocumentReference
+
 from model.firebase import Firebase
 
 
@@ -7,60 +13,84 @@ class Firestore:
     refs = dict
 
     @staticmethod
-    def subscribe(path, callback):
-        """Subscribes to a collection, executing callback whenever the collection update."""
+    def subscribe(path: str, callback: Callable):
+        """Subscribes to a collection, executing callback whenever the collection is updated."""
         Firestore.refs[path] = Firebase.get_db().collection(path)
         Firestore.refs[path].on_snapshot(callback)
 
     @staticmethod
-    def unsubscribe(path):
-        """Unsubscribes a collection."""
-        Firestore.refs[path].unsubscribe()
+    def unsubscribe(path: str):
+        """Unsubscribe from a collection."""
+        if path in Firestore.refs:
+            Firestore.refs[path].unsubscribe()
 
     @staticmethod
-    def batch(path):
+    def batch(path: str):
         """
-        Creates a FirestoreBatch
+        Create a batch read/write object.
 
-        Creates a batch read/write object to allow
-        modifications of multiple documents in a single commit.
+        This allows modifications of multiple documents in a single commit.
         """
-        return FirestoreBatch(Firebase.get_db().batch(),
-                              Firebase.get_db().collection(path))
+        return _FirestoreBatch(Firebase.get_db().batch(),
+                               Firebase.get_db().collection(path))
+
+    @staticmethod
+    def get(path: str) -> CollectionReference:
+        """
+        Fetch all items in a path from the Firestore database
+
+        :param path: The Firestore path of the collection to get
+        :type path: str
+        :return: An iterable containing the documents in the path.
+        """
+        return Firebase.get_db().collection(path).get()
 
 
-class FirestoreBatch:
-    """
-    Firestore batch model.
+    class _FirestoreBatch:
+        """
+        Firestore batch model.
 
-    For more details, see:
-    https://googleapis.github.io/google-cloud-python/latest/firestore/batch.html
-    """
+        For more details, see:
+        https://googleapis.github.io/google-cloud-python/latest/firestore/batch.html
+        """
 
-    batch_ref = None
-    collection = None
+        _batch_ref: WriteBatch = None
+        _collection: CollectionReference = None
 
-    def __init__(self, batch_ref, collection):
-        """Initializes the batch reference and collection."""
-        self.batch_ref = batch_ref
-        self.collection = collection
+        def __init__(self, batch_ref: WriteBatch, collection: CollectionReference):
+            """Initializes the batch reference and collection."""
+            self._batch_ref = batch_ref
+            self._collection = collection
 
-    def create(self, document, dict):
-        """Create a document."""
-        self.batch_ref.create(self.collection.document(document), dict)
+        def __enter__(self):
+            return self
 
-    def set(self, document, dict, merge=False):
-        """Replace document."""
-        self.batch_ref.set(self.collection.document(document), dict, merge)
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            if exc_type is None:
+                self.commit()
 
-    def update(self, document, updated_dict):
-        """Update document."""
-        self.batch_ref.update(self.collection.document(document), updated_dict)
+        def create(self, document_data: dict):
+            """
+            Create a document.
 
-    def delete(self, document):
-        """Delete document."""
-        self.batch_ref.delete(self.collection.document(document))
+            This method generates a random, unique UID for the document.
+            """
+            self._batch_ref.create(self._collection.document(), document_data)
 
-    def commit(self):
-        """Commit changes."""
-        self.batch_ref.commit()
+        def set(self, document: DocumentReference, document_data: dict):
+            """Replace document with new document data."""
+            self._batch_ref.set(self._collection.document(document), document_data,
+                                False)
+
+        def update(self, document: DocumentReference, field_updates: dict):
+            """Update existing document with new data."""
+            self._batch_ref.update(self._collection.document(document),
+                                   field_updates)
+
+        def delete(self, document: DocumentReference):
+            """Delete document."""
+            self._batch_ref.delete(self._collection.document(document))
+
+        def commit(self):
+            """Commit changes."""
+            self._batch_ref.commit()
