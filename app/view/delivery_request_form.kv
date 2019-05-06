@@ -15,208 +15,235 @@
     orientation: "vertical"
     padding: (0, 0, 0, 20)
     spacing: 10
-
     photo_path: None
 
-    GridLayout:
-        cols: 3
-        row_force_default: True
-        row_default_height: 75
-
-        RelativeLayout:
-            size_hint: (None, None)
-            width: 120
-            MDLabel:
-                halign: "right"
-                theme_text_color: 'Primary'
-                text: "Package: "
-                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+    ScrollView:
         BoxLayout:
-            padding: (20, 0)
-            MDTextField:
-                id: package_name
-                required: True
-                helper_text_mode: 'on_error'
-                write_tab: False
-        Widget:
-            size_hint_x: None
-            width: 60
+            size_hint_y:None
+            height:Window.height * 1.5
+            GridLayout:
+                cols: 3
 
-        RelativeLayout:
-            size_hint: (None, None)
-            width: 120
-            MDLabel:
-                halign: "right"
-                theme_text_color: 'Primary'
-                text: "From: "
-                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-        BoxLayout:
-            padding: (20, 0)
-            MDTextField:
-                id: from_text
-                required: True
-                helper_text_mode: 'on_error'
-                write_tab: False
-        HollowIcon:
-            icon: 'map-marker'
-            theme_text_color: 'Custom'
-            text_color: 212/255, 144/255, 0/255, 1
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "Package: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                BoxLayout:
+                    padding: (20, 0)
+                    MDTextField:
+                        id: package_name
+                        required: True
+                        helper_text_mode: 'on_error'
+                        write_tab: False
+                Widget:
+                    size_hint_x: None
+                    width: 60
 
-        RelativeLayout:
-            size_hint: (None, None)
-            width: 120
-            MDLabel:
-                halign: "right"
-                theme_text_color: 'Primary'
-                text: "To: "
-                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-        BoxLayout:
-            padding: (20, 0)
-            MDTextField:
-                id: dest_text
-                required: True
-                helper_text_mode: 'on_error'
-                write_tab: False
-        HollowIcon:
-            icon: 'map-marker'
-            theme_text_color: 'Custom'
-            text_color: 152/255, 224/255, 232/255, 1
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "From: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                BoxLayout:
+                    padding: (20, 0)
+                    MDTextField:
+                        id: from_text
+                        required: True
+                        helper_text_mode: 'on_error'
+                        write_tab: False
+                HollowIcon:
+                    icon: 'map-marker'
+                    theme_text_color: 'Custom'
+                    text_color: 212/255, 144/255, 0/255, 1
 
-        RelativeLayout:
-            size_hint: (None, None)
-            width: 120
-            MDLabel:
-                halign: "right"
-                theme_text_color: 'Primary'
-                text: "Weight: "
-                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "To: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                BoxLayout:
+                    padding: (20, 0)
+                    MDTextField:
+                        id: dest_text
+                        required: True
+                        helper_text_mode: 'on_error'
+                        write_tab: False
+                HollowIcon:
+                    icon: 'map-marker'
+                    theme_text_color: 'Custom'
+                    text_color: 152/255, 224/255, 232/255, 1
 
-        BoxLayout:
-            size_hint_x: 1
-            padding: (30, 0)
-            spacing: 10
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "Weight: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
 
-            MDIconButton:
-                id: weight_walk_button
-                icon: 'walk'
-                theme_text_color: 'Custom'
-                text_color: 128/255, 128/255, 128/255, 1
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: (30, 0)
+                    spacing: 10
 
-            MDIconButton:
-                id: weight_bike_button
-                icon: 'bike'
-                theme_text_color: 'Custom'
-                text_color: 128/255, 128/255, 128/255, 1
+                    MDIconButton:
+                        id: weight_walk_button
+                        icon: 'walk'
+                        theme_text_color: 'Custom'
+                        text_color: 128/255, 128/255, 128/255, 1
 
-            MDIconButton:
-                id: weight_car_button
-                icon: 'car'
-                theme_text_color: 'Custom'
-                text_color: 128/255, 128/255, 128/255, 1
+                    MDIconButton:
+                        id: weight_bike_button
+                        icon: 'motorbike'
+                        theme_text_color: 'Custom'
+                        text_color: 128/255, 128/255, 128/255, 1
 
-
-            MDIconButton:
-                id: weight_truck_button
-                icon: 'truck'
-                theme_text_color: 'Custom'
-                text_color: 128/255, 128/255, 128/255, 1
+                    MDIconButton:
+                        id: weight_car_button
+                        icon: 'car'
+                        theme_text_color: 'Custom'
+                        text_color: 128/255, 128/255, 128/255, 1
 
 
-        HollowIcon:
-            icon: 'dumbbell'
-            theme_text_color: 'Custom'
-            text_color: 0/255, 0/255, 0/255, 1
+                    MDIconButton:
+                        id: weight_truck_button
+                        icon: 'truck'
+                        theme_text_color: 'Custom'
+                        text_color: 128/255, 128/255, 128/255, 1
 
-        RelativeLayout:
-            size_hint: (None, None)
-            width: 120
-            MDLabel:
-                halign: "right"
-                theme_text_color: 'Primary'
-                text: "Payment: "
-                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-        BoxLayout:
-            padding: (20, 0)
-            MDTextField:
-                id: payment_amount
-                required: True
-                helper_text_mode: 'on_error'
-                input_filter: 'float'
-                write_tab: False
-        MDIconButton:
-            theme_text_color: 'Custom'
-            text_color: 255/255, 255/255, 255/255, 1
-            Label:
-                text: 'SEK'
-                color: (0,0,0,1)
 
-        RelativeLayout:
-            size_hint: (None, None)
-            width: 120
-            MDLabel:
-                halign: "right"
-                theme_text_color: 'Primary'
-                text: "Money lock: "
-                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-        BoxLayout:
-            padding: (20, 0)
-            MDTextField:
-                id: money_lock_amount
-                required: True
-                helper_text_mode: 'on_error'
-                input_filter: 'float'
-                write_tab: False
-        MDIconButton:
-            theme_text_color: 'Custom'
-            text_color: 255/255, 255/255, 255/255, 1
-            Label:
-                text: 'SEK'
-                color: (0,0,0,1)
+                HollowIcon:
+                    icon: 'dumbbell'
+                    theme_text_color: 'Custom'
+                    text_color: 0/255, 0/255, 0/255, 1
 
-        RelativeLayout:
-            size_hint: (None, None)
-            width: 120
-            MDLabel:
-                halign: "right"
-                theme_text_color: 'Primary'
-                text: "Fragile? "
-                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "Payment: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                BoxLayout:
+                    padding: (20, 0)
+                    MDTextField:
+                        id: payment_amount
+                        required: True
+                        helper_text_mode: 'on_error'
+                        input_filter: 'float'
+                        write_tab: False
+                MDIconButton:
+                    theme_text_color: 'Custom'
+                    text_color: 255/255, 255/255, 255/255, 1
+                    Label:
+                        text: 'SEK'
+                        color: (0,0,0,1)
 
-        BoxLayout:
-            size_hint_x: 1
-            padding: (30, 0)
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "Money lock: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                BoxLayout:
+                    padding: (20, 0)
+                    MDTextField:
+                        id: money_lock_amount
+                        input_filter: 'float'
+                        required: True
+                        helper_text_mode: 'on_error'
+                        write_tab: False
+                MDIconButton:
+                    theme_text_color: 'Custom'
+                    text_color: 255/255, 255/255, 255/255, 1
+                    Label:
+                        text: 'SEK'
+                        color: (0,0,0,1)
 
-            MDSwitch:
-                id: fragile_bool
-                size_hint: (None, None)
-                width: 40
-                height: 60
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "Fragile? "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
 
-    MDTextField:
-        id: description_text
-        required: True
-        helper_text_mode: 'on_error'
-        hint_text: 'Package Description'
-        max_text_length: 300
-        icon: 'lock-outline'
-        multiline: True
-        foreground_color: 212/255, 144/255, 0/255, 1
-        size_hint_x: 0.8
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: (30, 0)
 
-    RelativeLayout:
-        AsyncImage:
-            id: photo_preview
-            source: root.photo_path
+                    MDSwitch:
+                        id: fragile_bool
+                        size_hint: (None, None)
+                        width: 40
+                        height: 60
 
-        GalleryButton:
-            id: 'gallery_button'
-            icon: 'camera'
-            path_selected_callback: root._set_photo_path
-            text_color: app.theme_cls.primary_color
-            opposite_colors: True
-            elevation_normal: 8
-            md_bg_color: 255/255, 255/255, 255/255, 1
-            pos_hint: {'right':.95}
+
+                Widget:
+                    size_hint_x: None
+                    width: 60
+
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "Image: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+                AsyncImage:
+                    id: photo_preview
+                    source: root.photo_path
+
+                GalleryButton:
+                    id: 'gallery_button'
+                    icon: 'camera'
+                    path_selected_callback: root._set_photo_path
+                    text_color: app.theme_cls.primary_color
+                    opposite_colors: True
+                    elevation_normal: 8
+                    md_bg_color: 255/255, 255/255, 255/255, 1
+                    pos_hint: {'right':0}
+
+                RelativeLayout:
+                    size_hint: (None, None)
+                    width: 120
+                    MDLabel:
+                        halign: "right"
+                        theme_text_color: 'Primary'
+                        text: "Description: "
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+                MDTextField:
+                    required: True
+                    id: description_text
+                    helper_text_mode: 'on_error'
+                    hint_text: 'Package Description'
+                    max_text_length: 300
+                    icon: 'lock-outline'
+                    multiline: True
+                    foreground_color: 212/255, 144/255, 0/255, 1
+                    size_hint_x: 0.8
+
+                Widget:
+                    size_hint_x: None
+                    width: 60
 
     MDRaisedButton:
         id: request_button

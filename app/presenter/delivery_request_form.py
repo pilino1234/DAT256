@@ -38,11 +38,12 @@ class DeliveryRequestForm(BoxLayout):
 
         self._set_weight(self._weights[self.weight])
 
+
         for text_id in self.__text_field_ids:
             text_field: MDTextField = self.ids[text_id]
             text_field.bind(text=self._verify_entries)
 
-    def _set_photo_path(self, path):
+    def _set_photo_path(self, path: str):
         """Set the file path used by the preview image."""
         self.photo_path = path
 
