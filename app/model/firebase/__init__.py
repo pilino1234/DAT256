@@ -30,7 +30,7 @@ class Firebase:
         return Firebase.bucket
 
     @staticmethod
-    def auto_id():
+    def auto_id() -> str:
         """
         Generate a "random" automatically generated ID.
 
