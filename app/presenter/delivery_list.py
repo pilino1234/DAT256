@@ -28,7 +28,7 @@ class DeliveryList(BoxLayout):
         Clock.schedule_once(self._fill_content)
 
     def _fill_content(self, delta_time):
-        docs = Firestore.batch("packages").collection.get()
+        docs = Firestore.get('packages')
         for doc in docs:
             data = doc.to_dict()
 
