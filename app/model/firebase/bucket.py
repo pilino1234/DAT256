@@ -1,7 +1,11 @@
+import random
+
 from model.firebase import Firebase
 
 from typing import Optional
 
+
+_AUTO_ID_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
 class Bucket:
     """Carrepsa Cloud Storage Bucket interface"""
@@ -26,4 +30,16 @@ class Bucket:
         file_extension = path_to_file.split(".")[-1]
         blob = Firebase.bucket.blob(Firebase.auto_id() + "/img." +
                                     file_extension)
+        blob = Firebase.bucket.blob(Bucket._auto_id() + "/img." +
+                                    file_extension)
         blob.upload_from_filename(path_to_file)
+
+    @staticmethod
+    def _auto_id():
+        """Generate a "random" automatically generated ID.
+
+        Returns:
+            str: A 20 character string composed of digits, uppercase and
+            lowercase and letters.
+        """
+        return "".join(random.choice(_AUTO_ID_CHARS) for _ in range(20))

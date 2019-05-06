@@ -20,7 +20,7 @@ class Firebase:
     bucket = storage.Client().get_bucket("carrepsa.appspot.com")
 
     @staticmethod
-    def get_db() -> Client:
+    def get_db():
         """Fetch the common firebase db instance."""
         return Firebase.db
 
