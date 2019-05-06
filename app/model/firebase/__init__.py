@@ -29,10 +29,14 @@ class Firebase:
 
     @staticmethod
     def auto_id():
-        """Generate a "random" automatically generated ID.
+        """
+        Generate a "random" automatically generated ID.
 
-        Returns:
+        Returns
+        -------
             str: A 20 character string composed of digits, uppercase and
             lowercase and letters.
+
         """
-        return "".join(random.choice(_AUTO_ID_CHARS) for _ in six.moves.xrange(20))
+        return "".join(
+            random.choice(_AUTO_ID_CHARS) for _ in six.moves.xrange(20))
