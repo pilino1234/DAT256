@@ -38,7 +38,6 @@ class DeliveryRequestForm(BoxLayout):
 
         self._set_weight(self._weights[self.weight])
 
-
         for text_id in self.__text_field_ids:
             text_field: MDTextField = self.ids[text_id]
             text_field.bind(text=self._verify_entries)
@@ -103,6 +102,17 @@ class DeliveryRequestForm(BoxLayout):
             # User does not have enough money to pay for this delivery
             return
 
+        # TODO: implement this once user "management" is in place
+        #        if payment_amount > user.account_balance:
+        #            self.display_warning("You don't have enough money to pay for this delivery")
+        #            return
+        #        else:
+        #            user.lock_delivery_amount(payment_amount)
+
+        # TODO: Image path should refer to the firestore location,
+        #  but local file location is used temporarily for testing
+        firestore_image_path = self.photo_path
+
         request = DeliveryRequest(item=self.ids.package_name.text,
                                   description=self.ids.description_text.text,
                                   origin=self.ids.from_text.text,
@@ -115,7 +125,8 @@ class DeliveryRequestForm(BoxLayout):
                                       self.ids.money_lock_amount.text),
                                   owner='pIAeLAvHXp0KZKWDzTMz',
                                   assistant='',
-                                  uid='')
+                                  uid='',
+                                  image_path=firestore_image_path)
 
         user.lock_delivery_amount(request)
 
