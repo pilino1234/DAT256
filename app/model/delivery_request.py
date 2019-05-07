@@ -25,7 +25,7 @@ class DeliveryRequest:
     def __init__(self, uid: str, item: str, description: str, origin: str,
                  destination: str, reward: int, weight: int, fragile: bool,
                  status: Status, money_lock: int, owner: str, assistant: str,
-                 **kwargs):
+                 image_path: str="", **kwargs):
         """Initializes the delivery list"""
         self.uid = uid
         self.item = item
@@ -37,8 +37,10 @@ class DeliveryRequest:
         self.fragile = fragile
         self.status = status
         self.money_lock = money_lock
+
         self.owner = owner
         self.assistant = assistant
+        self.image_path = image_path
 
         self.weight_text = self._weight_props[weight].text
         self.weight_icon = self._weight_props[weight].icon
@@ -49,11 +51,12 @@ class DeliveryRequest:
         return "Delivery request {uid} | {name}, from: {from_} -> to: {to}, " \
                "reward: {reward}, money_lock: {money_lock}, " \
                "weight: {weight}, fragile: {fragile}, status: {status}, " \
-               "description: {description}".format(uid=self.uid, name=self.item, from_=self.origin,
-                                                   to=self.destination, reward=self.reward,
-                                                   money_lock=self.money_lock, weight=self.weight,
-                                                   fragile=self.fragile, status=self.status,
-                                                   description=self.description)
+               "description: {description}, image_path: {image_path}".format(
+                   uid=self.uid, name=self.item, from_=self.origin,
+                   to=self.destination, reward=self.reward,
+                   money_lock=self.money_lock, weight=self.weight,
+                   fragile=self.fragile, status=self.status,
+                   description=self.description, image_path=self.image_path)
 
     def to_dict(self) -> Dict[str, Union[str, float, int, bool]]:
         """
@@ -75,6 +78,7 @@ class DeliveryRequest:
         req_dict.update({'money_lock': self.money_lock})
         req_dict.update({'owner': self.owner})
         req_dict.update({'assistant': self.assistant})
+        req_dict.update({'image_path': self.image_path})
 
         return req_dict
 

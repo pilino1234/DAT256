@@ -18,6 +18,12 @@
     photo_path: None
 
     ScrollView:
+        canvas.before:
+            Color:
+                rgba: 222/255, 222/255, 222/255, 1
+            Line:
+                width: 0.5
+                rectangle: self.x, self.y, self.width, 0
         BoxLayout:
             size_hint_y:None
             height:Window.height * 1.5
