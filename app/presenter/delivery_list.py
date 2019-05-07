@@ -99,7 +99,7 @@ class ListItem(WhiteCardButton):
         self.ids.origin.text = delivery_request.origin
         self.ids.destination.text = delivery_request.destination
         self.ids.distance.text = delivery_request.distance_pretty
-        self.ids.reward.text = delivery_request.reward
+        self.ids.reward.text = str(delivery_request.reward)
         self.ids.weight.text = delivery_request.weight_text
         self.ids.weight_icon.icon = delivery_request.weight_icon
 
