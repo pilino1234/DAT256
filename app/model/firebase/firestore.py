@@ -45,6 +45,10 @@ class Firestore:
         """
         return Firebase.get_db().collection(path).get()
 
+    @staticmethod
+    def get_raw(path: str):
+        return Firebase.get_db().collection(path)
+
 
 class _FirestoreBatch:
     """
@@ -77,12 +81,12 @@ class _FirestoreBatch:
         """
         self._batchRef.create(self._collection.document(), document_data)
 
-    def set(self, document: DocumentReference, document_data: dict):
+    def set(self, document: str, document_data: dict):
         """Replace document with new document data."""
         self._batchRef.set(self._collection.document(document), document_data,
                            False)
 
-    def update(self, document: DocumentReference, field_updates: dict):
+    def update(self, document: str, field_updates: dict):
         """Update existing document with new data."""
         self._batchRef.update(self._collection.document(document),
                               field_updates)
