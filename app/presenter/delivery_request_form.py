@@ -65,17 +65,16 @@ class DeliveryRequestForm(BoxLayout):
         :return: True if all inputs are valid
                  False otherwise
         """
-
-        all_good = (len(self.ids.package_name.text) > 0 and
-                    len(self.ids.description_text.text) > 0 and
-                    len(self.ids.from_text.text) > 0 and
-                    len(self.ids.dest_text.text) > 0 and
-                    len(self.ids.payment_amount.text) > 0 and
-                    '-' not in self.ids.payment_amount.text and
-                    int(self.ids.payment_amount.text) > 0 and
-                    len(self.ids.money_lock_amount.text) > 0 and
-                    '-' not in self.ids.money_lock_amount.text and
-                    int(self.ids.money_lock_amount.text)) >= 0
+        all_good = (len(self.ids.package_name.text) > 0
+                    and len(self.ids.description_text.text) > 0
+                    and len(self.ids.from_text.text) > 0
+                    and len(self.ids.dest_text.text) > 0
+                    and len(self.ids.payment_amount.text) > 0
+                    and '-' not in self.ids.payment_amount.text
+                    and int(self.ids.payment_amount.text) > 0
+                    and len(self.ids.money_lock_amount.text) > 0
+                    and '-' not in self.ids.money_lock_amount.text
+                    and int(self.ids.money_lock_amount.text)) >= 0
 
         self.ids.request_button.disabled = not all_good
         return all_good
@@ -94,11 +93,11 @@ class DeliveryRequestForm(BoxLayout):
         payment_amount: int = int(self.ids.payment_amount.text)
 
         # TODO: implement this once user "management" is in place
-#        if payment_amount > user.account_balance:
-#            self.display_warning("You don't have enough money to pay for this delivery")
-#            return
-#        else:
-#            user.lock_delivery_amount(payment_amount)
+        # if payment_amount > user.account_balance:
+        #     self.display_warning("You don't have enough money to pay for this delivery")
+        #     return
+        # else:
+        #     user.lock_delivery_amount(payment_amount)
 
         request = DeliveryRequest(item=self.ids.package_name.text,
                                   description=self.ids.description_text.text,
@@ -108,7 +107,8 @@ class DeliveryRequestForm(BoxLayout):
                                   weight=self.weight,
                                   fragile=self.ids.fragile_bool.active,
                                   status=Status.AVAILABLE,
-                                  money_lock=int(self.ids.money_lock_amount.text))
+                                  money_lock=int(
+                                      self.ids.money_lock_amount.text))
 
         DeliveryRequestUploader.upload(request)
 
