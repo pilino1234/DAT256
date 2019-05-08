@@ -10,9 +10,12 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
 class Firebase:
     """Stores the common firebase db instance."""
 
-    db = firestore.Client()
+    _db: Client
 
     @staticmethod
     def get_db() -> Client:
         """Fetch the common firebase db instance."""
-        return Firebase.db
+        if not Firebase._db:
+            Firebase._db = firestore.Client()
+
+        return Firebase._db
