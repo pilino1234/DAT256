@@ -12,9 +12,9 @@ from kivy.properties import ObjectProperty
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest, Status
-from presenter.detail_view import DetailView
 
 from model.firebase.firestore import Firestore
+from presenter.delivery_request_detail import DeliveryRequestDetail
 
 Builder.load_file("view/delivery_list.kv")
 
@@ -67,7 +67,7 @@ class DeliveryList(BoxLayout):
         """Show detail view for selected delivery request."""
         self.clear_widgets()
         self.add_widget(
-            DetailView(back_button_handler=self._transition_to_delivery_list,
+            DeliveryRequestDetail(back_button_handler=self._transition_to_delivery_list,
                        request=request))
 
     def _transition_to_delivery_list(self):
