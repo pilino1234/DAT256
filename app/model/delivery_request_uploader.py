@@ -5,9 +5,26 @@ from model.firebase.firestore import Firestore
 
 
 class DeliveryRequestUploader:
+    """
+    A class for handling operations related to uploading delivery requests.
+
+    Contains:
+    ---------
+        Converter for converting a DeliveryRequest object to a dict for uploading
+        Uploader for uploading a delivery request to Firebase
+    """
+
     @staticmethod
-    def request_to_dict(request: DeliveryRequest) -> Dict[str, Union[str, int, float, bool]]:
-        req_dict = {}
+    def _request_to_dict(request: DeliveryRequest
+                         ) -> Dict[str, Union[str, float, int, bool]]:
+        """
+        Convert a DeliverRequest object to a dict ready for uploading.
+
+        :param request: The DeliveryRequest to convert.
+        :return: A dict that can be uploaded.
+        :rtype: dict
+        """
+        req_dict: Dict[str, Union[str, float, int, bool]] = {}
         req_dict.update({'item': request.item})
         req_dict.update({'description': request.description})
         req_dict.update({'origin': request.origin})
@@ -22,7 +39,13 @@ class DeliveryRequestUploader:
 
     @staticmethod
     def upload(request: DeliveryRequest):
-        request_dict = DeliveryRequestUploader.request_to_dict(request)
+        """
+        Upload a delivery request to Firebase.
+
+        :param request: The delivery request to upload.
+        :type request: DeliveryRequest
+        """
+        request_dict = DeliveryRequestUploader._request_to_dict(request)
 
         with Firestore.batch("packages") as batch:
             batch.create(request_dict)
