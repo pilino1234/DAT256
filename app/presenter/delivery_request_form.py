@@ -71,9 +71,11 @@ class DeliveryRequestForm(BoxLayout):
                     len(self.ids.from_text.text) > 0 and
                     len(self.ids.dest_text.text) > 0 and
                     len(self.ids.payment_amount.text) > 0 and
-                    int(self.ids.payment_amount.text) >= 0 and
+                    '-' not in self.ids.payment_amount.text and
+                    int(self.ids.payment_amount.text) > 0 and
                     len(self.ids.money_lock_amount.text) > 0 and
-                    int(self.ids.money_lock_amount.text))
+                    '-' not in self.ids.money_lock_amount.text and
+                    int(self.ids.money_lock_amount.text)) >= 0
 
         self.ids.request_button.disabled = not all_good
         return all_good
