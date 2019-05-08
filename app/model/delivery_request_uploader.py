@@ -7,18 +7,18 @@ from model.firebase.firestore import Firestore
 class DeliveryRequestUploader:
     @staticmethod
     def request_to_dict(request: DeliveryRequest) -> Dict[str, Union[str, int, float, bool]]:
-        temp = {}
-        temp.update({'item': request.item})
-        temp.update({'description': request.description})
-        temp.update({'origin': request.origin})
-        temp.update({'destination': request.destination})
-        temp.update({'reward': request.reward})
-        temp.update({'weight': request.weight})
-        temp.update({'fragile': request.fragile})
-        temp.update({'status': request.status.value})
-        temp.update({'money_lock': request.money_lock})
+        req_dict = {}
+        req_dict.update({'item': request.item})
+        req_dict.update({'description': request.description})
+        req_dict.update({'origin': request.origin})
+        req_dict.update({'destination': request.destination})
+        req_dict.update({'reward': request.reward})
+        req_dict.update({'weight': request.weight})
+        req_dict.update({'fragile': request.fragile})
+        req_dict.update({'status': request.status.value})
+        req_dict.update({'money_lock': request.money_lock})
 
-        return temp
+        return req_dict
 
     @staticmethod
     def upload(request: DeliveryRequest):
