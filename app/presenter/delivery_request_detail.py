@@ -5,10 +5,10 @@ from kivy.properties import ObjectProperty
 from model.delivery_request import DeliveryRequest
 from typing import Callable
 
-Builder.load_file("view/detail_view.kv")
+Builder.load_file("view/delivery_request_detail.kv")
 
 
-class DetailView(BoxLayout):
+class DeliveryRequestDetail(BoxLayout):
     """Widget that shows details about a specific delivery request."""
 
     request = ObjectProperty(DeliveryRequest)
@@ -22,7 +22,7 @@ class DetailView(BoxLayout):
         super(DetailView, self).__init__(**kwargs)
 
     def accept_delivery_button_callback(self):
-        """Callback function for the Show On Map button."""
+        """Callback function for the Accept Delivery button."""
         print("Got a callback from the accept delivery button!")
 
     def show_on_map_button_callback(self):
