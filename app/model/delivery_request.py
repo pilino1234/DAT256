@@ -23,7 +23,7 @@ class DeliveryRequest:
 
     def __init__(self, item: str, description: str, origin: str,
                  destination: str, reward: int, weight: int, fragile: bool,
-                 status: Status, money_lock: int):
+                 status: Status, money_lock: int, owner: str, assistant: str):
         """Initializes the delivery list"""
         self.item = item
         self.description = description
@@ -34,6 +34,8 @@ class DeliveryRequest:
         self.fragile = fragile
         self.status = status
         self.money_lock = money_lock
+        self.owner = owner
+        self.assistant = assistant
 
         self.weight_text = self._weight_props[weight].text
         self.weight_icon = self._weight_props[weight].icon

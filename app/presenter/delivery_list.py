@@ -31,27 +31,17 @@ class DeliveryList(BoxLayout):
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
+        self.delivery_list = self.ids.delivery_list
         Clock.schedule_once(self._fill_content)
 
     def _fill_content(self, delta_time):
         docs = Firestore.get_raw('packages').where(u'status', u'==', Status.AVAILABLE).get()
         for doc in docs:
             data = doc.to_dict()
+            data['status'] = Status(data.get('status'))
 
-            self.ids.available_requests.add_widget(
-                ListItem(
-                    DeliveryRequest(
-                        item=data.get('item'),
-                        description=data.get('description'),
-                        origin=data.get('origin'),
-                        destination=data.get('destination'),
-                        reward=data.get('reward'),
-                        weight=data.get('weight'),
-                        fragile=data.get('fragile'),
-                        status=Status(data.get('status')),
-                        money_lock=data.get('money_lock'),
-                    ), self._transition_to_detail_view))
-        self.delivery_list = self.ids.delivery_list
+            list_item = ListItem(DeliveryRequest(**data))
+            self.ids.available_requests.add_widget(list_item)
 
     def _update_content(self, spinner):
         self.tick = 0

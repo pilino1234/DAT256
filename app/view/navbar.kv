@@ -23,7 +23,7 @@
                 text: 'My Packages'
                 icon: 'package'
 
-                DeliveryRequestDetail:
+                on_tab_press: root._load_posted_requests(self)
 
             BlankNavItem:
                 icon: 'dots-horizontal'
@@ -33,7 +33,7 @@
                 text: 'My Deliveries'
                 icon: 'car'
 
-                on_tab_press: root._load_posted_requests(self)
+                on_tab_press: root._load_my_deliveries(self)
 
             MDBottomNavigationItem:
                 name: 'my-account'
