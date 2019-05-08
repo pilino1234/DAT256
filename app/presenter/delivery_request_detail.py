@@ -7,6 +7,15 @@ from typing import Callable
 
 Builder.load_file("view/delivery_request_detail.kv")
 
+# from model.delivery_request import DeliveryRequest, Status
+# from model.firebase.firestore import Firestore
+
+# Builder.load_file("view/delivery_request_detail.kv")
+
+# doc = Firestore.get_raw('packages').document(u'kMiNT8FkY1rtyg6ou7Pg').get()
+# data = doc.to_dict()
+# data['status'] = Status(data.get('status'))
+# dummyRequest = DeliveryRequest(**data)
 
 class DeliveryRequestDetail(BoxLayout):
     """Widget that shows details about a specific delivery request."""
@@ -23,6 +32,10 @@ class DeliveryRequestDetail(BoxLayout):
 
     def accept_delivery_button_callback(self):
         """Callback function for the Accept Delivery button."""
+
+        batch = Firestore.batch('packages')
+        batch.update(u'kMiNT8FkY1rtyg6ou7Pg', {'status': Status.ACCEPTED})
+        batch.commit()
         print("Got a callback from the accept delivery button!")
 
     def show_on_map_button_callback(self):
