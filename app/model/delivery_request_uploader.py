@@ -34,8 +34,11 @@ class DeliveryRequestUploader:
         req_dict.update({'fragile': request.fragile})
         req_dict.update({'status': request.status.value})
         req_dict.update({'money_lock': request.money_lock})
+        req_dict.update({'owner': request.owner})
+        req_dict.update({'assistant': request.assistant})
 
         return req_dict
+
 
     @staticmethod
     def upload(request: DeliveryRequest):
