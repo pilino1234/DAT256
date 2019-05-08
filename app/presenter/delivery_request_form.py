@@ -107,8 +107,8 @@ class DeliveryRequestForm(BoxLayout):
                                   weight=self.weight,
                                   fragile=self.ids.fragile_bool.active,
                                   status=Status.AVAILABLE,
-                                  money_lock=int(
-                                      self.ids.money_lock_amount.text))
+                                  money_lock=int(self.ids.money_lock_amount.text),
+                                  owner='pIAeLAvHXp0KZKWDzTMz')
 
         user.lock_delivery_amount(request)
 
