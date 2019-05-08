@@ -8,14 +8,6 @@ from model.firebase.firestore import Firestore
 
 Builder.load_file("view/my_posted_requests.kv")
 
-_delivery_requests = []
-
-docs = Firestore.get_raw('packages').where(u'owner', u'==', u'pIAeLAvHXp0KZKWDzTMz').get()
-for doc in docs:
-    data = doc.to_dict()
-    data['status'] = Status(data.get('status'))
-    _delivery_requests.append(DeliveryRequest(**data))
-
 class MyPostedRequests(BoxLayout):
     """
     Widget that lists all delivery requests owned by the user.
@@ -26,11 +18,22 @@ class MyPostedRequests(BoxLayout):
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(MyPostedRequests, self).__init__(**kwargs)
-        Clock.schedule_once(self._init_content)
+        Clock.schedule_once(lambda dt: self._update_content())
+        Firestore.subscribe("packages", lambda a, b, c: self._update_content())
 
-    def _init_content(self, delta_time):
+    def _update_content(self):
+        """Fech my deliveries"""
+        docs = Firestore.get_raw('packages').where(u'owner', u'==', u'pIAeLAvHXp0KZKWDzTMz').get()
+
+        delivery_requests = []
+        for doc in docs:
+            data = doc.to_dict()
+            data['status'] = Status(data.get('status'))
+            delivery_requests.append(DeliveryRequest(**data))
+
         """Fill delivery list"""
-        for req in _delivery_requests:
+        self.ids.my_requests.clear_widgets()
+        for req in delivery_requests:
             self.ids.my_requests.add_widget(MyPostedRequest(req))
 
 
