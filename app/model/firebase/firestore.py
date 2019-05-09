@@ -47,6 +47,7 @@ class Firestore:
 
     @staticmethod
     def get_raw(path: str):
+        """Returns raw collection at a given path in the database"""
         return Firebase.get_db().collection(path)
 
 
