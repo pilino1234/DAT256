@@ -2,6 +2,7 @@
 
 <DeliveryList>:
     MDTabbedPanel:
+        id: delivery_list
         MDTab:
             name: 'list'
             text: "List"
@@ -46,6 +47,7 @@
 <ListItem>:
     size_hint: (1, None)
     height: 180
+    on_release: self.tap_callback(self.request)
 
     RelativeLayout:
         size: 40, 40

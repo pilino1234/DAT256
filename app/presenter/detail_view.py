@@ -1,29 +1,25 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 
-from model.delivery_request import DeliveryRequest, Status
+from model.delivery_request import DeliveryRequest
+from typing import Callable
 
 Builder.load_file("view/detail_view.kv")
-
-dummyRequest = DeliveryRequest(
-    item="Package 2",
-    description="Lorem ipsum description goes here.",
-    origin="Brunnsparken",
-    destination="Frölunda Torg",
-    reward=20,
-    weight=0,
-    fragile=False,
-    status=Status.AVAILABLE,
-    money_lock=0)
 
 
 class DetailView(BoxLayout):
     """Widget that shows details about a specific delivery request."""
 
-    def __init__(self, request=dummyRequest, **kwargs):
+    request = ObjectProperty(DeliveryRequest)
+    back_button_handler = ObjectProperty(None)
+
+    def __init__(self, back_button_handler: Callable, request: DeliveryRequest,
+                 **kwargs):
         """Initializes a DetailView"""
-        super(DetailView, self).__init__(**kwargs)
         self.request = request
+        self.back_button_handler = back_button_handler
+        super(DetailView, self).__init__(**kwargs)
 
     def accept_delivery_button_callback(self):
         """Callback function for the Show On Map button."""
@@ -32,10 +28,6 @@ class DetailView(BoxLayout):
     def show_on_map_button_callback(self):
         """Callback function for the Show On Map button."""
         print("Got a callback from the show on map button!")
-
-    def back_button_callback(self):
-        """Callback function for the Back button."""
-        print("Got a callback from the back button!")
 
 
 class DetailLabel(BoxLayout):
