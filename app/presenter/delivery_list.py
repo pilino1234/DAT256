@@ -9,7 +9,10 @@ from kivy.clock import Clock
 from kivy.animation import Animation
 from kivy.properties import ObjectProperty
 
+from typing import Callable
+
 from model.delivery_request import DeliveryRequest, Status
+from presenter.detail_view import DetailView
 
 from model.firebase.firestore import Firestore
 
@@ -22,6 +25,8 @@ class DeliveryList(BoxLayout):
 
     Each request is represented with a ListItem.
     """
+
+    delivery_list = ObjectProperty(BoxLayout)
 
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
@@ -45,7 +50,8 @@ class DeliveryList(BoxLayout):
                         fragile=data.get('fragile'),
                         status=Status(data.get('status')),
                         money_lock=data.get('money_lock'),
-                    )))
+                    ), self._transition_to_detail_view))
+        self.delivery_list = self.ids.delivery_list
 
     def _update_content(self, spinner):
         self.tick = 0
@@ -57,6 +63,18 @@ class DeliveryList(BoxLayout):
         self.ids.available_requests.clear_widgets()
         self._fill_content(0)
 
+    def _transition_to_detail_view(self, request: DeliveryRequest):
+        """Show detail view for selected delivery request."""
+        self.clear_widgets()
+        self.add_widget(
+            DetailView(back_button_handler=self._transition_to_delivery_list,
+                       request=request))
+
+    def _transition_to_delivery_list(self):
+        """Show list of all available deliveries."""
+        self.clear_widgets()
+        self.add_widget(self.delivery_list)
+
 
 class WhiteCardButton(MDRaisedButton):
     """Widget that alters MDRaisedButton to a blank card-looking button with a drop shadow."""
@@ -67,10 +85,16 @@ class WhiteCardButton(MDRaisedButton):
 class ListItem(WhiteCardButton):
     """Widget that represents all the content of a list item."""
 
-    def __init__(self, delivery_request: DeliveryRequest, **kwargs):
+    request = ObjectProperty(None)
+    tap_callback = ObjectProperty(None)
+
+    def __init__(self, delivery_request: DeliveryRequest,
+                 tap_callback: Callable, **kwargs):
         """Initializes the delivery list"""
         super(ListItem, self).__init__(**kwargs)
 
+        self.tap_callback = tap_callback
+        self.request = delivery_request
         self.ids.item.text = delivery_request.item
         self.ids.origin.text = delivery_request.origin
         self.ids.destination.text = delivery_request.destination
