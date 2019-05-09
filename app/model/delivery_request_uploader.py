@@ -39,7 +39,6 @@ class DeliveryRequestUploader:
 
         return req_dict
 
-
     @staticmethod
     def upload(request: DeliveryRequest):
         """
