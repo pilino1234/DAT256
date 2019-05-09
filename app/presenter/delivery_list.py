@@ -1,20 +1,18 @@
+from kivy.animation import Animation
+from kivy.clock import Clock
 from kivy.lang import Builder
+from kivy.metrics import dp
 from kivy.properties import NumericProperty
+from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
-from kivy.metrics import dp
-from kivy.clock import Clock
-from kivy.animation import Animation
-from kivy.properties import ObjectProperty
 
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest, Status
-
-from model.firebase.firestore import Firestore
-from presenter.delivery_request_detail import DeliveryRequestDetail
+from model.delivery_request_getter import DeliveryRequestGetter
 
 Builder.load_file("view/delivery_list.kv")
 
@@ -35,12 +33,11 @@ class DeliveryList(BoxLayout):
         Clock.schedule_once(self._fill_content)
 
     def _fill_content(self, delta_time):
-        docs = Firestore.get_raw('packages').where(u'status', u'==', Status.AVAILABLE).get()
-        for doc in docs:
-            data = doc.to_dict()
-            data['status'] = Status(data.get('status'))
+        delivery_requests = DeliveryRequestGetter.query(
+            u'status', u'==', Status.AVAILABLE)
 
-            list_item = ListItem(DeliveryRequest(**data))
+        for delivery_request in delivery_requests:
+            list_item = ListItem(delivery_request)
             self.ids.available_requests.add_widget(list_item)
 
     def _update_content(self, spinner):
@@ -57,7 +54,7 @@ class DeliveryList(BoxLayout):
         """Show detail view for selected delivery request."""
         self.clear_widgets()
         self.add_widget(
-            DeliveryRequestDetail(back_button_handler=self._transition_to_delivery_list,
+            DetailView(back_button_handler=self._transition_to_delivery_list,
                        request=request))
 
     def _transition_to_delivery_list(self):
