@@ -55,5 +55,6 @@ class Router(RelativeLayout):
 
     def go_back(self):
         """Navigate to the previous route"""
-        if len(self.history) > 0:
-            self._set_current_route(self.history.pop())
+        if len(self.history) > 1:
+            self.history.pop()
+            self._set_current_route(self.history[len(self.history)-1])
