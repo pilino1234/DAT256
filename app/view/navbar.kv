@@ -1,10 +1,8 @@
 #:import BlankNavItem presenter.navbar
 #:import CalculatorWidget presenter.calculator
 #:import DeliveryList presenter.delivery_list
-#:import MyPostedRequests presenter.my_posted_requests
 #:import BlankNavItem presenter.navbar
 #:import DetailView presenter.detail_view
-#:import UserProfileView presenter.user_profile_view
 
 
 <NavBarWithFAB>:
@@ -41,7 +39,7 @@
                 text: 'My Account'
                 icon: 'account-circle'
 
-                UserProfileView:
+                on_tab_press: root._load_profile_view(self)
 
         MDFloatingActionButton:
             id: fab
