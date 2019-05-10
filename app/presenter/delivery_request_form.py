@@ -35,10 +35,11 @@ class DeliveryRequestForm(BoxLayout):
     def __init__(self, **kwargs):
         """Instantiate a form for submitting a delivery request."""
         super(DeliveryRequestForm, self).__init__(**kwargs)
+        Clock.schedule_once(self.init_ui, 0)
 
+    def init_ui(self, _):
         for button_id in self._weights:
             button: MDIconButton = self.ids[button_id]
-
             button.bind(
                 on_release=lambda _, bid=button_id: self._set_weight(bid))
 

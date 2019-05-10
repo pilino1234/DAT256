@@ -1,3 +1,4 @@
+#:import DeliveryRequestForm presenter.delivery_request_form
 #:import Card presenter.utils.card
 
 <SlidingPopupContent@Card>
@@ -28,3 +29,5 @@
         size_hint: 1, self.height_hint
         top_hint: 0
         pos_hint: {"top": self.top_hint, "right": 1}
+
+        DeliveryRequestForm:
