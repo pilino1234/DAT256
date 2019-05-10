@@ -9,6 +9,8 @@ services:
 
 stages:
   - tests
+  - name: tests
+    if: type == pull_request
   - name: buildeploy
     if: (branch IN (master, dev) AND type != pull_request) OR tag is present
 
