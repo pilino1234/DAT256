@@ -1,3 +1,8 @@
+from typing import List
+
+from model.delivery_request import DeliveryRequest
+
+
 class User:
     """Represents a user's account."""
 
@@ -10,6 +15,8 @@ class User:
         self.avatar = avatar
         self.balance = balance
         self.rating = rating
+
+        self._delivery_reservations: List[DeliveryRequest] = []
 
     def deposit(self, amount: int):
         """
@@ -35,6 +42,16 @@ class User:
         """
         if 0 < amount <= self.balance:
             self.balance -= amount
+
+    def lock_delivery_amount(self, delivery: DeliveryRequest):
+        """
+        Reserves the payment amount required to pay for a delivery.
+
+        :param delivery: The delivery request for which the payment amount should be locked.
+        :type delivery: DeliveryRequest
+        """
+        self._delivery_reservations.append(delivery)
+        self.balance -= delivery.reward
 
     def __eq__(self, other):
         """Checks equality between users using their mail."""
