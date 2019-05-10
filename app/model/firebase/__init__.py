@@ -14,6 +14,13 @@ class Firebase:
     _bucket: storage.Bucket = None
 
     @staticmethod
+    def sign_in_with_tokens(token, refresh_token):
+        credentials = FirebaseCredentials(token=token,
+                                          refresh_token=refresh_token)
+        Firebase.db = fs.Client(project="carrepsa", credentials=credentials)
+
+
+    @staticmethod
     def sign_in(email, password):
         """Authenticate the user to firebase"""
         sign_in_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + webApiKey
@@ -26,11 +33,14 @@ class Firebase:
         sign_in_data = json.loads(sign_in_request.content.decode())
 
         if sign_in_request.ok == True:
-            refresh_token = sign_in_data['refreshToken']
             idToken = sign_in_data['idToken']
+            refresh_token = sign_in_data['refreshToken']
             credentials = FirebaseCredentials(token=idToken,
                                               refresh_token=refresh_token)
             Firebase._db = fs.Client(project="carrepsa", credentials=credentials)
+
+            Firebase.sign_in_with_tokens(idToken, refresh_token)
+
             return True
 
         return False
