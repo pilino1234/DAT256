@@ -6,12 +6,12 @@ from model.firebase.firestore import Firestore
 
 class DeliveryRequestGetter:
     """
-    A class for handling operations related to uploading delivery requests.
+    A class for handling operations related to getting delivery requests from firebase.
 
     Contains:
     ---------
-        Converter for converting a DeliveryRequest object to a dict for uploading
-        Uploader for uploading a delivery request to Firebase
+        A method for querying delivery requests from firestore
+        A method for fetching specific delivery requests by their id.
     """
 
     @staticmethod
