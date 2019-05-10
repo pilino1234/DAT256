@@ -1,15 +1,8 @@
 from google.cloud import firestore as fs, storage  # type: ignore
-
 from google.auth.credentials import Credentials
 import requests
 import json
-import os
 from google.auth import _helpers
-
-from google.cloud.storage import Bucket
-
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
-
 webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
 
 
@@ -17,7 +10,7 @@ class Firebase:
     """Stores the common firebase db and storage bucket instance."""
 
     _db = None
-    _bucket: Bucket = None
+    _bucket: storage.Bucket = None
 
     @staticmethod
     def sign_in(email, password):
@@ -30,19 +23,12 @@ class Firebase:
             refresh_token = sign_in_data['refreshToken']
             localId = sign_in_data['localId']
             idToken = sign_in_data['idToken']
+            credentials = FirebaseCredentials(token=idToken,
+                                              refresh_token=refresh_token)
+            Firebase._db = fs.Client(project="carrepsa", credentials=credentials)
+            return True
 
-            print(idToken)
-
-            credentials = FirebaseCredentials(token=idToken, refresh_token=refresh_token)
-
-            Firebase._db = fs.Client(credentials=credentials)
-
-            # print(Firebase.db.collection("packages").get())
-
-    # elif signin_request.ok == False:
-    #     error_data = json.loads(signin_request.content.decode())
-    #     error_message = error_data["error"]['message']
-    #     app.root.ids['login_screen'].ids['login_message'].text = "EMAIL EXISTS - " + error_message.replace("_", " ")
+        return False
 
     @staticmethod
     def get_db() -> fs.Client:
@@ -59,6 +45,7 @@ class Firebase:
         return Firebase._bucket
 
 class FirebaseCredentials(Credentials):
+    """Firebase Credentials, stores the authentication tokens"""
     token = None
     refresh_token = None
 
