@@ -30,6 +30,7 @@ class DeliveryRequestGetter:
         delivery_requests = []
         for doc in docs:
             data = doc.to_dict()
+            data['uid'] = doc.id
             data['status'] = Status(data['status'])
             delivery_requests.append(DeliveryRequest(**data))
 
@@ -44,5 +45,6 @@ class DeliveryRequestGetter:
         """
         data = Firestore.get_raw('packages').document(
             delivery_request_id).get().to_dict()
+        data['uid'] = delivery_request_id
         data['status'] = Status(data['status'])
         return DeliveryRequest(**data)

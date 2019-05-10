@@ -21,10 +21,11 @@ class DeliveryRequest:
         _weight_prop('truck', "Huge")
     ]
 
-    def __init__(self, item: str, description: str, origin: str,
+    def __init__(self, uid: str, item: str, description: str, origin: str,
                  destination: str, reward: int, weight: int, fragile: bool,
                  status: Status, money_lock: int, owner: str, assistant: str):
         """Initializes the delivery list"""
+        self.uid = uid
         self.item = item
         self.description = description
         self.origin = origin
@@ -43,13 +44,14 @@ class DeliveryRequest:
 
     def __str__(self):
         """Format a delivery request for printing"""
-        return "Delivery request {name}, from: {from_} -> to: {to}, " \
+        return "Delivery request {uid} | {name}, from: {from_} -> to: {to}, " \
                "reward: {reward}, money_lock: {money_lock}, " \
                "weight: {weight}, fragile: {fragile}, status: {status}, " \
-               "desc: {description}".format(name=self.item, from_=self.origin, to=self.destination,
-                                            reward=self.reward, money_lock=self.money_lock,
-                                            weight=self.weight, fragile=self.fragile,
-                                            status=self.status, description=self.description)
+               "description: {description}".format(uid=self.uid, name=self.item, from_=self.origin,
+                                                   to=self.destination, reward=self.reward,
+                                                   money_lock=self.money_lock, weight=self.weight,
+                                                   fragile=self.fragile, status=self.status,
+                                                   description=self.description)
 
     @property
     def distance_pretty(self) -> str:
