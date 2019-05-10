@@ -11,6 +11,8 @@ from kivymd.updatespinner import MDUpdateSpinner
 
 from typing import Callable
 
+from presenter.delivery_request_detail import DeliveryRequestDetail
+
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_getter import DeliveryRequestGetter
 
@@ -29,7 +31,6 @@ class DeliveryList(BoxLayout):
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
-        self.delivery_list = self.ids.delivery_list
         Clock.schedule_once(self._fill_content)
 
     def _fill_content(self, delta_time):
@@ -37,8 +38,11 @@ class DeliveryList(BoxLayout):
             u'status', u'==', Status.AVAILABLE)
 
         for delivery_request in delivery_requests:
-            list_item = ListItem(delivery_request)
+            list_item = ListItem(delivery_request,
+                                 self._transition_to_detail_view)
             self.ids.available_requests.add_widget(list_item)
+
+        self.delivery_list = self.ids.delivery_list
 
     def _update_content(self, spinner):
         self.tick = 0
@@ -54,8 +58,9 @@ class DeliveryList(BoxLayout):
         """Show detail view for selected delivery request."""
         self.clear_widgets()
         self.add_widget(
-            DetailView(back_button_handler=self._transition_to_delivery_list,
-                       request=request))
+            DeliveryRequestDetail(
+                back_button_handler=self._transition_to_delivery_list,
+                request=request))
 
     def _transition_to_delivery_list(self):
         """Show list of all available deliveries."""
