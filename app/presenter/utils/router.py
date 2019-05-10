@@ -1,5 +1,6 @@
 from kivy.lang import Builder
 from kivy.properties import StringProperty, Clock
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
 
 from presenter.utils.route import Route
@@ -25,21 +26,24 @@ class Router(RelativeLayout):
 
     def on_selected_route(self, instance, value):
         """Method called when the 'selected_route' property changes value."""
-        self._set_current_route(value)
+        self.route(value)
 
     def add_widget(self, route: Route, index=0, canvas=None):
         """Adds a widget to the router, expects a widget of type Route"""
         # This is needed because the path property can't be read
         # until the route widget has been initialized.
-        Clock.schedule_once(lambda *_: self._maybe_add(route), 0)
 
-    def _maybe_add(self, route):
+        Clock.schedule_once(lambda *_: self._add(route), 0)
+
+    def _add(self, route):
         """Adds the route unless there is a path conflict"""
         if route.path in self._routes:
             raise Exception("Route path must be unique")
         self._routes[route.path] = route
+        super(Router, self).add_widget(route)
         if route.path == self.selected_route:
-            self._set_current_route(route.path)
+            Clock.schedule_once(lambda *_: self._set_current_route(route.path),
+                                0)
 
     def _set_current_route(self, route_path: str):
         """Set the route that should be displayed"""
@@ -57,4 +61,4 @@ class Router(RelativeLayout):
         """Navigate to the previous route"""
         if len(self.history) > 1:
             self.history.pop()
-            self._set_current_route(self.history[len(self.history)-1])
+            self._set_current_route(self.history[len(self.history) - 1])
