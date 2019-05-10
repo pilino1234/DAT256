@@ -76,7 +76,7 @@ class DeliveryRequestForm(BoxLayout):
                     and int(self.ids.payment_amount.text) > 0
                     and len(self.ids.money_lock_amount.text) > 0
                     and '-' not in self.ids.money_lock_amount.text
-                    and int(self.ids.money_lock_amount.text)) >= 0
+                    and int(self.ids.money_lock_amount.text) >= 0)
 
         self.ids.request_button.disabled = not all_good
         return all_good
@@ -95,6 +95,10 @@ class DeliveryRequestForm(BoxLayout):
         payment_amount: int = int(self.ids.payment_amount.text)
         user: User = UserProfileView.user_me
 
+        if payment_amount > user.balance:
+            # User does not have enough money to pay for this delivery
+            return
+
         request = DeliveryRequest(item=self.ids.package_name.text,
                                   description=self.ids.description_text.text,
                                   origin=self.ids.from_text.text,
@@ -106,11 +110,7 @@ class DeliveryRequestForm(BoxLayout):
                                   money_lock=int(
                                       self.ids.money_lock_amount.text))
 
-        if payment_amount > user.balance:
-            # User does not have enough money to pay for this delivery
-            return
-        else:
-            user.lock_delivery_amount(payment_amount)
+        user.lock_delivery_amount(request)
 
         DeliveryRequestUploader.upload(request)
 
