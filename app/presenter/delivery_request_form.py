@@ -5,6 +5,8 @@ from kivymd.textfields import MDTextField
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
+from model.user import User
+from presenter.user_profile_view import UserProfileView
 
 Builder.load_file("view/delivery_request.kv")
 
@@ -91,13 +93,7 @@ class DeliveryRequestForm(BoxLayout):
 
     def _submit_request(self):
         payment_amount: int = int(self.ids.payment_amount.text)
-
-        # TODO: implement this once user "management" is in place
-        # if payment_amount > user.account_balance:
-        #     self.display_warning("You don't have enough money to pay for this delivery")
-        #     return
-        # else:
-        #     user.lock_delivery_amount(payment_amount)
+        user: User = UserProfileView.user_me
 
         request = DeliveryRequest(item=self.ids.package_name.text,
                                   description=self.ids.description_text.text,
@@ -109,6 +105,12 @@ class DeliveryRequestForm(BoxLayout):
                                   status=Status.AVAILABLE,
                                   money_lock=int(
                                       self.ids.money_lock_amount.text))
+
+        if payment_amount > user.balance:
+            # User does not have enough money to pay for this delivery
+            return
+        else:
+            user.lock_delivery_amount(payment_amount)
 
         DeliveryRequestUploader.upload(request)
 
