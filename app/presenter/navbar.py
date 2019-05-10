@@ -3,6 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.tabs import MDBottomNavigationItem
 from kivymd.theming import ThemableBehavior
 from presenter.my_posted_requests import MyPostedRequests
+from presenter.user_profile_view import UserProfileView
 
 from kivy.lang import Builder
 Builder.load_file("view/navbar.kv")
@@ -28,6 +29,11 @@ class NavBarWithFAB(BoxLayout, ThemableBehavior):
         if tab not in self.__tab_loaded:
             self.__tab_loaded.add(tab)
             tab.add_widget(MyPostedRequests())
+
+    def _load_profile_view(self, tab):
+        if tab not in self.__tab_loaded:
+            self.__tab_loaded.add(tab)
+            tab.add_widget(UserProfileView())
 
 
 class BlankNavItem(MDBottomNavigationItem):
