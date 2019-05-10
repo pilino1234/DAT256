@@ -1,13 +1,13 @@
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import ObjectProperty
+from typing import Callable
 
-from model.delivery_request import Status
-from model.delivery_request_getter import DeliveryRequestGetter
+from model.delivery_request import DeliveryRequest, Status
 from model.firebase.firestore import Firestore
 
 Builder.load_file("view/delivery_request_detail.kv")
 
-dummy_request = DeliveryRequestGetter.get_by_id(u'kMiNT8FkY1rtyg6ou7Pg')
 
 class DeliveryRequestDetail(BoxLayout):
     """Widget that shows details about a specific delivery request."""
@@ -15,18 +15,24 @@ class DeliveryRequestDetail(BoxLayout):
     request = ObjectProperty(DeliveryRequest)
     back_button_handler = ObjectProperty(None)
 
-    def __init__(self, request=dummy_request, **kwargs):
+    def __init__(self, back_button_handler: Callable, request: DeliveryRequest,
+                 **kwargs):
         """Initializes a DeliveryRequestDetail"""
-        super(DeliveryRequestDetail, self).__init__(**kwargs)
         self.request = request
         self.back_button_handler = back_button_handler
-        super(DetailView, self).__init__(**kwargs)
+        super(DeliveryRequestDetail, self).__init__(**kwargs)
 
     def accept_delivery_button_callback(self):
         """Callback function for the Accept Delivery button."""
+        # Can't accept your own request.
+        if self.request.assistant == 'pIAeLAvHXp0KZKWDzTMz':
+            return
+
         with Firestore.batch('packages') as batch:
-            batch.update(u'kMiNT8FkY1rtyg6ou7Pg', {'status': Status.ACCEPTED})
-        print("Got a callback from the accept delivery button!")
+            batch.update(self.request.uid, {
+                'status': Status.ACCEPTED,
+                'assistant': u'pIAeLAvHXp0KZKWDzTMz'
+            })
 
     def show_on_map_button_callback(self):
         """Callback function for the Show On Map button."""
