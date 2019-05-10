@@ -121,6 +121,7 @@ class UserProfileView(RelativeLayout):
         # If no input given, cancel edit (do nothing and remove popup)
         if text is None or text == "":
             self.remove_widget(self.widget_input)
+            return
 
         if self.field_editing == "Name":
             self.user_me.name = text
@@ -133,12 +134,12 @@ class UserProfileView(RelativeLayout):
 
         if self.field_editing == "deposit":
             amount = int(text)
-            self.user_me.balance = self.user_me.balance + amount
+            self.user_me.deposit(amount)
 
         if self.field_editing == "withdraw":
             amount = int(text)
             if amount <= self.user_me.balance:
-                self.user_me.balance = self.user_me.balance - amount
+                self.user_me.withdraw(amount)
 
         self.update_fields()
         self.remove_widget(self.widget_input)  # Remove the edit widget
