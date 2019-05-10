@@ -14,14 +14,18 @@ class Firebase:
 
     @staticmethod
     def sign_in(email, password):
+        """Authenticate the user to firebase"""
         signin_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + webApiKey
-        signin_payload = {"email": email, "password": password, "returnSecureToken": True}
+        signin_payload = {
+            "email": email,
+            "password": password,
+            "returnSecureToken": True
+        }
         signin_request = requests.post(signin_url, data=signin_payload)
         sign_in_data = json.loads(signin_request.content.decode())
 
         if signin_request.ok == True:
             refresh_token = sign_in_data['refreshToken']
-            localId = sign_in_data['localId']
             idToken = sign_in_data['idToken']
             credentials = FirebaseCredentials(token=idToken,
                                               refresh_token=refresh_token)
