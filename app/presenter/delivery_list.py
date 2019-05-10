@@ -9,6 +9,12 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
+from kivy.metrics import dp
+from kivy.clock import Clock
+from kivy.animation import Animation
+from kivy.properties import ObjectProperty
+from kivy.app import App
+
 from typing import Callable
 
 from presenter.delivery_request_detail import DeliveryRequestDetail
@@ -37,7 +43,8 @@ class DeliveryList(RelativeLayout):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
         self.filter_widget = Filter()
-        Clock.schedule_once(lambda x: self.add_widget(self.filter_widget))
+        if App.get_running_app().is_authenticated:
+            Clock.schedule_once(self._filter_content)
 
     def _filter_content(self, walk, car, truck, fragile):
         """Filters the delivery list."""
