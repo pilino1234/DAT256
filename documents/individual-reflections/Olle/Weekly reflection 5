@@ -1,0 +1,29 @@
+What do I want to learn or understand better?
+A: I understand kivy quite well but can't contribute much since the front end development is basically done. 
+
+B: I want to learn firebase so I can work on the backend.
+
+A -> B: I will take on a firebase related back-end issue for the next sprint
+
+How can I help someone else, or the entire team, to learn something new?
+A: I can contribute by helping people question whether what they are doing is adding value.
+
+B: I want to be able to help someone with programming related stuff.
+
+A -> B: I can try to work more with Kevin so we can learn together.
+
+What is my contribution towards the team's use of Scrum?
+A: As a product owner, I am trying to see whether what people are doing is adding value in a way that makes sense to the end user.
+
+B: I want to contribute more.
+
+A -> B: I will try to work more with Kevin and maybe come up with new issues with the front end that might add value.
+        That way there will be front end stuff to review, the desigh of which the end user will actually care about.
+        This is however a complete U-turn compared to the mvp thought process we are trying to adopt which feels a bit dumb.
+
+What is my contribution towards the team's deliveries?
+A: Me and Kevin did some programming and finished the User Profile view and some related front end Edit functionality
+
+B: I need to learn firebase or find more front end stuff to do.
+
+A -> B: I will discuss with Kevin if we should learn firebase together or find new front end functionality to design.
