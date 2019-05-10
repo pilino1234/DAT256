@@ -1,5 +1,6 @@
 import unittest
 
+from model.delivery_request import DeliveryRequest, Status
 from model.user import User
 
 
@@ -99,3 +100,25 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, 100)
         user.withdraw(1000000)
         self.assertEqual(user.balance, 100)
+
+    def test_locking_money(self):
+        user = User("User1",
+                    "email@example.com",
+                    "1234567890",
+                    "",
+                    balance=100,
+                    rating=3)
+
+        request = DeliveryRequest("item",
+                                  "description\ntext",
+                                  "origin",
+                                  "destination",
+                                  reward=50,
+                                  weight=2,
+                                  fragile=True,
+                                  status=Status.AVAILABLE,
+                                  money_lock=0)
+
+        self.assertEqual(user.balance, 100)
+        user.lock_delivery_amount(request)
+        self.assertEqual(user.balance, 50)
