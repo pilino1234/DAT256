@@ -1,29 +1,10 @@
+#:import Card kivymd.cards.MDCard
+
 <GetTextDialog@MDInputDialog>:
     id: text_input
     result: ""
     on_touch_up: self.parent.do_edit(self.text_field)
     events_callback: self.parent.test_callback
-
-<AvatarEditPrompt>:
-    id: avatar_edit_prompt
-    size_hint: None, None
-    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-    MDCard:
-        size_hint: None, None
-        size:     dp(260), dp(105)
-        BoxLayout:
-            orientation: "horizontal"
-            padding: 30
-            spacing: 30
-            MDIconButton:
-                icon: 'camera'
-                on_release: avatar_edit_prompt.parent.do_avatar_edit("camera")
-            MDIconButton:
-                icon: 'image'
-                on_release: avatar_edit_prompt.parent.do_avatar_edit("image")
-            MDIconButton:
-                icon: 'download'
-                on_release: avatar_edit_prompt.parent.do_avatar_edit("download")
 
 <AnswerInput>:
     id: input_box
@@ -100,7 +81,7 @@
         Color:
             rgb: (1, 1, 1)
         Ellipse:
-            source: "model/user_image/jigglypuff.png"
+            source: "assets/jigglypuff.png"
             id: image_container
             pos: 250, 500
             size: 20, 20
@@ -114,6 +95,7 @@
         id:scroll_view
         do_scroll_x: False
         do_scroll_y: True
+
         BoxLayout:
             height: self.minimum_height
             id: scroll_view_container
@@ -121,6 +103,7 @@
             spacing: 30
             orientation: 'vertical'
             size_hint_y: None
+
             BoxLayout:
                 id: image_container
                 size_hint: None, None
@@ -132,14 +115,15 @@
                         Color:
                             rgb: (1, 1, 1)
                         Ellipse:
-                            source: "model/user_image/jigglypuff.png"
+                            source: "assets/jigglypuff.png"
                             id: image_container
                             angle_start: 0
                             angle_end: 360
                             size: 300, 300
                             pos: user_profile_view.size[0]/2-self.size[0]/2,0
+
                     MDIconButton:
                         id: avatar_edit_button
-                        icon: 'camera'
+                        icon: 'image'
                         pos: user_profile_view.size[0]/2+1.8*self.size[0], 0
-                        on_release: user_profile_view.request_avatar_edit()
+                        on_release: root.do_avatar_edit()
