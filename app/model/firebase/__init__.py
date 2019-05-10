@@ -1,14 +1,10 @@
 from google.cloud import firestore, storage  # type: ignore
-
+from google.cloud.storage.bucket import Bucket as GoogleBucket
 import random
-
 import string
-
-from model.firebase.bucket import Bucket
+import os
 
 _AUTO_ID_CHARS = string.ascii_letters + string.digits
-
-import os
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
 
@@ -25,7 +21,7 @@ class Firebase:
         return Firebase.db
 
     @staticmethod
-    def get_bucket() -> Bucket:
+    def get_bucket() -> GoogleBucket:
         """Fetch the common firebase storage bucket instance"""
         return Firebase.bucket
 

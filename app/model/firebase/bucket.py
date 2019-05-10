@@ -2,6 +2,7 @@ from model.firebase import Firebase
 
 from typing import Optional
 
+
 class Bucket:
     """Carrepsa Cloud Storage Bucket interface"""
 
