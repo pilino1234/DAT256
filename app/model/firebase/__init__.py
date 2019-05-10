@@ -4,7 +4,13 @@ import requests
 import json
 from google.auth import _helpers
 
+from kivy.app import App
+
 webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
+
+from kivy.storage.jsonstore import JsonStore
+
+credential_store = JsonStore('credentials.json')
 
 
 class Firebase:
@@ -14,11 +20,12 @@ class Firebase:
     _bucket: storage.Bucket = None
 
     @staticmethod
-    def sign_in_with_tokens(token, refresh_token):
-        credentials = FirebaseCredentials(token=token,
+    def sign_in_with_tokens(id_token, refresh_token):
+        credentials = FirebaseCredentials(token=id_token,
                                           refresh_token=refresh_token)
         Firebase.db = fs.Client(project="carrepsa", credentials=credentials)
-
+        app = App.get_running_app()
+        app.is_authenticated = True
 
     @staticmethod
     def sign_in(email, password):
@@ -33,13 +40,10 @@ class Firebase:
         sign_in_data = json.loads(sign_in_request.content.decode())
 
         if sign_in_request.ok == True:
-            idToken = sign_in_data['idToken']
+            id_token = sign_in_data['idToken']
             refresh_token = sign_in_data['refreshToken']
-            credentials = FirebaseCredentials(token=idToken,
-                                              refresh_token=refresh_token)
-            Firebase._db = fs.Client(project="carrepsa", credentials=credentials)
-
-            Firebase.sign_in_with_tokens(idToken, refresh_token)
+            credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token)
+            Firebase.sign_in_with_tokens(id_token, refresh_token)
 
             return True
 
@@ -84,4 +88,6 @@ class FirebaseCredentials(Credentials):
     def refresh(self, request):
         print("nah")
 
-Firebase.sign_in("portalsasdf@chalmers.it", "asdfasdf")
+
+if credential_store.exists('tokens'):
+    Firebase.sign_in_with_tokens(**credential_store.get('tokens'))
