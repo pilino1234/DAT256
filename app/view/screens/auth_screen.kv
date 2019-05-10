@@ -1,0 +1,29 @@
+#:import Router presenter.utils.router
+#:import Card presenter.utils.card
+#:import Login presenter.auth.login
+#:import Register presenter.auth.register
+#:import Forgot presenter.auth.forgot
+#:import Welcome presenter.auth.welcome
+
+<AuthScreen>:
+    BoxLayout:
+        padding: (10, 10)
+        Card:
+            bg_color: 1, 1, 1,1
+            elevation: 8
+            radius: 8
+
+            Router:
+                selected_route: "welcome"
+                Route:
+                    path: "welcome"
+                    Welcome:
+                Route:
+                    path: "login"
+                    Login:
+                Route:
+                    path: "register"
+                    Register:
+                Route:
+                    path: "forgot"
+                    Forgot:
