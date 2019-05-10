@@ -42,8 +42,7 @@ class Router(RelativeLayout):
         self._routes[route.path] = route
         super(Router, self).add_widget(route)
         if route.path == self.selected_route:
-            Clock.schedule_once(lambda *_: self._set_current_route(route.path),
-                                0)
+            Clock.schedule_once(lambda *_: self._set_current_route(route.path), 0)
 
     def _set_current_route(self, route_path: str):
         """Set the route that should be displayed"""
