@@ -25,7 +25,7 @@ class MyDeliveries(BoxLayout):
         Firestore.subscribe("packages", lambda *_: self._update_content())
 
     def _update_content(self):
-        """Fech my deliveries I have accepted"""
+        """Fetch all deliveries the current owner has accepted"""
         delivery_requests = DeliveryRequestGetter.query(
             u'assistant', u'==', u'pIAeLAvHXp0KZKWDzTMz')
 
