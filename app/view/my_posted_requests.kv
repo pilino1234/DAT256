@@ -1,5 +1,6 @@
 <MyPostedRequests>:
     BoxLayout:
+        id: content
         ScrollView:
             do_scroll_x: False
             do_scroll_y: True
@@ -15,6 +16,7 @@
 <MyPostedRequest>:
     size_hint: (1, None)
     height: 180
+    on_release: self.tap_callback(self.request)
 
     RelativeLayout:
         size: 40, 40
