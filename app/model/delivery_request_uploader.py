@@ -25,6 +25,7 @@ class DeliveryRequestUploader:
         :rtype: dict
         """
         req_dict: Dict[str, Union[str, float, int, bool]] = {}
+        req_dict.update({'uid': request.uid})
         req_dict.update({'item': request.item})
         req_dict.update({'description': request.description})
         req_dict.update({'origin': request.origin})
