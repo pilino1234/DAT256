@@ -4,9 +4,10 @@ from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
 
 
-class DictConverterTest(unittest.TestCase):
+class UploaderTest(unittest.TestCase):
     def test_conversion(self):
-        request = DeliveryRequest("item",
+        request = DeliveryRequest("abcdef",
+                                  "item",
                                   "description\ntext",
                                   "origin",
                                   "destination",
@@ -14,20 +15,25 @@ class DictConverterTest(unittest.TestCase):
                                   weight=2,
                                   fragile=True,
                                   status=Status.AVAILABLE,
-                                  money_lock=0)
+                                  money_lock=0,
+                                  owner='person A',
+                                  assistant='person B')
 
         request_dict = DeliveryRequestUploader._request_to_dict(request)
 
         expected = {
-            'description': 'description\ntext',
-            'destination': 'destination',
-            'fragile': True,
+            'uid': 'abcdef',
             'item': 'item',
-            'money_lock': 0,
+            'description': 'description\ntext',
             'origin': 'origin',
+            'destination': 'destination',
             'reward': 10,
+            'weight': 2,
+            'fragile': True,
             'status': 0,
-            'weight': 2
+            'money_lock': 0,
+            'owner': 'person A',
+            'assistant': 'person B'
         }
 
         self.assertDictEqual(
@@ -36,3 +42,22 @@ class DictConverterTest(unittest.TestCase):
             msg="The converted dict should equal the expected dict. "
             "You may want to check the data definition in the team "
             "GDrive to confirm all data is present and correct.")
+
+    def test_upload(self):
+        request = DeliveryRequest("abcdef",
+                                  "test",
+                                  "FEEL FREE TO REMOVE ME. I AM A TEST.",
+                                  "origin",
+                                  "destination",
+                                  reward=10,
+                                  weight=2,
+                                  fragile=True,
+                                  status=Status.AVAILABLE,
+                                  money_lock=0,
+                                  owner='person A',
+                                  assistant='person B')
+
+        try:
+            DeliveryRequestUploader.upload(request)
+        except:
+            self.fail()

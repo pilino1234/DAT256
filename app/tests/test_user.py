@@ -109,7 +109,8 @@ class UserTest(unittest.TestCase):
                     balance=100,
                     rating=3)
 
-        request = DeliveryRequest("item",
+        request = DeliveryRequest("id",
+                                  "item",
                                   "description\ntext",
                                   "origin",
                                   "destination",
@@ -117,7 +118,9 @@ class UserTest(unittest.TestCase):
                                   weight=2,
                                   fragile=True,
                                   status=Status.AVAILABLE,
-                                  money_lock=0)
+                                  money_lock=0,
+                                  owner="",
+                                  assistant="")
 
         self.assertEqual(user.balance, 100)
         user.lock_delivery_amount(request)

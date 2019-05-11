@@ -109,7 +109,9 @@ class DeliveryRequestForm(BoxLayout):
                                   status=Status.AVAILABLE,
                                   money_lock=int(
                                       self.ids.money_lock_amount.text),
-                                  owner='pIAeLAvHXp0KZKWDzTMz')
+                                  owner='pIAeLAvHXp0KZKWDzTMz',
+                                  assistant='',
+                                  uid='')
 
         user.lock_delivery_amount(request)
 
