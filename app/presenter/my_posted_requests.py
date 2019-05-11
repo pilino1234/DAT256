@@ -22,7 +22,7 @@ class MyPostedRequests(BoxLayout):
         Firestore.subscribe("packages", lambda *_: self._update_content())
 
     def _update_content(self):
-        """Fech my deliveries"""
+        """Fetch my posted deliveries"""
         from model.delivery_request_getter import DeliveryRequestGetter
         delivery_requests = DeliveryRequestGetter.query(
             u'owner', u'==', u'pIAeLAvHXp0KZKWDzTMz')
