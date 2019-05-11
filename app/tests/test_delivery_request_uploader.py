@@ -1,9 +1,13 @@
+import os
 import unittest
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
 
 
+@unittest.skipUnless(
+    os.path.exists(os.environ['GOOGLE_APPLICATION_CREDENTIALS']),
+    "keyfile.json not found")
 class UploaderTest(unittest.TestCase):
     def test_upload(self):
         request = DeliveryRequest("abcdef",
