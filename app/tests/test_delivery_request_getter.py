@@ -1,9 +1,13 @@
+import os
 import unittest
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_getter import DeliveryRequestGetter
 
 
+@unittest.skipUnless(
+    os.path.exists(os.environ['GOOGLE_APPLICATION_CREDENTIALS']),
+    "keyfile.json not found")
 class RequestGetterTest(unittest.TestCase):
     def test_query(self):
         delivery_requests = DeliveryRequestGetter.query(
