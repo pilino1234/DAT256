@@ -1,5 +1,6 @@
 from collections import namedtuple
 from enum import IntEnum
+from typing import Dict, Union
 
 
 class Status(IntEnum):
@@ -52,6 +53,29 @@ class DeliveryRequest:
                                                    money_lock=self.money_lock, weight=self.weight,
                                                    fragile=self.fragile, status=self.status,
                                                    description=self.description)
+
+    def to_dict(self) -> Dict[str, Union[str, float, int, bool]]:
+        """
+        Convert a DeliveryRequest object to a dict.
+
+        :return: A dict that can be used with third-party software.
+        :rtype: dict
+        """
+        req_dict: Dict[str, Union[str, float, int, bool]] = {}
+        req_dict.update({'uid': self.uid})
+        req_dict.update({'item': self.item})
+        req_dict.update({'description': self.description})
+        req_dict.update({'origin': self.origin})
+        req_dict.update({'destination': self.destination})
+        req_dict.update({'reward': self.reward})
+        req_dict.update({'weight': self.weight})
+        req_dict.update({'fragile': self.fragile})
+        req_dict.update({'status': self.status.value})
+        req_dict.update({'money_lock': self.money_lock})
+        req_dict.update({'owner': self.owner})
+        req_dict.update({'assistant': self.assistant})
+
+        return req_dict
 
     @property
     def distance_pretty(self) -> str:
