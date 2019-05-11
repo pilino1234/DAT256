@@ -17,6 +17,3 @@ class Firebase:
             Firebase._db = Client()
 
         return Firebase._db
-
-
-Firebase._db = Client()
