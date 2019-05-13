@@ -72,13 +72,13 @@
             MDLabel:
                 halign: "right"
                 theme_text_color: 'Primary'
-                text: "Password: "
+                text: "Password again: "
                 pos_hint: {'center_x': 0.5, 'center_y': 0.3}
 
         BoxLayout:
             padding: (20, 0)
             MDTextField:
-                id: password_tf
+                id: password_repeat_tf
                 required: True
                 helper_text_mode: 'on_error'
                 write_tab: False
@@ -99,9 +99,8 @@
         BoxLayout:
             padding: (20, 0)
             MDTextField:
-                id: password_tf
+                id: name_tf
                 required: True
-                password: True
                 helper_text_mode: 'on_error'
                 write_tab: False
 
@@ -122,9 +121,8 @@
         BoxLayout:
             padding: (20, 0)
             MDTextField:
-                id: password_repeat_tf
+                id: phonenumber_tf
                 required: True
-                password: True
                 helper_text_mode: 'on_error'
                 write_tab: False
 
@@ -136,4 +134,5 @@
     MDFillRoundFlatButton:
         id: login_button
         text: "Sign Up"
+        on_release: root.register()
         pos_hint: {'center_x': 0.5, 'center_y': .15}
