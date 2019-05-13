@@ -23,7 +23,6 @@ class DeliveryRequestDetail(BoxLayout):
         self.back_button_handler = back_button_handler
         self.is_owner = self.request.owner == 'pIAeLAvHXp0KZKWDzTMz'
         super(DeliveryRequestDetail, self).__init__(**kwargs)
-
         Clock.schedule_once(self._setup_action_button)
 
     def _setup_action_button(self, _):
@@ -83,10 +82,6 @@ class DeliveryRequestDetail(BoxLayout):
                     self.request.reward,
                 })
         self.back_button_handler()
-
-    def show_on_map_button_callback(self):
-        """Callback function for the Show On Map button."""
-        print("Got a callback from the show on map button!")
 
 
 class DetailLabel(BoxLayout):
