@@ -32,7 +32,8 @@ class DeliveryRequestTest(unittest.TestCase):
             'status': 0,
             'money_lock': 0,
             'owner': 'person A',
-            'assistant': 'person B'
+            'assistant': 'person B',
+            'image_path': ''
         }
 
         self.assertDictEqual(
