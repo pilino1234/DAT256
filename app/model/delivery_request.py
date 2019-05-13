@@ -24,7 +24,8 @@ class DeliveryRequest:
 
     def __init__(self, uid: str, item: str, description: str, origin: str,
                  destination: str, reward: int, weight: int, fragile: bool,
-                 status: Status, money_lock: int, owner: str, assistant: str):
+                 status: Status, money_lock: int, owner: str, assistant: str,
+                 **kwargs):
         """Initializes the delivery list"""
         self.uid = uid
         self.item = item

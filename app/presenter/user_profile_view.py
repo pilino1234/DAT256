@@ -45,12 +45,13 @@ class UserProfileView(RelativeLayout):
     avatar_edit_widget = ""
     _back_button_handler = ObjectProperty(None)
 
-    user_me = User(name="Jiggly Puff",
-                   email="jiggly@puff.com",
-                   phone="0706123123",
-                   avatar="something image related here, not used atm",
-                   balance=1498,
-                   rating=4.3)
+    user_me = User(
+        name="Jiggly Puff",
+        email="jiggly@puff.com",
+        phone="0706123123",
+        avatar="something image related here, not used atm",
+        balance=1498,
+        rating=4.3)
 
     user_viewing = user_me
 
@@ -75,7 +76,7 @@ class UserProfileView(RelativeLayout):
                                      self.user_viewing == self.user_me)
         self.ids.scroll_view_container.add_widget(self.phone_field)
 
-        self.email_field = MenuField("E-mail", self.user_viewing.email,
+        self.email_field = MenuField("Mail", self.user_viewing.email,
                                      self.user_viewing == self.user_me)
         self.ids.scroll_view_container.add_widget(self.email_field)
 
@@ -107,7 +108,7 @@ class UserProfileView(RelativeLayout):
         if field == "Name":
             self.widget_input.ids.title.text = field
             self.widget_input.ids.text_input.text = self.user_viewing.name
-        if field == "E-mail":
+        if field == "Mail":
             self.widget_input.ids.title.text = field
             self.widget_input.ids.text_input.text = self.user_viewing.email
         if field == "Phone":
@@ -134,7 +135,7 @@ class UserProfileView(RelativeLayout):
             self.user_me.name = text
         if self.field_editing == "Phone":
             self.user_me.phone = text
-        if self.field_editing == "E-mail":
+        if self.field_editing == "Mail":
             self.user_me.email = text
         if self.field_editing == "avatar":
             self.user_me.avatar = text
