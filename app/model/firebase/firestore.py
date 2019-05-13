@@ -51,51 +51,51 @@ class Firestore:
         return Firebase.get_db().collection(path)
 
 
-class _FirestoreBatch:
-    """
-    Firestore batch model.
-
-    For more details, see:
-    https://googleapis.github.io/google-cloud-python/latest/firestore/batch.html
-    """
-
-    _batch_ref: WriteBatch = None
-    _collection: CollectionReference = None
-
-    def __init__(self, batch_ref: WriteBatch, collection: CollectionReference):
-        """Initializes the batch reference and collection."""
-        self._batch_ref = batch_ref
-        self._collection = collection
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_type is None:
-            self.commit()
-
-    def create(self, document_data: dict):
+    class _FirestoreBatch:
         """
-        Create a document.
+        Firestore batch model.
 
-        This method generates a random, unique UID for the document.
+        For more details, see:
+        https://googleapis.github.io/google-cloud-python/latest/firestore/batch.html
         """
-        self._batch_ref.create(self._collection.document(), document_data)
 
-    def set(self, document: DocumentReference, document_data: dict):
-        """Replace document with new document data."""
-        self._batch_ref.set(self._collection.document(document), document_data,
-                            False)
+        _batch_ref: WriteBatch = None
+        _collection: CollectionReference = None
 
-    def update(self, document: DocumentReference, field_updates: dict):
-        """Update existing document with new data."""
-        self._batch_ref.update(self._collection.document(document),
-                               field_updates)
+        def __init__(self, batch_ref: WriteBatch, collection: CollectionReference):
+            """Initializes the batch reference and collection."""
+            self._batch_ref = batch_ref
+            self._collection = collection
 
-    def delete(self, document: DocumentReference):
-        """Delete document."""
-        self._batch_ref.delete(self._collection.document(document))
+        def __enter__(self):
+            return self
 
-    def commit(self):
-        """Commit changes."""
-        self._batch_ref.commit()
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            if exc_type is None:
+                self.commit()
+
+        def create(self, document_data: dict):
+            """
+            Create a document.
+
+            This method generates a random, unique UID for the document.
+            """
+            self._batch_ref.create(self._collection.document(), document_data)
+
+        def set(self, document: DocumentReference, document_data: dict):
+            """Replace document with new document data."""
+            self._batch_ref.set(self._collection.document(document), document_data,
+                                False)
+
+        def update(self, document: DocumentReference, field_updates: dict):
+            """Update existing document with new data."""
+            self._batch_ref.update(self._collection.document(document),
+                                   field_updates)
+
+        def delete(self, document: DocumentReference):
+            """Delete document."""
+            self._batch_ref.delete(self._collection.document(document))
+
+        def commit(self):
+            """Commit changes."""
+            self._batch_ref.commit()

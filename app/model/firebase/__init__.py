@@ -1,7 +1,6 @@
-from google.cloud import firestore, storage  # type: ignore
+from google.cloud import firestore as fs, storage  # type: ignore
 
 import os
-from google.cloud.storage import Bucket
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
 
@@ -13,7 +12,7 @@ class Firebase:
         """Fetch the common firebase db instance."""
 
         if not hasattr(Firebase, "_db"):
-            Firebase._db = firestore.Client()
+            Firebase._db = fs.Client()
 
         return Firebase._db
 
