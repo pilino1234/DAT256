@@ -17,12 +17,20 @@ class Bucket:
         blob.delete()
 
     @staticmethod
-    def download(path: str) -> Optional[str]:
+    def download_as_string(path: str) -> Optional[str]:
         """Downloads file from Firebase Storage"""
         blob = Firebase.get_bucket().get_blob(path)
         if blob is None:
             return None
         return blob.download_as_string()
+
+    @staticmethod
+    def get_url(path: str) -> Optional[str]:
+        """Downloads file from Firebase Storage"""
+        blob = Firebase.get_bucket().get_blob(path)
+        if blob is None:
+            return None
+        return blob.public_url()
 
     @staticmethod
     def upload(path_to_file: str):
@@ -41,5 +49,13 @@ class Bucket:
 
     @staticmethod
     def _auto_id():
-        """Generate a "random" automatically generated ID"""
+        """
+        Generate a "random" automatically generated ID.
+
+        Returns
+        -------
+            str: A 20 character string composed of digits, uppercase and
+            lowercase and letters.
+
+        """
         return "".join(random.choice(_AUTO_ID_CHARS) for _ in range(20))
