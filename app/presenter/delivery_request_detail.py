@@ -1,13 +1,14 @@
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty
+from kivymd.button import MDRaisedButton
+from kivy.metrics import dp
 from typing import Callable
 from kivy.clock import Clock
 
 from model.delivery_request import DeliveryRequest, Status
 from model.firebase.firestore import Firestore
 from model.user_getter import UserGetter
-from model.user import User
 
 from presenter.user_profile_view import UserProfileView
 
@@ -18,7 +19,7 @@ class DeliveryRequestDetail(BoxLayout):
     """Widget that shows details about a specific delivery request."""
 
     request = ObjectProperty(DeliveryRequest)
-    delivery_assistant = ObjectProperty(User)
+    delivery_assistant = ObjectProperty(None)
     _detail_view = ObjectProperty(None)
     _back_button_handler = ObjectProperty(None)
 
@@ -41,7 +42,7 @@ class DeliveryRequestDetail(BoxLayout):
 
         if user is not None:
             self.ids.assistant.description = user.name
-            self.ids.assistant.on_touch_up = self._transition_to_user_profile
+            self.ids.assistant.on_release = self._transition_to_user_profile
             self.delivery_assistant = user
         else:
             self.ids.stack.remove_widget(self.ids.assistant)
@@ -104,14 +105,13 @@ class DeliveryRequestDetail(BoxLayout):
                 })
         self._back_button_handler()
 
-    def _transition_to_user_profile(self, touch):
+    def _transition_to_user_profile(self):
         """Show the user profile of a specific user."""
-        if self.ids.assistant.collide_point(*touch.pos):
-            self.clear_widgets()
-            self.add_widget(
-                UserProfileView(
-                    user=self.delivery_assistant,
-                    back_button_handler=self._transition_to_detail_view))
+        self.clear_widgets()
+        self.add_widget(
+            UserProfileView(
+                user=self.delivery_assistant,
+                back_button_handler=self._transition_to_detail_view))
 
     def _transition_to_detail_view(self):
         """Show the detail view."""
@@ -119,13 +119,17 @@ class DeliveryRequestDetail(BoxLayout):
         self.add_widget(self._detail_view)
 
 
-class DetailLabel(BoxLayout):
+class DetailLabel(MDRaisedButton):
     """A pair of labels showing a title and a description for that title."""
 
-    pass
+    title = StringProperty()
+    description = StringProperty()
+    _radius = NumericProperty(dp(14))
 
 
-class DetailIcon(BoxLayout):
+class DetailIcon(MDRaisedButton):
     """A pair of labels showing a title and an icon accompanying that title."""
 
-    pass
+    title = StringProperty()
+    icon = StringProperty()
+    _radius = NumericProperty(dp(14))
