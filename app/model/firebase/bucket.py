@@ -1,3 +1,4 @@
+import datetime
 import random
 import string
 
@@ -25,20 +26,27 @@ class Bucket:
         return blob.download_as_string()
 
     @staticmethod
-    def get_url(path: str) -> Optional[str]:
+    def get_url(blob_name: str) -> Optional[str]:
         """Downloads file from Firebase Storage"""
-        blob = Firebase.get_bucket().get_blob(path)
+        try:
+            blob = Firebase.get_bucket().get_blob(blob_name)
+        except ValueError:
+            return ""
+
         if blob is None:
             return None
-        return blob.public_url()
+        return blob.generate_signed_url(datetime.timedelta(seconds=300),
+                                        method='GET')
 
     @staticmethod
     def upload(path_to_file: str):
         """Uploads from a file on the system"""
         file_extension = path_to_file.split(".")[-1]
-        blob = Firebase.get_bucket().blob(Bucket._auto_id() + "/img." +
-                                          file_extension)
+
+        blob_name = Bucket._auto_id() + "/img." + file_extension
+        blob = Firebase.get_bucket().blob(blob_name)
         blob.upload_from_filename(path_to_file)
+        return blob_name
 
     @staticmethod
     def upload_raw(data: str, file_extension):

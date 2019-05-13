@@ -23,9 +23,13 @@
                     text_color: 0.5, 0.5, 0.5, 1
                     on_release: root._back_button_handler()
 
+
                 DetailLabel:
                     title: "Item"
                     description: root.request.item
+
+                DetailImage:
+                    id: product_photo
 
                 DetailLabel:
                     title: "From"
@@ -179,7 +183,8 @@
             icon: root.icon
             text_color: (107 / 255, 200 / 255, 0 / 255, 1)
 
-<DetailUsers>:
+
+<DetailImage>:
     canvas.before:
         Color:
             rgba: 160/255, 160/255, 160/255, 1
@@ -190,10 +195,10 @@
     md_bg_color: 255/255, 255/255, 255/255, 1
     elevation_normal: 4
     size_hint: (1, None)
-    padding: dp(20)
+
     title: ""
-    icon: "chevron-left"
-    height: 100
+    source: ""
+    height: dp(250)
     ripple_alpha: 0
     disabled: True
 
@@ -212,9 +217,8 @@
             height: self.texture_size[1]
             text: root.title
 
-        HollowIcon:
-            size_hint: None, None
-            id: icon
-            theme_text_color: 'Custom'
-            icon: root.icon
-            text_color: (107 / 255, 200 / 255, 0 / 255, 1)
+        AsyncImage:
+            size_hint: dp(200), None
+            id: image
+            source: root.source
+            pos_hint: {'center_x': 0.5, 'center_y': .5}

@@ -1,3 +1,4 @@
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty
@@ -6,6 +7,7 @@ from kivy.metrics import dp
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest, Status
+from model.firebase.bucket import Bucket
 from model.firebase.firestore import Firestore
 from model.user_getter import UserGetter
 
@@ -32,7 +34,7 @@ class DeliveryRequestDetail(BoxLayout):
         super(DeliveryRequestDetail, self).__init__(**kwargs)
         self._detail_view = self.ids.detail_view.__self__
         self._setup_user_fields()
-        self._setup_action_button()
+        Clock.schedule_once(self._setup_ui)
 
     def _setup_user_fields(self):
         assistant = UserGetter.get_by_id(self.request.assistant)
@@ -55,8 +57,14 @@ class DeliveryRequestDetail(BoxLayout):
         else:
             self.ids.stack.remove_widget(owner_widget)
 
-    def _setup_action_button(self):
+    def _setup_ui(self, _):
+        image_source = Bucket.get_url(self.request.image_path)
+        photo_widget = self.ids.product_photo
         button = MDRaisedButton(size_hint=(1, None))
+        if image_source:
+            photo_widget.source = image_source
+        else:
+            photo_widget.parent.remove_widget(photo_widget)
 
         if self.is_owner:
             if self.request.status == Status.ACCEPTED:
@@ -124,8 +132,8 @@ class DeliveryRequestDetail(BoxLayout):
             batch.update(
                 self.request.assistant, {
                     'balance':
-                    assistant_balance + self.request.money_lock +
-                    self.request.reward,
+                        assistant_balance + self.request.money_lock +
+                        self.request.reward,
                 })
         self._back_button_handler()
 
@@ -166,6 +174,24 @@ class DetailIcon(MDRaisedButton):
 
     title = StringProperty()
     icon = StringProperty()
+    _radius = NumericProperty(dp(14))
+    md_bg_color_disabled = [1, 1, 1, 1]
+    md_bg_color_down = [1, 1, 1, 1]
+
+    def _get_md_bg_color_disabled(self):
+        """Override super class' behavior for this particular action."""
+        return 1, 1, 1, 1
+
+    def on_disabled(self, instance, value):
+        """Override super class' behavior for this particular action."""
+        self.elevation = self.elevation_normal
+
+
+class DetailImage(MDRaisedButton):
+    """A pair of labels showing a title and an icon accompanying that title."""
+
+    title = StringProperty()
+    source = StringProperty()
     _radius = NumericProperty(dp(14))
     md_bg_color_disabled = [1, 1, 1, 1]
     md_bg_color_down = [1, 1, 1, 1]
