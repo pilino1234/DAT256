@@ -81,7 +81,6 @@ class DeliveryList(RelativeLayout):
                         status=Status(data.get('status')),
                         money_lock=data.get('money_lock'),
                     )))
->>>>>>> Starts work with register
 
         self.hide_filter()
 
