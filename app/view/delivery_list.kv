@@ -1,38 +1,26 @@
 #:import UpdateSpinner presenter.delivery_list
 
 <DeliveryList>:
-    MDTabbedPanel:
+    FloatLayout:
         id: delivery_list
-        MDTab:
-            name: 'list'
-            text: "List"
+        BoxLayout:
+            ScrollView:
+                id: scroll_view
+                do_scroll_x: False
+                do_scroll_y: True
 
-            BoxLayout:
-                ScrollView:
-                    id: scroll_view
-                    do_scroll_x: False
-                    do_scroll_y: True
+                BoxLayout:
+                    id: available_requests
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    padding: 30
+                    spacing: 30
 
-                    BoxLayout:
-                        id: available_requests
-                        size_hint_y: None
-                        height: self.minimum_height
-                        orientation: 'vertical'
-                        padding: 30
-                        spacing: 30
-
-            FloatLayout:
-                UpdateSpinner:
-                    scroll: scroll_view
-                    event_update: lambda x: root._update_content(self)
-
-
-        MDTab:
-            name: 'map'
-            text: "Map"
-
-            MDLabel:
-                text: "Show map here"
+        FloatLayout:
+            UpdateSpinner:
+                scroll: scroll_view
+                event_update: lambda x: root._update_content(self)
 
 
 <WhiteCardButton>
