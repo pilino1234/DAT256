@@ -1,7 +1,7 @@
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
-from model.firebase import Firebase
+from model.firebase.auth import Auth
 
 Builder.load_file("view/auth/register.kv")
 
@@ -17,4 +17,4 @@ class Register(BoxLayout):
         phonenumber = self.ids.phonenumber_tf.text
 
         if(password == password_repeat):
-            Firebase.sign_up(email, password, name, phonenumber)
+            Auth.sign_up(email, password, name, phonenumber)
