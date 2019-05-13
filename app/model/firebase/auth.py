@@ -14,6 +14,7 @@ credential_store = JsonStore('credentials.json')
 webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
 
 class Auth:
+
     @staticmethod
     def sign_in_with_tokens(id_token, refresh_token):
         credentials = FirebaseCredentials(token=id_token,
@@ -21,6 +22,7 @@ class Auth:
         Firebase.db = fs.Client(project="carrepsa", credentials=credentials)
         app = App.get_running_app()
         app.is_authenticated = True
+        credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token)
 
     @staticmethod
     def sign_in(email, password):
