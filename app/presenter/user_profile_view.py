@@ -75,9 +75,9 @@ class UserProfileView(RelativeLayout):
                                      self.user_viewing == self.user_me)
         self.ids.scroll_view_container.add_widget(self.phone_field)
 
-        self.email_field = MenuField("Mail", self.user_viewing.email,
-                                     self.user_viewing == self.user_me)
-        self.ids.scroll_view_container.add_widget(self.email_field)
+        self.mail_field = MenuField("Mail", self.user_viewing.mail,
+                                    self.user_viewing == self.user_me)
+        self.ids.scroll_view_container.add_widget(self.mail_field)
 
         if self.user_viewing == self.user_me:
             self.balance_field = MenuField(
@@ -97,7 +97,7 @@ class UserProfileView(RelativeLayout):
         """Update displayed information from the user data."""
         self.name_field.set_data(self.user_viewing.name)
         self.phone_field.set_data(self.user_viewing.phone)
-        self.email_field.set_data(self.user_viewing.email)
+        self.mail_field.set_data(self.user_viewing.mail)
         self.balance_field.set_data(str(self.user_viewing.balance) + " SEK")
         self.rating_field.set_data(str(self.user_viewing.rating) + " / 5")
 
@@ -109,7 +109,7 @@ class UserProfileView(RelativeLayout):
             self.widget_input.ids.text_input.text = self.user_viewing.name
         if field == "Mail":
             self.widget_input.ids.title.text = field
-            self.widget_input.ids.text_input.text = self.user_viewing.email
+            self.widget_input.ids.text_input.text = self.user_viewing.mail
         if field == "Phone":
             self.widget_input.ids.title.text = field
             self.widget_input.ids.text_input.text = self.user_viewing.phone
@@ -135,7 +135,7 @@ class UserProfileView(RelativeLayout):
         if self.field_editing == "Phone":
             self.user_me.phone = text
         if self.field_editing == "Mail":
-            self.user_me.email = text
+            self.user_me.mail = text
         if self.field_editing == "avatar":
             self.user_me.avatar = text
 
