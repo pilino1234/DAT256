@@ -5,6 +5,7 @@ from kivymd.textfields import MDTextField
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
+from model.firebase.bucket import Bucket
 from model.user import User
 from presenter.user_profile_view import UserProfileView
 
@@ -111,7 +112,8 @@ class DeliveryRequestForm(BoxLayout):
 
         # TODO: Image path should refer to the firestore location,
         #  but local file location is used temporarily for testing
-        firestore_image_path = self.photo_path
+
+        firestore_image_path = Bucket.upload(self.photo_path)
 
         request = DeliveryRequest(item=self.ids.package_name.text,
                                   description=self.ids.description_text.text,
