@@ -95,7 +95,6 @@
         id:scroll_view
         do_scroll_x: False
         do_scroll_y: True
-
         BoxLayout:
             height: self.minimum_height
             id: scroll_view_container
@@ -103,6 +102,15 @@
             spacing: 30
             orientation: 'vertical'
             size_hint_y: None
+
+            MDIconButton:
+                id: back_button
+                size_hint: None, None
+                size: 50, 50
+                icon: 'chevron-left'
+                theme_text_color: 'Custom'
+                text_color: 0.5, 0.5, 0.5, 1
+                on_release: root._back_button_handler()
 
             BoxLayout:
                 id: image_container
