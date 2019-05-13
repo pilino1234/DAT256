@@ -110,9 +110,6 @@ class DeliveryRequestForm(BoxLayout):
         #        else:
         #            user.lock_delivery_amount(payment_amount)
 
-        # TODO: Image path should refer to the firestore location,
-        #  but local file location is used temporarily for testing
-
         firestore_image_path = Bucket.upload(self.photo_path)
 
         request = DeliveryRequest(item=self.ids.package_name.text,
