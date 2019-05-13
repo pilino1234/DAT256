@@ -1,15 +1,12 @@
 from kivy.lang import Builder
-
 from kivy.uix.relativelayout import RelativeLayout
-
-from model.user import User
-from kivy.clock import Clock
 from kivy.metrics import dp
 from kivy.properties import NumericProperty, ObjectProperty
-
 from kivymd.button import MDRaisedButton
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
+
+from model.user import User
 
 Builder.load_file("view/user_profile_view.kv")
 

@@ -4,7 +4,6 @@ from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivymd.button import MDRaisedButton
 from kivy.metrics import dp
 from typing import Callable
-from kivy.clock import Clock
 
 from model.delivery_request import DeliveryRequest, Status
 from model.firebase.firestore import Firestore
@@ -32,7 +31,7 @@ class DeliveryRequestDetail(BoxLayout):
         super(DeliveryRequestDetail, self).__init__(**kwargs)
         self._detail_view = self.ids.detail_view.__self__
         self._setup_assistant_field()
-        Clock.schedule_once(self._setup_action_button)
+        self._setup_action_button()
 
     def _setup_assistant_field(self):
         if self.request.assistant is not None and self.request.assistant != "":
@@ -42,12 +41,11 @@ class DeliveryRequestDetail(BoxLayout):
 
         if user is not None:
             self.ids.assistant.description = user.name
-            self.ids.assistant.on_release = self._transition_to_user_profile
             self.delivery_assistant = user
         else:
             self.ids.stack.remove_widget(self.ids.assistant)
 
-    def _setup_action_button(self, _):
+    def _setup_action_button(self):
         if self.is_owner:
             if self.request.status == Status.ACCEPTED:
                 self.ids.action_button.text = "Confirm Pickup"
@@ -125,6 +123,16 @@ class DetailLabel(MDRaisedButton):
     title = StringProperty()
     description = StringProperty()
     _radius = NumericProperty(dp(14))
+    md_bg_color_disabled = [1, 1, 1, 1]
+    md_bg_color_down = [1, 1, 1, 1]
+
+    def _get_md_bg_color_disabled(self):
+        """Override super class' behavior for this particular action."""
+        return 1, 1, 1, 1
+
+    def on_disabled(self, instance, value):
+        """Override super class' behavior for this particular action."""
+        self.elevation = self.elevation_normal
 
 
 class DetailIcon(MDRaisedButton):
@@ -133,3 +141,13 @@ class DetailIcon(MDRaisedButton):
     title = StringProperty()
     icon = StringProperty()
     _radius = NumericProperty(dp(14))
+    md_bg_color_disabled = [1, 1, 1, 1]
+    md_bg_color_down = [1, 1, 1, 1]
+
+    def _get_md_bg_color_disabled(self):
+        """Override super class' behavior for this particular action."""
+        return 1, 1, 1, 1
+
+    def on_disabled(self, instance, value):
+        """Override super class' behavior for this particular action."""
+        self.elevation = self.elevation_normal
