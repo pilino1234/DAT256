@@ -4,7 +4,7 @@ from google.cloud.firestore_v1.batch import WriteBatch
 from google.cloud.firestore_v1.collection import CollectionReference
 from google.cloud.firestore_v1.document import DocumentReference
 
-from model.firebase import Firebase
+from model.firebase.firebase import Firebase
 
 
 class Firestore:
@@ -74,7 +74,7 @@ class _FirestoreBatch:
         if exc_type is None:
             self.commit()
 
-    def create(self, document_data: dict):
+    def create_with_random_id(self, document_data: dict):
         """
         Create a document.
 
@@ -84,8 +84,15 @@ class _FirestoreBatch:
         self._batchRef.create(document, document_data)
         return document.id
 
+    def create(self, document: DocumentReference, document_data: dict):
+        """Create a document."""
+        self._batchRef.create(self._collection.document(document), document_data)
+
     def set(self, document: DocumentReference, document_data: dict):
         """Replace document with new document data."""
+
+        print(document)
+
         self._batchRef.set(self._collection.document(document), document_data,
                            False)
 
