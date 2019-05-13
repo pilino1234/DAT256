@@ -13,13 +13,13 @@ class Bucket:
     @staticmethod
     def delete(path: str):
         """Deletes a file from Firebase Storage"""
-        blob = Firebase.bucket.get_blob(path)
+        blob = Firebase.get_bucket().get_blob(path)
         blob.delete()
 
     @staticmethod
     def download(path: str) -> Optional[str]:
         """Downloads file from Firebase Storage"""
-        blob = Firebase.bucket.get_blob(path)
+        blob = Firebase.get_bucket().get_blob(path)
         if blob is None:
             return None
         return blob.download_as_string()
@@ -28,9 +28,16 @@ class Bucket:
     def upload(path_to_file: str):
         """Uploads from a file on the system"""
         file_extension = path_to_file.split(".")[-1]
-        blob = Firebase.bucket.blob(Bucket._auto_id() + "/img." +
+        blob = Firebase.get_bucket().blob(Bucket._auto_id() + "/img." +
                                     file_extension)
         blob.upload_from_filename(path_to_file)
+
+    @staticmethod
+    def upload_raw(data: str, file_extension):
+        """Uploads from a file on the system"""
+        blob = Firebase.get_bucket().blob(Bucket._auto_id() + "/img." +
+                                    file_extension)
+        blob.upload_from_string(data)
 
     @staticmethod
     def _auto_id():
