@@ -10,7 +10,7 @@ class User:
                  balance: int, rating: float, **kwargs):
         """Initializes the user using kwargs."""
         self.name = name
-        self.email = mail
+        self.mail = mail
         self.phone = phone
         self.avatar = avatar
         self.balance = balance
@@ -55,4 +55,4 @@ class User:
 
     def __eq__(self, other):
         """Checks equality between users using their mail."""
-        return self.email == other.email
+        return self.mail == other.mail
