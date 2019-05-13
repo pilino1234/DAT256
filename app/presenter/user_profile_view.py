@@ -45,13 +45,12 @@ class UserProfileView(RelativeLayout):
     avatar_edit_widget = ""
     _back_button_handler = ObjectProperty(None)
 
-    user_me = User(
-        name="Jiggly Puff",
-        mail="jiggly@puff.com",
-        phone="0706123123",
-        avatar="something image related here, not used atm",
-        balance=1498,
-        rating=4.3)
+    user_me = User(name="Jiggly Puff",
+                   mail="jiggly@puff.com",
+                   phone="0706123123",
+                   avatar="something image related here, not used atm",
+                   balance=1498,
+                   rating=4.3)
 
     user_viewing = user_me
 
@@ -64,9 +63,9 @@ class UserProfileView(RelativeLayout):
             self._back_button_handler = kwargs['back_button_handler']
         else:
             self.ids.scroll_view_container.remove_widget(self.ids.back_button)
-        Clock.schedule_once(self._init_content)
+        self._init_content()
 
-    def _init_content(self, wtf):
+    def _init_content(self):
         """Initializes the user profile."""
         self.name_field = MenuField("Name", self.user_viewing.name,
                                     self.user_viewing == self.user_me)

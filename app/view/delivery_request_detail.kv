@@ -4,15 +4,6 @@
     BoxLayout:
         id: detail_view
         orientation: "vertical"
-        padding: 30, 30
-
-        MDIconButton:
-            size_hint: None, None
-            size: 50, 50
-            icon: 'chevron-left'
-            theme_text_color: 'Custom'
-            text_color: 0.5, 0.5, 0.5, 1
-            on_release: root._back_button_handler()
 
         ScrollView:
             id: detailScrollView
@@ -20,8 +11,17 @@
                 id: stack
                 size_hint_y: None
                 height: self.minimum_height
-                padding: [20, 10]
-                spacing: 25
+                padding: [30, 30, 30, 0]
+                spacing: 30
+
+                MDIconButton:
+                    id: back_button
+                    size_hint: None, None
+                    size: 50, 50
+                    icon: 'chevron-left'
+                    theme_text_color: 'Custom'
+                    text_color: 0.5, 0.5, 0.5, 1
+                    on_release: root._back_button_handler()
 
                 DetailLabel:
                     title: "Item"
@@ -30,18 +30,26 @@
                 DetailLabel:
                     title: "From"
                     description: root.request.origin
+                    size_hint_x: 0.5
 
                 DetailLabel:
                     title: "To"
                     description: root.request.destination
+                    size_hint_x: 0.5
+
+                DetailLabel:
+                    title: "Delivery Distance"
+                    description: root.request.distance_pretty
 
                 DetailLabel:
                     id: assistant
                     title: "Assistant"
 
-                DetailLabel:
-                    title: "Delivery Distance"
-                    description: root.request.distance_pretty
+                    RelativeLayout:
+                        size: 40, 40
+                        HollowIcon:
+                            pos: self.parent.width-self.width, self.parent.height/2-self.height/2
+                            icon: 'chevron-right'
 
                 DetailIcon:
                     title: "Weight"
@@ -74,53 +82,81 @@
                     text: ""
 
 <DetailLabel>:
-    orientation: "vertical"
-    size_hint_y: None
-    height: self.minimum_height
-    spacing: 7
-    title: ""
-    description: ""
+    canvas.before:
+        Color:
+            rgba: 160/255, 160/255, 160/255, 1
 
-    MDLabel:
-        id: title
-        font_style: 'H6'
-        text_size: self.width, None
-        color: 0, 0, 0, 1
-        size_hint_y: None
-        height: self.texture_size[1]
-        text: root.title
+    padding: [30, 0, 30, 0]
+    theme_text_color: 'Custom'
+    text_color: root.theme_cls.primary_color
+    md_bg_color: 255/255, 255/255, 255/255, 1
+    elevation_normal: 4
+    size_hint: (1, None)
+    padding: dp(20), dp(0)
+    height: 100
 
-    MDLabel:
-        id: description
-        font_style: 'Body1'
-        font_size: 16
-        text_size: root.width, None
-        color: 0, 0, 0, 1
+    BoxLayout:
+        id: container
+        orientation: "vertical"
         size_hint_y: None
-        height: self.texture_size[1]
-        text: root.description
+        height: self.minimum_height
+        spacing: 7
+        title: ""
+        description: ""
+
+        MDLabel:
+            id: title
+            font_style: 'H6'
+            text_size: self.width, None
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: self.texture_size[1]
+            text: root.title
+
+        MDLabel:
+            id: description
+            font_style: 'Body1'
+            font_size: 16
+            text_size: root.width, None
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: self.texture_size[1]
+            text: root.description
 
 <DetailIcon>:
-    orientation: "vertical"
-    size_hint_y: None
-    height: self.minimum_height
-    spacing: -8
+    canvas.before:
+        Color:
+            rgba: 160/255, 160/255, 160/255, 1
+
+    padding: [30, 0, 30, 0]
+    theme_text_color: 'Custom'
+    text_color: root.theme_cls.primary_color
+    md_bg_color: 255/255, 255/255, 255/255, 1
+    elevation_normal: 4
+    size_hint: (1, None)
+    padding: dp(20)
     title: ""
     icon: "chevron-left"
+    height: 100
 
-    MDLabel:
-        id: title
-        font_style: 'H6'
-        text_size: self.width, None
-        color: 0, 0, 0, 1
+    BoxLayout:
+        id: container
+        orientation: "vertical"
         size_hint_y: None
-        height: self.texture_size[1]
-        text: root.title
+        height: self.minimum_height
 
-    HollowIcon:
-        size_hint: None, None
-        padding: -20, 0, 0, 0
-        id: icon
-        theme_text_color: 'Custom'
-        icon: root.icon
-        text_color: (107 / 255, 200 / 255, 0 / 255, 1)
+        MDLabel:
+            id: title
+            font_style: 'H6'
+            text_size: self.width, None
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: self.texture_size[1]
+            text: root.title
+
+        HollowIcon:
+            size_hint: None, None
+            id: icon
+            theme_text_color: 'Custom'
+            icon: root.icon
+            text_color: (107 / 255, 200 / 255, 0 / 255, 1)
