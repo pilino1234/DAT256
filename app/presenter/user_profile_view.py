@@ -47,7 +47,7 @@ class UserProfileView(RelativeLayout):
 
     user_me = User(
         name="Jiggly Puff",
-        email="jiggly@puff.com",
+        mail="jiggly@puff.com",
         phone="0706123123",
         avatar="something image related here, not used atm",
         balance=1498,
