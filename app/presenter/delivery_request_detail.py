@@ -6,6 +6,10 @@ from kivy.clock import Clock
 
 from model.delivery_request import DeliveryRequest, Status
 from model.firebase.firestore import Firestore
+from model.user_getter import UserGetter
+from model.user import User
+
+from presenter.user_profile_view import UserProfileView
 
 Builder.load_file("view/delivery_request_detail.kv")
 
@@ -14,16 +18,33 @@ class DeliveryRequestDetail(BoxLayout):
     """Widget that shows details about a specific delivery request."""
 
     request = ObjectProperty(DeliveryRequest)
-    back_button_handler = ObjectProperty(None)
+    delivery_assistant = ObjectProperty(User)
+    _detail_view = ObjectProperty(None)
+    _back_button_handler = ObjectProperty(None)
 
     def __init__(self, back_button_handler: Callable, request: DeliveryRequest,
                  **kwargs):
         """Initializes a DeliveryRequestDetail"""
         self.request = request
-        self.back_button_handler = back_button_handler
+        self._back_button_handler = back_button_handler
         self.is_owner = self.request.owner == 'pIAeLAvHXp0KZKWDzTMz'
         super(DeliveryRequestDetail, self).__init__(**kwargs)
+        self._detail_view = self.ids.detail_view.__self__
+        self._setup_assistant_field()
         Clock.schedule_once(self._setup_action_button)
+
+    def _setup_assistant_field(self):
+        if self.request.assistant is not None and self.request.assistant != "":
+            user = UserGetter.get_by_id(self.request.assistant)
+        else:
+            user = None
+
+        if user is not None:
+            self.ids.assistant.description = user.name
+            self.ids.assistant.on_touch_up = self._transition_to_user_profile
+            self.delivery_assistant = user
+        else:
+            self.ids.stack.remove_widget(self.ids.assistant)
 
     def _setup_action_button(self, _):
         if self.is_owner:
@@ -49,7 +70,7 @@ class DeliveryRequestDetail(BoxLayout):
                 'status': Status.ACCEPTED,
                 'assistant': u'pIAeLAvHXp0KZKWDzTMz'
             })
-        self.back_button_handler()
+        self._back_button_handler()
 
     def confirm_pickup(self):
         """Confirm the delivery as picked up, as the current user."""
@@ -57,7 +78,7 @@ class DeliveryRequestDetail(BoxLayout):
             batch.update(self.request.uid, {
                 'status': Status.TRAVELLING,
             })
-        self.back_button_handler()
+        self._back_button_handler()
 
     def confirm_delivery(self):
         """
@@ -81,7 +102,21 @@ class DeliveryRequestDetail(BoxLayout):
                     assistant_balance + self.request.money_lock +
                     self.request.reward,
                 })
-        self.back_button_handler()
+        self._back_button_handler()
+
+    def _transition_to_user_profile(self, touch):
+        """Show the user profile of a specific user."""
+        if self.ids.assistant.collide_point(*touch.pos):
+            self.clear_widgets()
+            self.add_widget(
+                UserProfileView(
+                    user=self.delivery_assistant,
+                    back_button_handler=self._transition_to_detail_view))
+
+    def _transition_to_detail_view(self):
+        """Show the detail view."""
+        self.clear_widgets()
+        self.add_widget(self._detail_view)
 
 
 class DetailLabel(BoxLayout):

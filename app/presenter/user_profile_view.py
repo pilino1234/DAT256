@@ -5,7 +5,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from model.user import User
 from kivy.clock import Clock
 from kivy.metrics import dp
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, ObjectProperty
 
 from kivymd.button import MDRaisedButton
 from kivy.uix.boxlayout import BoxLayout
@@ -43,11 +43,12 @@ class UserProfileView(RelativeLayout):
     field_editing = ""  # Keep track of which field is being edited (if any)
     widget_input = ""  # Keep track of widget for getting input in order to be able to delete it.
     avatar_edit_widget = ""
+    _back_button_handler = ObjectProperty(None)
 
-    user_me = User("Jiggly Puff",
-                   "jiggly@puff.com",
-                   "0706123123",
-                   "something image related here, not used atm",
+    user_me = User(name="Jiggly Puff",
+                   email="jiggly@puff.com",
+                   phone="0706123123",
+                   avatar="something image related here, not used atm",
                    balance=1498,
                    rating=4.3)
 
@@ -55,7 +56,13 @@ class UserProfileView(RelativeLayout):
 
     def __init__(self, **kwargs):
         """Initializes the user profile."""
-        super(RelativeLayout, self).__init__(**kwargs)
+        super(RelativeLayout, self).__init__()
+        if 'user' in kwargs:
+            self.user_viewing = kwargs['user']
+        if 'back_button_handler' in kwargs:
+            self._back_button_handler = kwargs['back_button_handler']
+        else:
+            self.ids.scroll_view_container.remove_widget(self.ids.back_button)
         Clock.schedule_once(self._init_content)
 
     def _init_content(self, wtf):

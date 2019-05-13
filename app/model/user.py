@@ -6,15 +6,14 @@ from model.delivery_request import DeliveryRequest
 class User:
     """Represents a user's account."""
 
-    def __init__(self, name: str, email: str, phone: str, avatar: str,
-                 balance: int, rating: float):
-        """Initializes the user."""
-        self.name = name
-        self.email = email
-        self.phone = phone
-        self.avatar = avatar
-        self.balance = balance
-        self.rating = rating
+    def __init__(self, **kwargs):
+        """Initializes the user using kwargs."""
+        self.name = kwargs['name'] if 'name' in kwargs else ""
+        self.email = kwargs['mail'] if 'mail' in kwargs else ""
+        self.phone = kwargs['phone'] if 'phone' in kwargs else ""
+        self.avatar = kwargs['avatar'] if 'avatar' in kwargs else None
+        self.balance = kwargs['balance'] if 'balance' in kwargs else 0
+        self.rating = kwargs['rating'] if 'rating' in kwargs else None
 
         self._delivery_reservations: List[DeliveryRequest] = []
 

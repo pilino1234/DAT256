@@ -1,69 +1,77 @@
 #:import MDIconButton kivymd.button.MDIconButton
 
-
 <DeliveryRequestDetail>:
-    orientation: "vertical"
-    MDIconButton:
-        size_hint: None, None
-        size: 50, 50
-        icon: 'chevron-left'
-        theme_text_color: 'Custom'
-        text_color: 0.5, 0.5, 0.5, 1
-        on_release: root.back_button_handler()
-    ScrollView:
-        id: detailScrollView
-        StackLayout:
-            id: stack
-            size_hint_y: None
-            height: self.minimum_height
-            padding: [20, 10]
-            spacing: 25
+    BoxLayout:
+        id: detail_view
+        orientation: "vertical"
+        padding: 30, 30
 
-            DetailLabel:
-                title: "Item"
-                description: root.request.item
+        MDIconButton:
+            size_hint: None, None
+            size: 50, 50
+            icon: 'chevron-left'
+            theme_text_color: 'Custom'
+            text_color: 0.5, 0.5, 0.5, 1
+            on_release: root._back_button_handler()
 
-            DetailLabel:
-                title: "From"
-                description: root.request.origin
+        ScrollView:
+            id: detailScrollView
+            StackLayout:
+                id: stack
+                size_hint_y: None
+                height: self.minimum_height
+                padding: [20, 10]
+                spacing: 25
 
-            DetailLabel:
-                title: "To"
-                description: root.request.destination
+                DetailLabel:
+                    title: "Item"
+                    description: root.request.item
 
-            DetailLabel:
-                title: "Delivery Distance"
-                description: root.request.distance_pretty
+                DetailLabel:
+                    title: "From"
+                    description: root.request.origin
 
-            DetailIcon:
-                title: "Weight"
-                icon: root.request.weight_icon
-                size_hint_x: 0.5
+                DetailLabel:
+                    title: "To"
+                    description: root.request.destination
 
-            DetailLabel:
-                title: "Fragile"
-                description: "Yes" if root.request.fragile else "No"
-                size_hint_x: 0.5
+                DetailLabel:
+                    id: assistant
+                    title: "Assistant"
 
-            DetailLabel:
-                title: "Reward"
-                description: "$ " + str(root.request.reward)
-                size_hint_x: 0.5
+                DetailLabel:
+                    title: "Delivery Distance"
+                    description: root.request.distance_pretty
 
-            DetailLabel:
-                title: "Money Lock"
-                description: "$ " + str(root.request.money_lock)
-                size_hint_x: 0.5
+                DetailIcon:
+                    title: "Weight"
+                    icon: root.request.weight_icon
+                    size_hint_x: 0.5
 
-            DetailLabel:
-                title: "Description"
-                description: root.request.description
-                size_hint_x: 1
+                DetailLabel:
+                    title: "Fragile"
+                    description: "Yes" if root.request.fragile else "No"
+                    size_hint_x: 0.5
 
-            MDRaisedButton:
-                id: action_button
-                size_hint: (0.5, None)
-                text: ""
+                DetailLabel:
+                    title: "Reward"
+                    description: "$ " + str(root.request.reward)
+                    size_hint_x: 0.5
+
+                DetailLabel:
+                    title: "Money Lock"
+                    description: "$ " + str(root.request.money_lock)
+                    size_hint_x: 0.5
+
+                DetailLabel:
+                    title: "Description"
+                    description: root.request.description
+                    size_hint_x: 1
+
+                MDRaisedButton:
+                    id: action_button
+                    size_hint: (0.5, None)
+                    text: ""
 
 <DetailLabel>:
     orientation: "vertical"
