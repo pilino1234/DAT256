@@ -44,6 +44,9 @@
                 DetailLabel:
                     id: assistant
                     title: "Assistant"
+                    on_release: root._transition_to_user_profile()
+                    ripple_alpha: 0.5
+                    disabled: False
 
                     RelativeLayout:
                         size: 40, 40
@@ -94,6 +97,8 @@
     size_hint: (1, None)
     padding: dp(20), dp(0)
     height: 100
+    ripple_alpha: 0
+    disabled: True
 
     BoxLayout:
         id: container
@@ -138,6 +143,8 @@
     title: ""
     icon: "chevron-left"
     height: 100
+    ripple_alpha: 0
+    disabled: True
 
     BoxLayout:
         id: container
