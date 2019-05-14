@@ -15,8 +15,9 @@ class Firestore:
     @staticmethod
     def subscribe(path: str, callback: Callable):
         """Subscribes to a collection, executing callback whenever the collection is updated."""
-        Firestore.refs[path] = Firebase.get_db().collection(path)
-        Firestore.refs[path].on_snapshot(callback)
+        Firestore.refs[path] = Firebase.get_db().collection(path).on_snapshot(
+            callback)
+        return Firestore.refs[path]
 
     @staticmethod
     def unsubscribe(path: str):
@@ -80,7 +81,9 @@ class _FirestoreBatch:
 
         This method generates a random, unique UID for the document.
         """
-        self._batchRef.create(self._collection.document(), document_data)
+        document: DocumentReference = self._collection.document()
+        self._batchRef.create(document, document_data)
+        return document.id
 
     def set(self, document: DocumentReference, document_data: dict):
         """Replace document with new document data."""

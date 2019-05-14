@@ -132,8 +132,8 @@ class DeliveryRequestDetail(BoxLayout):
             batch.update(
                 self.request.assistant, {
                     'balance':
-                        assistant_balance + self.request.money_lock +
-                        self.request.reward,
+                    assistant_balance + self.request.money_lock +
+                    self.request.reward,
                 })
         self._back_button_handler()
 

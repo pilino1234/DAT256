@@ -3,11 +3,9 @@ import unittest
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
+from model.firebase.bucket import Bucket
 
 
-@unittest.skipUnless(
-    os.path.exists(os.environ['GOOGLE_APPLICATION_CREDENTIALS']),
-    "keyfile.json not found")
 class UploaderTest(unittest.TestCase):
     def test_upload(self):
         request = DeliveryRequest("abcdef",
@@ -23,7 +21,10 @@ class UploaderTest(unittest.TestCase):
                                   owner='person A',
                                   assistant='person B')
 
-        try:
-            DeliveryRequestUploader.upload(request)
-        except:
-            self.fail()
+        DeliveryRequestUploader.upload(request)
+
+    def test_get_invalid_url_should_return_empty_string(self):
+        something = Bucket.get_url("some_invalid_url")
+        self.assertIsNone(something)
+        something = Bucket.get_url(45)
+        self.assertIsNone(something)

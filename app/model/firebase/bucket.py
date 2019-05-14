@@ -31,7 +31,7 @@ class Bucket:
         try:
             blob = Firebase.get_bucket().get_blob(blob_name)
         except ValueError:
-            return ""
+            return None
 
         if blob is None:
             return None
