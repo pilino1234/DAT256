@@ -44,8 +44,9 @@
                 DetailLabel:
                     id: assistant
                     title: "Assistant"
-                    on_release: root._transition_to_user_profile()
+                    on_release: root._transition_to_user_profile(root.delivery_assistant)
                     ripple_alpha: 0.5
+                    size_hint_x: 0.5
                     disabled: False
 
                     RelativeLayout:
@@ -53,6 +54,21 @@
                         HollowIcon:
                             pos: self.parent.width-self.width, self.parent.height/2-self.height/2
                             icon: 'chevron-right'
+
+                DetailLabel:
+                    id: owner
+                    title: "Owner"
+                    on_release: root._transition_to_user_profile(root.delivery_owner)
+                    ripple_alpha: 0.5
+                    size_hint_x: 0.5
+                    disabled: False
+
+                    RelativeLayout:
+                        size: 40, 40
+                        HollowIcon:
+                            pos: self.parent.width-self.width, self.parent.height/2-self.height/2
+                            icon: 'chevron-right'
+
 
                 DetailIcon:
                     title: "Weight"
@@ -129,6 +145,46 @@
             text: root.description
 
 <DetailIcon>:
+    canvas.before:
+        Color:
+            rgba: 160/255, 160/255, 160/255, 1
+
+    padding: [30, 0, 30, 0]
+    theme_text_color: 'Custom'
+    text_color: root.theme_cls.primary_color
+    md_bg_color: 255/255, 255/255, 255/255, 1
+    elevation_normal: 4
+    size_hint: (1, None)
+    padding: dp(20)
+    title: ""
+    icon: "chevron-left"
+    height: 100
+    ripple_alpha: 0
+    disabled: True
+
+    BoxLayout:
+        id: container
+        orientation: "vertical"
+        size_hint_y: None
+        height: self.minimum_height
+
+        MDLabel:
+            id: title
+            font_style: 'H6'
+            text_size: self.width, None
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: self.texture_size[1]
+            text: root.title
+
+        HollowIcon:
+            size_hint: None, None
+            id: icon
+            theme_text_color: 'Custom'
+            icon: root.icon
+            text_color: (107 / 255, 200 / 255, 0 / 255, 1)
+
+<DetailUsers>:
     canvas.before:
         Color:
             rgba: 160/255, 160/255, 160/255, 1

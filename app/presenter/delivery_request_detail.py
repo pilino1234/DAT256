@@ -19,6 +19,7 @@ class DeliveryRequestDetail(BoxLayout):
 
     request = ObjectProperty(DeliveryRequest)
     delivery_assistant = ObjectProperty(None)
+    delivery_owner = ObjectProperty(None)
     _detail_view = ObjectProperty(None)
     _back_button_handler = ObjectProperty(None)
 
@@ -30,20 +31,29 @@ class DeliveryRequestDetail(BoxLayout):
         self.is_owner = self.request.owner == 'pIAeLAvHXp0KZKWDzTMz'
         super(DeliveryRequestDetail, self).__init__(**kwargs)
         self._detail_view = self.ids.detail_view.__self__
-        self._setup_assistant_field()
+        self._setup_user_fields()
         self._setup_action_button()
 
-    def _setup_assistant_field(self):
-        if self.request.assistant is not None and self.request.assistant != "":
-            user = UserGetter.get_by_id(self.request.assistant)
-        else:
-            user = None
+    def _setup_user_fields(self):
+        assistant, owner = (UserGetter.get_by_id(uid)
+                            for uid in (self.request.assistant,
+                                        self.request.owner))
+        assistant_widget, owner_widget = self.ids.assistant, self.ids.owner
+        if None in (assistant, owner):
+            assistant_widget.size_hint_x = 1
+            owner_widget.size_hint_x = 1
 
-        if user is not None:
-            self.ids.assistant.description = user.name
-            self.delivery_assistant = user
+        if assistant is not None:
+            assistant_widget.description = assistant.name
+            self.delivery_assistant = assistant
         else:
-            self.ids.stack.remove_widget(self.ids.assistant)
+            self.ids.stack.remove_widget(assistant_widget)
+
+        if owner is not None:
+            owner_widget.description = owner.name
+            self.delivery_owner = owner
+        else:
+            self.ids.stack.remove_widget(owner_widget)
 
     def _setup_action_button(self):
         if self.is_owner:
@@ -117,12 +127,12 @@ class DeliveryRequestDetail(BoxLayout):
                 })
         self._back_button_handler()
 
-    def _transition_to_user_profile(self):
+    def _transition_to_user_profile(self, user):
         """Show the user profile of a specific user."""
         self.clear_widgets()
         self.add_widget(
             UserProfileView(
-                user=self.delivery_assistant,
+                user=user,
                 back_button_handler=self._transition_to_detail_view))
 
     def _transition_to_detail_view(self):
