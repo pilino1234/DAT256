@@ -35,9 +35,9 @@ class DeliveryRequestDetail(BoxLayout):
         self._setup_action_button()
 
     def _setup_user_fields(self):
-        assistant, owner = (UserGetter.get_by_id(uid)
-                            for uid in (self.request.assistant,
-                                        self.request.owner))
+        assistant = UserGetter.get_by_id(self.request.assistant)
+        owner = UserGetter.get_by_id(self.request.owner)
+
         assistant_widget, owner_widget = self.ids.assistant, self.ids.owner
         if None in (assistant, owner):
             assistant_widget.size_hint_x = 1
