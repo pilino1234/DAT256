@@ -20,6 +20,8 @@ class UserGetter:
 
         :param user_id: The id of the user.
         """
+        if user_id == "":
+            return None
         data = Firestore.get_raw('users').document(user_id).get().to_dict()
         if data is not None:
             return User(**data)
