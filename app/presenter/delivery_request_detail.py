@@ -64,11 +64,25 @@ class DeliveryRequestDetail(BoxLayout):
 
     def accept_delivery(self):
         """Accept the delivery as the current user."""
+        assistant = 'pIAeLAvHXp0KZKWDzTMz'
+        assistant_ref = Firestore.get_raw('users').document(assistant).get()
+        assistant_balance = assistant_ref._data['balance']
+
+        # Not enough money
+        if assistant_balance < self.request.money_lock:
+            return
+
         with Firestore.batch('packages') as batch:
             batch.update(self.request.uid, {
                 'status': Status.ACCEPTED,
-                'assistant': u'pIAeLAvHXp0KZKWDzTMz'
+                'assistant': assistant
             })
+
+        with Firestore.batch('users') as batch:
+            batch.update(
+                assistant,
+                {'balance': assistant_balance - self.request.money_lock})
+
         self._back_button_handler()
 
     def confirm_pickup(self):
