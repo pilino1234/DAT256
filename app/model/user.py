@@ -56,4 +56,3 @@ class User:
     def __eq__(self, other):
         """Checks equality between users using their mail."""
         return isinstance(other, User) and self.mail == other.mail
-
