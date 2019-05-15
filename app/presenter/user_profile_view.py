@@ -42,11 +42,12 @@ class UserProfileView(RelativeLayout):
     avatar_edit_widget = ""
     _back_button_handler = ObjectProperty(None)
 
-    user_me = User(name="Jiggly Puff",
-                   mail="jiggly@puff.com",
-                   phone="0706123123",
-                   avatar="something image related here, not used atm",
-                   balance=1498)
+    user_me = User(
+        name="Jiggly Puff",
+        mail="jiggly@puff.com",
+        phone="0706123123",
+        avatar="something image related here, not used atm",
+        balance=1498)
 
     user_viewing = user_me
 
@@ -140,6 +141,9 @@ class UserProfileView(RelativeLayout):
 
         self.update_fields()
         self.remove_widget(self.widget_input)  # Remove the edit widget
+
+    def logout(self):
+        print("logout")
 
 
 class AnswerInput(BoxLayout):
