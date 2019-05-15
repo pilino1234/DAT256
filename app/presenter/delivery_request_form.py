@@ -14,7 +14,7 @@ Builder.load_file("view/delivery_request_form.kv")
 class DeliveryRequestForm(BoxLayout):
     """Widget to create a delivery request"""
 
-    weight = 2
+    weight = 0
 
     _weights = [
         'weight_walk_button', 'weight_bike_button', 'weight_car_button',
