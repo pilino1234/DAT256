@@ -8,7 +8,7 @@ from model.delivery_request_uploader import DeliveryRequestUploader
 from model.user import User
 from presenter.user_profile_view import UserProfileView
 
-Builder.load_file("view/delivery_request.kv")
+Builder.load_file("view/delivery_request_form.kv")
 
 
 class DeliveryRequestForm(BoxLayout):
