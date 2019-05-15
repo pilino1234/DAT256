@@ -56,21 +56,23 @@ class DeliveryRequestDetail(BoxLayout):
             self.ids.stack.remove_widget(owner_widget)
 
     def _setup_action_button(self):
+        button = MDRaisedButton(size_hint=(1, None))
+
         if self.is_owner:
             if self.request.status == Status.ACCEPTED:
-                self.ids.action_button.text = "Confirm Pickup"
-                self.ids.action_button.on_release = self.confirm_pickup
+                button.text = "Confirm Pickup"
+                button.on_release = self.confirm_pickup
             elif self.request.status == Status.TRAVELLING:
-                self.ids.action_button.text = "Confirm Delivery"
-                self.ids.action_button.on_release = self.confirm_delivery
+                button.text = "Confirm Delivery"
+                button.on_release = self.confirm_delivery
 
         else:
             if self.request.status == Status.AVAILABLE:
-                self.ids.action_button.text = "Accept Delivery"
-                self.ids.action_button.on_release = self.accept_delivery
+                button.text = "Accept Delivery"
+                button.on_release = self.accept_delivery
 
-        if self.ids.action_button.text == "":
-            self.ids.stack.remove_widget(self.ids.action_button)
+        if button.text != "":
+            self.ids.stack.add_widget(button)
 
     def accept_delivery(self):
         """Accept the delivery as the current user."""
