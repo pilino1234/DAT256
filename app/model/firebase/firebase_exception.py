@@ -1,0 +1,2 @@
+class FirebaseException(Exception):
+    pass
