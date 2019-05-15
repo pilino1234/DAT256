@@ -61,10 +61,16 @@ class Auth:
             Auth.sign_in_with_tokens(token, refresh_token)
 
             batch = Firestore.batch("users")
-            batch.set(uid, {"email": email, "name": name, "phonenumber": phonenumber})
+            batch.set(uid, {
+                "email": email,
+                "name": name,
+                "phonenumber": phonenumber,
+                "avatar": "",
+                "balance": 0,
+                "rating": 0,
+                "packages": []
+            })
             batch.commit()
-
-            print("done")
 
         elif sign_up_request.ok == False:
             error_data = json.loads(sign_up_request.content.decode())
