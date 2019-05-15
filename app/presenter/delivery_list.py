@@ -17,6 +17,7 @@ from kivy.app import App
 
 from typing import Callable
 
+from model.firebase.firestore import Firestore
 from presenter.delivery_request_detail import DeliveryRequestDetail
 from presenter.utils.suggester import LocationSuggester
 
@@ -80,6 +81,9 @@ class DeliveryList(RelativeLayout):
                         fragile=data.get('fragile'),
                         status=Status(data.get('status')),
                         money_lock=data.get('money_lock'),
+                        uid=doc.id,
+                        owner=data.get('owner'),
+                        assistant=data.get('assistant')
                     )))
 
         self.hide_filter()
