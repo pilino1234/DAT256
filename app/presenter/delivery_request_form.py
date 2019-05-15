@@ -68,7 +68,6 @@ class DeliveryRequestForm(BoxLayout):
                  False otherwise
         """
         all_good = (len(self.ids.package_name.text) > 0
-                    and len(self.ids.description_text.text) > 0
                     and len(self.ids.from_text.text) > 0
                     and len(self.ids.dest_text.text) > 0
                     and len(self.ids.payment_amount.text) > 0
