@@ -34,7 +34,7 @@ class Bucket:
 
     @staticmethod
     def upload_raw(data: str, file_extension):
-        """Uploads from a file on the system"""
+        """Uploads a files raw content to storage"""
         blob = Firebase.get_bucket().blob(Bucket._auto_id() + "/img." +
                                           file_extension)
         blob.upload_from_string(data)
