@@ -14,7 +14,7 @@ class Firebase:
     @staticmethod
     def get_db():
         """Fetch the common firebase db instance."""
-        if not hasattr(Firebase, "_db"):
+        if Firebase._db is None:
             Firebase._db = fs.Client()
 
         return Firebase._db
@@ -22,7 +22,7 @@ class Firebase:
     @staticmethod
     def get_bucket() -> storage.Bucket:
         """Fetch the common firebase storage bucket instance"""
-        if not hasattr(Firebase, "_bucket"):
+        if Firebase._bucket is None:
             Firebase._bucket = storage.Client().get_bucket(
                 "carrepsa.appspot.com")
 
