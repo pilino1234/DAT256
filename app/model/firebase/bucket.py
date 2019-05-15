@@ -29,22 +29,17 @@ class Bucket:
         """Uploads from a file on the system"""
         file_extension = path_to_file.split(".")[-1]
         blob = Firebase.get_bucket().blob(Bucket._auto_id() + "/img." +
-                                    file_extension)
+                                          file_extension)
         blob.upload_from_filename(path_to_file)
 
     @staticmethod
     def upload_raw(data: str, file_extension):
         """Uploads from a file on the system"""
         blob = Firebase.get_bucket().blob(Bucket._auto_id() + "/img." +
-                                    file_extension)
+                                          file_extension)
         blob.upload_from_string(data)
 
     @staticmethod
     def _auto_id():
-        """Generate a "random" automatically generated ID.
-
-        Returns:
-            str: A 20 character string composed of digits, uppercase and
-            lowercase and letters.
-        """
+        """Generate a "random" automatically generated ID"""
         return "".join(random.choice(_AUTO_ID_CHARS) for _ in range(20))
