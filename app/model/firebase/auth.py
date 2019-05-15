@@ -1,9 +1,7 @@
-from google.cloud import firestore as fs  # type: ignore
-from google.auth.credentials import Credentials
-from google.auth import _helpers
 from kivy.app import App
 
 from model.firebase.firebase import Firebase
+from model.firebase.firebase_credentials import FirebaseCredentials
 from model.firebase.firestore import Firestore
 from kivy.storage.jsonstore import JsonStore
 import requests
@@ -19,7 +17,8 @@ class Auth:
     def sign_in_with_tokens(id_token, refresh_token):
         credentials = FirebaseCredentials(token=id_token,
                                           refresh_token=refresh_token)
-        Firebase.db = fs.Client(project="carrepsa", credentials=credentials)
+        Firebase.create_db(credentials=credentials)
+        # Firebase.create_bucket(credentials=credentials)
         app = App.get_running_app()
         app.is_authenticated = True
         credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token)
