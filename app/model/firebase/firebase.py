@@ -1,6 +1,9 @@
 
 from google.cloud import firestore as fs, storage  # type: ignore
 
+from model.firebase.firebase_credentials import FirebaseCredentials
+from model.firebase.firebase_exception import FirebaseException
+
 webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
 
 class Firebase:
@@ -12,13 +15,24 @@ class Firebase:
     @staticmethod
     def get_db() -> fs.Client:
         """Fetch the common firebase db instance."""
+        if Firebase._db is None:
+            raise FirebaseException("create_db() must be called before get_db()")
+
         return Firebase._db
+
+    @staticmethod
+    def create_db(credentials: FirebaseCredentials, project: str = "carrepsa"):
+        Firebase._db = fs.Client(project=project, credentials=credentials)
 
     @staticmethod
     def get_bucket() -> storage.Bucket:
         """Fetch the common firebase storage bucket instance"""
         if Firebase._bucket is None:
-            Firebase._bucket = storage.Client().get_bucket(
-                "carrepsa.appspot.com")
+            raise FirebaseException("create_bucket() must be called before get_bucket()")
 
         return Firebase._bucket
+
+    @staticmethod
+    def create_bucket(credentials: FirebaseCredentials, project: str = "carrepsa"):
+        Firebase._bucket = storage.Client(project=project, credentials=credentials)\
+            .get_bucket(project + ".appspot.com")
