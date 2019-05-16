@@ -2,9 +2,9 @@ from model.delivery_request import DeliveryRequest, Status
 
 
 def create_delivery_request():
-    return DeliveryRequest("abcdef",
+    return DeliveryRequest("TEST",
                            "item",
-                           "description\ntext",
+                           "This a test, feel free to remove.",
                            "origin",
                            "destination",
                            reward=10,
