@@ -30,6 +30,7 @@
             size_hint_x: 0.4
         MDTextField:
             hint_text: "(Optional)"
+            id: input_distance
 
     MDToolbar:
         title:'Weights'
@@ -100,6 +101,6 @@
     MDFillRoundFlatButton:
         text: "    Search     "
         pos_hint: {'center_x': 0.5, 'center_y': .15}
-        on_release: self.parent.parent._filter_content(self.parent.ids.check_walk.active,self.parent.ids.check_bike.active,self.parent.ids.check_car.active,self.parent.ids.check_truck.active,self.parent.ids.check_fragile.active,)
+        on_release: self.parent.parent._filter_content(self.parent.ids.check_walk.active,self.parent.ids.check_bike.active,self.parent.ids.check_car.active,self.parent.ids.check_truck.active,self.parent.ids.check_fragile.active, self.parent.ids.input_distance.text)
     Widget:
         size_hint_y: 0.2

@@ -49,20 +49,20 @@ class DeliveryList(BoxLayout):
         self.delivery_list = self.ids.delivery_list
         self.add_widget(Filter())
 
-    def _filter_content(self, walk, bike, car, truck, fragile):
+    def _filter_content(self, walk, bike, car, truck, fragile, distance):
 
         delivery_requests = DeliveryRequestGetter.query(
             u'status', u'==', Status.AVAILABLE)
         self.ids.available_requests.clear_widgets()
         for delivery_request in delivery_requests:
-            if self.passes_filter(delivery_request, walk, bike, car, truck, fragile):
+            if self.passes_filter(delivery_request, walk, bike, car, truck, fragile, distance):
                 list_item = ListItem(delivery_request,
                                      self._transition_to_detail_view)
                 self.ids.available_requests.add_widget(list_item)
 
         self.delivery_list = self.ids.delivery_list
 
-    def passes_filter(self, delivery_request, walk, bike, car, truck, fragile):
+    def passes_filter(self, delivery_request, walk, bike, car, truck, fragile, distance):
         arr = [walk, bike, car, truck]
         print(arr[delivery_request.weight])
 
@@ -70,6 +70,9 @@ class DeliveryList(BoxLayout):
             return False
 
         if delivery_request.fragile and not fragile:
+            return False
+
+        if delivery_request.distance_km > float(distance):
             return False
 
         return True
