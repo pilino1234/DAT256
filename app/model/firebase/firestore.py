@@ -1,10 +1,28 @@
+import os
+
 from typing import Callable, Dict
 
 from google.cloud.firestore_v1.batch import WriteBatch
 from google.cloud.firestore_v1.collection import CollectionReference
 from google.cloud.firestore_v1.document import DocumentReference
 
-from model.firebase import Firebase
+from google.cloud.firestore_v1 import Client
+
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
+
+
+class Firebase:
+    """Stores the common firebase db instance."""
+
+    _db: Client
+
+    @staticmethod
+    def get_db() -> Client:
+        """Fetch the common firebase db instance."""
+        if not hasattr(Firebase, '_db'):
+            Firebase._db = Client()
+
+        return Firebase._db
 
 
 class Firestore:
@@ -84,13 +102,13 @@ class _FirestoreBatch:
 
     def set(self, document: DocumentReference, document_data: dict):
         """Replace document with new document data."""
-        self._batchRef.set(self._collection.document(document), document_data,
-                           False)
+        self._batchRef.set(
+            self._collection.document(document), document_data, False)
 
     def update(self, document: DocumentReference, field_updates: dict):
         """Update existing document with new data."""
-        self._batchRef.update(self._collection.document(document),
-                              field_updates)
+        self._batchRef.update(
+            self._collection.document(document), field_updates)
 
     def delete(self, document: DocumentReference):
         """Delete document."""
