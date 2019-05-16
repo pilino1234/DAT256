@@ -39,7 +39,6 @@
         size_hint_y: .5
     BoxLayout:
         MDIconButton:
-            id: weight_walk_button
             icon: 'walk'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
@@ -48,9 +47,9 @@
             size_hint_x: 0.4
         MDCheckbox:
             size_hint_x: 0.2
+            id: check_walk
     BoxLayout:
         MDIconButton:
-            id: weight_bike_button
             icon: 'bike'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
@@ -59,9 +58,9 @@
             size_hint_x: 0.4
         MDCheckbox:
             size_hint_x: 0.2
+            id: check_bike
     BoxLayout:
         MDIconButton:
-            id: weight_car_button
             icon: 'car'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
@@ -70,9 +69,9 @@
             size_hint_x: 0.4
         MDCheckbox:
             size_hint_x: 0.2
+            id: check_car
     BoxLayout:
         MDIconButton:
-            id: weight_truck_button
             icon: 'truck'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
@@ -81,11 +80,11 @@
             size_hint_x: 0.4
         MDCheckbox:
             size_hint_x: 0.2
+            id: check_truck
     Widget:
         size_hint_y: 0.6
     BoxLayout:
         MDIconButton:
-            id: weight_truck_button
             icon: 'glass-flute'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
@@ -93,6 +92,7 @@
             text: "Include fragile"
             size_hint_x: 0.4
         MDCheckbox:
+            id: check_fragile
             size_hint_x: 0.2
 
     Widget:
@@ -100,5 +100,6 @@
     MDFillRoundFlatButton:
         text: "    Search     "
         pos_hint: {'center_x': 0.5, 'center_y': .15}
+        on_release: self.parent.parent._filter_content(self.parent.ids.check_walk.active,self.parent.ids.check_bike.active,self.parent.ids.check_car.active,self.parent.ids.check_truck.active,self.parent.ids.check_fragile.active,)
     Widget:
         size_hint_y: 0.2
