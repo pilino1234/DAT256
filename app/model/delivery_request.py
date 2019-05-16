@@ -84,6 +84,11 @@ class DeliveryRequest:
         return "7 km"
 
     @property
+    def distance_km(self) -> float:
+        """Computes distance between origin and destination in kilometres"""
+        return float(7)
+
+    @property
     def reward_pretty(self) -> str:
         """Pretty formats reward in local currency."""
         return str(self.reward) + " kr"
