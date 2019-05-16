@@ -5,6 +5,8 @@ ignore-paths:
   - docs/
   - tests/
   - venv/
+  - .buildozer/
+  - p4a-recipes/
 
 pylint:
   run: false
