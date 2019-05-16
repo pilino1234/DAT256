@@ -29,6 +29,8 @@ class DeliveryList(BoxLayout):
 
     delivery_list = ObjectProperty(BoxLayout)
 
+    deliveries = []
+
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
@@ -42,9 +44,35 @@ class DeliveryList(BoxLayout):
             list_item = ListItem(delivery_request,
                                  self._transition_to_detail_view)
             self.ids.available_requests.add_widget(list_item)
+            self.deliveries.append(delivery_request)
 
         self.delivery_list = self.ids.delivery_list
         self.add_widget(Filter())
+
+    def _filter_content(self, walk, bike, car, truck, fragile):
+
+        delivery_requests = DeliveryRequestGetter.query(
+            u'status', u'==', Status.AVAILABLE)
+        self.ids.available_requests.clear_widgets()
+        for delivery_request in delivery_requests:
+            if self.passes_filter(delivery_request, walk, bike, car, truck, fragile):
+                list_item = ListItem(delivery_request,
+                                     self._transition_to_detail_view)
+                self.ids.available_requests.add_widget(list_item)
+
+        self.delivery_list = self.ids.delivery_list
+
+    def passes_filter(self, delivery_request, walk, bike, car, truck, fragile):
+        arr = [walk, bike, car, truck]
+        print(arr[delivery_request.weight])
+
+        if not arr[delivery_request.weight]:
+            return False
+
+        if delivery_request.fragile and not fragile:
+            return False
+
+        return True
 
     def _update_content(self, spinner):
         self.tick = 0
