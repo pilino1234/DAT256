@@ -202,23 +202,9 @@
     ripple_alpha: 0
     disabled: True
 
-    BoxLayout:
-        id: container
-        orientation: "vertical"
-        size_hint_y: None
-        height: self.minimum_height
-
-        MDLabel:
-            id: title
-            font_style: 'H6'
-            text_size: self.width, None
-            color: 0, 0, 0, 1
-            size_hint_y: None
-            height: self.texture_size[1]
-            text: root.title
-
-        AsyncImage:
-            size_hint: dp(200), None
-            id: image
-            source: root.source
-            pos_hint: {'center_x': 0.5, 'center_y': .5}
+    AsyncImage:
+        size_hint: (1, None)
+        height: dp(250)
+        id: image
+        source: root.source
+        pos_hint: {'center_x': 0.5, 'center_y': .5}
