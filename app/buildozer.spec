@@ -36,7 +36,7 @@ version = 0.0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,git+https://github.com/HeaTTheatR/KivyMD.git,https://files.pythonhosted.org/packages/c1/a0/51a0b113ff96acde8ff232979a145c0276c8fcbce2b527b9952a378811ef/grpcio-1.20.1-cp37-cp37m-win32.whl,setuptools,google-api-core,googleapis-common-protos,google-cloud-firestore==0.32.1,google-auth,protobuf
+requirements = python3,kivy,git+https://github.com/HeaTTheatR/KivyMD.git,grpcio,setuptools,google-api-core,googleapis-common-protos,google-cloud-firestore==0.32.1,google-auth,protobuf
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -208,7 +208,7 @@ android.arch = armeabi-v7a
 #p4a.source_dir =
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
-#p4a.local_recipes =
+p4a.local_recipes = p4a-recipes
 
 # (str) Filename to the hook for p4a
 #p4a.hook =
