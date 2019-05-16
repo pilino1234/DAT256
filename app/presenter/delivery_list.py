@@ -11,13 +11,13 @@ from kivymd.updatespinner import MDUpdateSpinner
 
 from typing import Callable
 
-from presenter.filtering_delivery import Filter
 from presenter.delivery_request_detail import DeliveryRequestDetail
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_getter import DeliveryRequestGetter
 
 Builder.load_file("view/delivery_list.kv")
+Builder.load_file("view/filtering_delivery.kv")
 
 
 class DeliveryList(BoxLayout):
@@ -50,7 +50,7 @@ class DeliveryList(BoxLayout):
         self.add_widget(Filter())
 
     def _filter_content(self, walk, bike, car, truck, fragile, distance):
-
+        '''Filters the delivery list depending on checkboxes and distance'''
         delivery_requests = DeliveryRequestGetter.query(
             u'status', u'==', Status.AVAILABLE)
         self.ids.available_requests.clear_widgets()
@@ -63,6 +63,9 @@ class DeliveryList(BoxLayout):
         self.delivery_list = self.ids.delivery_list
 
     def passes_filter(self, delivery_request, walk, bike, car, truck, fragile, distance):
+        '''Filters the delivery list depending on checkboxes and distance'''
+        if distance == "":
+            distance = 99999999999999
         arr = [walk, bike, car, truck]
         print(arr[delivery_request.weight])
 
@@ -76,6 +79,8 @@ class DeliveryList(BoxLayout):
             return False
 
         return True
+
+
 
     def _update_content(self, spinner):
         self.tick = 0
@@ -198,3 +203,7 @@ class UpdateSpinner(MDUpdateSpinner):
 
         Clock.schedule_interval(wait_updates, .1)
         self.event_update(self)
+
+
+class Filter(BoxLayout):
+    pass
