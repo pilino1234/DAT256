@@ -1,4 +1,3 @@
-from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.modalview import ModalView
@@ -17,7 +16,6 @@ class GalleryButton(MDFloatingActionButton):
     def __init__(self, **kwargs):
         """Initializes the gallery button"""
         super(GalleryButton, self).__init__(**kwargs)
-        Window.bind(on_keyboard=self.events)
         self.manager_open = False
         self.manager = None
 
@@ -53,10 +51,3 @@ class GalleryButton(MDFloatingActionButton):
         """Called when the user reaches the root of the directory tree."""
         self.manager.dismiss()
         self.manager_open = False
-
-    def events(self, instance, keyboard, keycode, text, modifiers):
-        """Called when buttons are pressed on the mobile device.."""
-        if keyboard in (1001, 27):
-            if self.manager_open:
-                self.file_manager.back()
-        return True

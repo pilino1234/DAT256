@@ -11,9 +11,9 @@ class DeliveryRequestTest(unittest.TestCase):
         request_dict = request.to_dict()
 
         expected = {
-            'uid': 'abcdef',
+            'uid': 'TEST',
             'item': 'item',
-            'description': 'description\ntext',
+            'description': 'This a test, feel free to remove.',
             'origin': 'origin',
             'destination': 'destination',
             'reward': 10,
@@ -36,11 +36,10 @@ class DeliveryRequestTest(unittest.TestCase):
     def test_to_string(self):
         request = create_delivery_request()
         self.assertEqual(
-            request.__str__(),
-            "Delivery request abcdef | item, from: origin -> to: destination,"
-            +
+            str(request),
+            "Delivery request TEST | item, from: origin -> to: destination," +
             " reward: 10, money_lock: 0, weight: 2, fragile: True, status: 0,"
-            + " description: description\ntext, image_path: ")
+            + " description: This a test, feel free to remove., image_path: ")
 
     def test_distance_pretty(self):
         request = create_delivery_request()

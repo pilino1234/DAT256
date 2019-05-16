@@ -17,7 +17,6 @@ class Firestore:
         """Subscribes to a collection, executing callback whenever the collection is updated."""
         Firestore.refs[path] = Firebase.get_db().collection(path).on_snapshot(
             callback)
-        return Firestore.refs[path]
 
     @staticmethod
     def unsubscribe(path: str):

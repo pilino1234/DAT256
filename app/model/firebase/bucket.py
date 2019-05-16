@@ -49,13 +49,6 @@ class Bucket:
         return blob_name
 
     @staticmethod
-    def upload_raw(data: str, file_extension):
-        """Uploads a files raw content to storage"""
-        blob = Firebase.get_bucket().blob(Bucket._auto_id() + "/img." +
-                                          file_extension)
-        blob.upload_from_string(data)
-
-    @staticmethod
     def _auto_id():
         """
         Generate a "random" automatically generated ID.

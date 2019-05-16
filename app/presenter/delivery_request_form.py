@@ -103,13 +103,6 @@ class DeliveryRequestForm(BoxLayout):
             # User does not have enough money to pay for this delivery
             return
 
-        # TODO: implement this once user "management" is in place
-        #        if payment_amount > user.account_balance:
-        #            self.display_warning("You don't have enough money to pay for this delivery")
-        #            return
-        #        else:
-        #            user.lock_delivery_amount(payment_amount)
-
         firestore_image_path = Bucket.upload(self.photo_path)
 
         request = DeliveryRequest(item=self.ids.package_name.text,
