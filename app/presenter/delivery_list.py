@@ -11,6 +11,7 @@ from kivymd.updatespinner import MDUpdateSpinner
 
 from typing import Callable
 
+from presenter.filtering_delivery import Filter
 from presenter.delivery_request_detail import DeliveryRequestDetail
 
 from model.delivery_request import DeliveryRequest, Status
@@ -43,6 +44,7 @@ class DeliveryList(BoxLayout):
             self.ids.available_requests.add_widget(list_item)
 
         self.delivery_list = self.ids.delivery_list
+        self.add_widget(Filter())
 
     def _update_content(self, spinner):
         self.tick = 0
