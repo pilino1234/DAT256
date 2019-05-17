@@ -32,6 +32,7 @@ jobs:
         file_glob: true
         file: app/bin/*
         skip_cleanup: true
+        draft: true
         on:
           all_branches: true # This stage is only triggered for certain branches anyway
 
