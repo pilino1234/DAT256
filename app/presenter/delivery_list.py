@@ -42,7 +42,7 @@ class DeliveryList(BoxLayout):
                                  self._transition_to_detail_view)
             self.ids.available_requests.add_widget(list_item)
 
-        self.delivery_list = self.ids.delivery_list
+        self.delivery_list = self.ids.delivery_list.__self__
 
     def _update_content(self, spinner):
         self.tick = 0

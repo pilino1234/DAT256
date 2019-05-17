@@ -4,7 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from typing import Callable
 
-from model.delivery_request import DeliveryRequest
+from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_getter import DeliveryRequestGetter
 from model.firebase.firestore import Firestore
 from presenter.delivery_list import WhiteCardButton
@@ -25,16 +25,18 @@ class MyPostedRequests(BoxLayout):
         super(MyPostedRequests, self).__init__(**kwargs)
         Clock.schedule_once(lambda dt: self._update_content())
         Firestore.subscribe("packages", lambda *_: self._update_content())
+        self.content = self.ids.content.__self__
 
     def _update_content(self):
         """Fetch my posted deliveries"""
-        self.content = self.ids.content
         delivery_requests = DeliveryRequestGetter.query(
             u'owner', u'==', u'pIAeLAvHXp0KZKWDzTMz')
 
         # Fill delivery list
         self.ids.my_requests.clear_widgets()
         for req in delivery_requests:
+            if req.status == Status.DELIVERED:
+                continue
             self.ids.my_requests.add_widget(
                 MyPostedRequest(req, self._transition_to_detail_view))
 

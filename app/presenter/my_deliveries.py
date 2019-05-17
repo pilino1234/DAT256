@@ -2,7 +2,7 @@ from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
-from model.delivery_request import DeliveryRequest
+from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_getter import DeliveryRequestGetter
 from presenter.delivery_request_detail import DeliveryRequestDetail
 from model.firebase.firestore import Firestore
@@ -23,6 +23,7 @@ class MyDeliveries(BoxLayout):
         super(MyDeliveries, self).__init__(**kwargs)
         Clock.schedule_once(lambda dt: self._update_content())
         Firestore.subscribe("packages", lambda *_: self._update_content())
+        self.content = self.ids.content.__self__
 
     def _update_content(self):
         """Fetch all deliveries the current owner has accepted"""
@@ -32,10 +33,10 @@ class MyDeliveries(BoxLayout):
         # Fill delivery list
         self.ids.my_deliveries.clear_widgets()
         for req in delivery_requests:
+            if req.status == Status.DELIVERED:
+                continue
             self.ids.my_deliveries.add_widget(
                 ListItem(req, self._transition_to_detail_view))
-
-        self.content = self.ids.content
 
     def _transition_to_detail_view(self, request: DeliveryRequest):
         """Show detail view for selected delivery request."""
