@@ -8,9 +8,8 @@ services:
   - docker
 
 stages:
-  - tests
   - name: tests
-    if: type == pull_request
+    if: type == pull_request OR branch IN (master, dev)
   - name: buildeploy
     if: (branch IN (master, dev) AND type != pull_request) OR tag is present
 
