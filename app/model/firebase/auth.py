@@ -18,7 +18,7 @@ class Auth:
         credentials = FirebaseCredentials(token=id_token,
                                           refresh_token=refresh_token)
         Firebase.create_db(credentials=credentials)
-        # Firebase.create_bucket(credentials=credentials)
+        Firebase.create_bucket(credentials=credentials)
         app = App.get_running_app()
         app.is_authenticated = True
         credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token)

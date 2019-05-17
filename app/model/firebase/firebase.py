@@ -34,5 +34,9 @@ class Firebase:
 
     @staticmethod
     def create_bucket(credentials: FirebaseCredentials, project: str = "carrepsa"):
-        Firebase._bucket = storage.Client(project=project, credentials=credentials)\
-            .get_bucket(project + ".appspot.com")
+        client = storage.Client(project=project, credentials=credentials)
+        print("oh")
+        print(client)
+        for bucket in client.list_buckets():
+            print("Prepare yourself")
+            print(bucket)
