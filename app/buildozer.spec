@@ -36,7 +36,7 @@ version = 0.0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,git+https://github.com/HeaTTheatR/KivyMD.git,grpcio,setuptools,google-api-core,googleapis-common-protos,google-cloud-firestore==0.32.1,google-auth,protobuf
+requirements = python3,kivy,git+https://github.com/HeaTTheatR/KivyMD.git,setuptools,grpcio,google-api-core,googleapis-common-protos,google-cloud-firestore==0.32.1,google-auth,protobuf
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
