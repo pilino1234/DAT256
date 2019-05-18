@@ -84,6 +84,7 @@ class DeliveryRequestForm(BoxLayout):
         all_good = (len(self.ids.package_name.text) > 0
                     and len(self.ids.from_text.text) > 0
                     and len(self.ids.dest_text.text) > 0
+                    and len(self.ids.description_text.text) <= 300
                     and is_payment_valid
                     and is_money_lock_valid)
 
