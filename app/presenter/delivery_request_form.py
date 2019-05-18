@@ -73,7 +73,6 @@ class DeliveryRequestForm(BoxLayout):
         :return: True if all inputs are valid
                  False otherwise
         """
-
         is_payment_valid = self._is_payment_valid()
 
         # Only display 1 toast a time
@@ -85,8 +84,7 @@ class DeliveryRequestForm(BoxLayout):
                     and len(self.ids.from_text.text) > 0
                     and len(self.ids.dest_text.text) > 0
                     and len(self.ids.description_text.text) <= 300
-                    and is_payment_valid
-                    and is_money_lock_valid)
+                    and is_payment_valid and is_money_lock_valid)
 
         self.ids.request_button.disabled = not all_good
         return all_good
@@ -103,7 +101,8 @@ class DeliveryRequestForm(BoxLayout):
 
         user: User = UserProfileView.user_me
         if int(payment) > user.balance:
-            toast("Your balance ($" + str(user.balance) + ") is insufficient to pay for this delivery.")
+            toast("Your balance ($" + str(user.balance) +
+                  ") is insufficient to pay for this delivery.")
             return False
 
         return True
