@@ -111,7 +111,7 @@
 
                     MDIconButton:
                         id: weight_bike_button
-                        icon: 'motorbike'
+                        icon: 'bike'
                         theme_text_color: 'Custom'
                         text_color: 128/255, 128/255, 128/255, 1
 
@@ -148,7 +148,7 @@
                         id: payment_amount
                         required: True
                         helper_text_mode: 'on_error'
-                        input_filter: 'float'
+                        input_filter: 'int'
                         write_tab: False
                 MDIconButton:
                     theme_text_color: 'Custom'
@@ -169,7 +169,7 @@
                     padding: (20, 0)
                     MDTextField:
                         id: money_lock_amount
-                        input_filter: 'float'
+                        input_filter: 'int'
                         required: True
                         helper_text_mode: 'on_error'
                         write_tab: False

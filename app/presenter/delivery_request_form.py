@@ -2,6 +2,7 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.button import MDIconButton
 from kivymd.textfields import MDTextField
+from kivymd.toast.kivytoast import toast
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
@@ -72,18 +73,51 @@ class DeliveryRequestForm(BoxLayout):
         :return: True if all inputs are valid
                  False otherwise
         """
+
+        is_payment_valid = self._is_payment_valid()
+
+        # Only display 1 toast a time
+        is_money_lock_valid = True
+        if is_payment_valid:
+            is_money_lock_valid = self._is_money_lock_valid()
+
         all_good = (len(self.ids.package_name.text) > 0
                     and len(self.ids.from_text.text) > 0
                     and len(self.ids.dest_text.text) > 0
-                    and len(self.ids.payment_amount.text) > 0
-                    and '-' not in self.ids.payment_amount.text
-                    and int(self.ids.payment_amount.text) > 0
-                    and len(self.ids.money_lock_amount.text) > 0
-                    and '-' not in self.ids.money_lock_amount.text
-                    and int(self.ids.money_lock_amount.text) >= 0)
+                    and is_payment_valid
+                    and is_money_lock_valid)
 
         self.ids.request_button.disabled = not all_good
         return all_good
+
+    def _is_payment_valid(self) -> bool:
+        payment = self.ids.payment_amount.text
+
+        if len(payment) == 0:
+            return False
+
+        if '-' in payment or int(payment) == 0:
+            toast("Payment amount must be above $0.")
+            return False
+
+        user: User = UserProfileView.user_me
+        if int(payment) > user.balance:
+            toast("Your balance ($" + str(user.balance) + ") is insufficient to pay for this delivery.")
+            return False
+
+        return True
+
+    def _is_money_lock_valid(self) -> bool:
+        money_lock = self.ids.money_lock_amount.text
+
+        if len(money_lock) == 0:
+            return False
+
+        if '-' in money_lock:
+            toast("Money lock amount must not be negative.")
+            return False
+
+        return True
 
     def _clear_form(self):
         self.ids.package_name.text = ""
@@ -99,8 +133,7 @@ class DeliveryRequestForm(BoxLayout):
         payment_amount: int = int(self.ids.payment_amount.text)
         user: User = UserProfileView.user_me
 
-        if payment_amount > user.balance:
-            # User does not have enough money to pay for this delivery
+        if not self._verify_entries():
             return
 
         firestore_image_path = Bucket.upload(self.photo_path)
