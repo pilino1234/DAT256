@@ -13,8 +13,8 @@
     MDCard:
         BoxLayout:
             orientation: "vertical"
-            padding: 30
-            spacing: 30
+            padding: dp(30)
+            spacing: dp(30)
             MDLabel:
                 id: title
                 text: "Title"
@@ -34,29 +34,29 @@
     BoxLayout:
         pos: self.parent.width-withdraw_button.width-10, 0
         orientation: "vertical"
-        padding: 10
-        spacing: 10
+        padding: dp(10)
+        spacing: dp(10)
         MDRaisedButton:
             id: withdraw_button
             _radius: 5
             text: "Withdraw"
-            size: 300, 35
+            size: dp(300), dp(35)
             on_release: account_buttons.parent.parent.parent.parent.request_edit("withdraw")
         MDRaisedButton:
             _radius: 5
             text: "Deposit     "
-            size: 300, 35
+            size: dp(300), dp(35)
             on_release: account_buttons.parent.parent.parent.parent.request_edit("deposit")
 
 
 <MenuField>:
     on_release: if self.editable == True: self.parent.parent.parent.request_edit(self.ids.field_title.text)
     size_hint: (1, None)
-    height: 100
+    height: dp(100)
 
     RelativeLayout:
         id: edit_button_container
-        size: 40, 40
+        size: dp(40), dp(40)
         HollowIcon:
             pos: self.parent.width-self.width, self.parent.height/3
             icon: 'chevron-right'
@@ -64,14 +64,14 @@
     RelativeLayout:
         MDLabel:
             id: field_title
-            pos: 20, self.parent.height/5
+            pos: dp(20), self.parent.height/5
             font_style: 'H5'
             theme_text_color: 'Primary'
             text: "Title"
 
         MDLabel:
             id: field_data
-            pos: 20, -self.parent.height/5
+            pos: dp(20), -self.parent.height/5
             font_style: 'Subtitle1'
             theme_text_color: 'Primary'
             text: "text"
@@ -83,11 +83,11 @@
         Ellipse:
             source: "assets/jigglypuff.png"
             id: image_container
-            pos: 250, 500
-            size: 20, 20
+            pos: dp(250), dp(500)
+            size: dp(20), dp(20)
             angle_start: 0
             angle_end: 360
-            size: 100, 100
+            size: dp(100), dp(100)
 
 <UserProfileView>:
     id: user_profile_view
@@ -98,15 +98,15 @@
         BoxLayout:
             height: self.minimum_height
             id: scroll_view_container
-            padding: 30
-            spacing: 30
+            padding: dp(30)
+            spacing: dp(30)
             orientation: 'vertical'
             size_hint_y: None
 
             MDIconButton:
                 id: back_button
                 size_hint: None, None
-                size: 50, 50
+                size: dp(50), dp(50)
                 icon: 'chevron-left'
                 theme_text_color: 'Custom'
                 text_color: 0.5, 0.5, 0.5, 1
@@ -115,7 +115,7 @@
             BoxLayout:
                 id: image_container
                 size_hint: None, None
-                size: 300, 300
+                size: dp(300), dp(300)
                 pos_hint_x: 0.5
                 RelativeLayout:
 
@@ -127,8 +127,8 @@
                             id: image_container
                             angle_start: 0
                             angle_end: 360
-                            size: 300, 300
-                            pos: user_profile_view.size[0]/2-self.size[0]/2,0
+                            size: dp(300), dp(300)
+                            pos: user_profile_view.size[0]/2-self.size[0]/2, 0
 
                     MDIconButton:
                         id: avatar_edit_button
