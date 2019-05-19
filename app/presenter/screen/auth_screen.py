@@ -26,5 +26,3 @@ class AuthScreen(Screen):
                 print(error)
                 print("Deleting credentials.json since it may be corrupted")
                 credential_store.delete('tokens')
-
-    pass
