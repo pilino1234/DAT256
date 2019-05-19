@@ -128,10 +128,10 @@ class UserProfileView(RelativeLayout):
             user_me.update(avatar=text)
         if self.field_editing == "deposit":
             amount = int(text)
-            self.user_me.deposit(amount)
+            user_me.deposit(amount)
         if self.field_editing == "withdraw":
             amount = int(text)
-            self.user_me.withdraw(amount)
+            user_me.withdraw(amount)
 
         self.update_fields()
         self.remove_widget(self.widget_input)  # Remove the edit widget
