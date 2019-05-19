@@ -13,8 +13,7 @@ class Login(BoxLayout):
     def authenticate(self):
         email = self.ids.email_tf.text
         password = self.ids.password_tf.text
-        if(Auth.sign_in(email, password)):
-            app = App.get_running_app()
-            app.is_authenticated = True
-        else:
+        result = Auth.sign_in(email, password)
+
+        if not result:
             print("Something went wrong")
