@@ -6,12 +6,11 @@ from model.delivery_request import DeliveryRequest
 class User:
     """Represents a user's account."""
 
-    def __init__(self, name: str, mail: str, phone: str, avatar: str,
-                 balance: int, **kwargs):
-        """Initializes the user using kwargs."""
+    def update(self, name: str, mail: str, phonenumber: str, avatar: str,
+               balance: int):
         self.name = name
         self.mail = mail
-        self.phone = phone
+        self.phonenumber = phonenumber
         self.avatar = avatar
         self.balance = balance
 
@@ -55,3 +54,10 @@ class User:
     def __eq__(self, other):
         """Checks equality between users using their mail."""
         return isinstance(other, User) and self.mail == other.mail
+
+    def __str__(self):
+        """Format a user for printing"""
+        return "User: {name}, {mail}, {phonenumber}, Avatar: {avatar}, Balance: {balance}, Rating: {rating}".format(
+            name = self.name, mail = self.mail, phonenumber = self.phonenumber,
+            avatar = self.avatar, balance = self.balance, rating = self.rating
+        )

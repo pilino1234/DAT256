@@ -14,15 +14,48 @@ class Firestore:
 
     @staticmethod
     def subscribe(path: str, callback: Callable):
-        """Subscribes to a collection, executing callback whenever the collection is updated."""
+        """
+        Subscribes to a collection, executing callback whenever the collection is updated.
+
+        Example on a callable function
+
+        def on_snapshot(collection_snapshot, collection_change_snapshot, timestamp):
+            for doc in collection_snapshot:
+                print(u’{} => {}’.format)(doc.id, doc.to_dict()))
+
+        """
         Firestore.refs[path] = Firebase.get_db().collection(path).on_snapshot(
             callback)
+
+    @staticmethod
+    def subscribe_document(collection_path: str, document: str, callback: Callable):
+        """
+        Subscribes to a document, executing callback whenever the collection is updated.
+
+        Example on a callable function
+
+        def on_snapshot(document_snapshot):
+            for doc in document_snapshot:
+                print(u’{} => {}’.format)(doc.id, doc.to_dict()))
+
+        """
+        path = collection_path + "/" + document
+        Firestore.refs[path] = Firebase.get_db().collection(collection_path).document(document).on_snapshot(
+            callback)
+
 
     @staticmethod
     def unsubscribe(path: str):
         """Unsubscribe from a collection."""
         if path in Firestore.refs:
             Firestore.refs[path].unsubscribe()
+
+    @staticmethod
+    def unsubscribe_document(collection_path: str, document: str):
+        path = collection_path + "/" + document
+        if path in Firestore.refs:
+            Firestore.refs[path].unsubscribe()
+
 
     @staticmethod
     def batch(path: str):

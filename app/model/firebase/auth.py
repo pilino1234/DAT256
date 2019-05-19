@@ -7,6 +7,8 @@ from kivy.storage.jsonstore import JsonStore
 import requests
 import json
 
+from model.user_me_getter import UserMeGetter
+
 credential_store = JsonStore('credentials.json')
 
 webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
@@ -14,21 +16,23 @@ webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
 class Auth:
 
     @staticmethod
-    def sign_in_with_tokens(id_token, refresh_token):
+    def sign_in_with_tokens(id_token, refresh_token, user_id):
         credentials = FirebaseCredentials(token=id_token,
                                           refresh_token=refresh_token)
         Firebase.create_db(credentials=credentials)
-        Firebase.create_bucket(credentials=credentials)
+        # Firebase.create_bucket(credentials=credentials)
         app = App.get_running_app()
         app.is_authenticated = True
-        credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token)
+        UserMeGetter.set_me(user_id)
+
+        credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token, user_id=user_id)
 
     @staticmethod
-    def sign_in(email, password):
+    def sign_in(mail, password):
         """Authenticate the user to firebase"""
         sign_in_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + webApiKey
         sign_in_payload = {
-            "email": email,
+            "email": mail,
             "password": password,
             "returnSecureToken": True
         }
@@ -37,31 +41,35 @@ class Auth:
 
         if sign_in_request.ok == True:
             id_token = sign_in_data['idToken']
+            user_id = sign_in_data['localId']
             refresh_token = sign_in_data['refreshToken']
-            credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token)
-            Auth.sign_in_with_tokens(id_token, refresh_token)
+
+            Auth.sign_in_with_tokens(id_token, refresh_token, user_id)
 
             return True
+
+        print(sign_in_request.status_code)
+        print(sign_in_request.reason)
 
         return False
 
     @staticmethod
-    def sign_up(email, password, name, phonenumber):
-        signup_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + webApiKey
-        signup_payload = {"email": email, "password": password, "returnSecureToken": True}
-        sign_up_request = requests.post(signup_url, data=signup_payload)
+    def sign_up(mail, password, name, phonenumber):
+        sign_up_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + webApiKey
+        sign_up_payload = {"mail": mail, "password": password, "returnSecureToken": True}
+        sign_up_request = requests.post(sign_up_url, data=sign_up_payload)
         sign_up_data = json.loads(sign_up_request.content.decode())
 
         if sign_up_request.ok == True:
             token = sign_up_data['idToken']
             refresh_token = sign_up_data['refreshToken']
-            uid = sign_up_data['localId']
+            user_id = sign_up_data['localId']
 
-            Auth.sign_in_with_tokens(token, refresh_token)
+            Auth.sign_in_with_tokens(token, refresh_token, user_id)
 
             batch = Firestore.batch("users")
-            batch.set(uid, {
-                "email": email,
+            batch.set(user_id, {
+                "mail": mail,
                 "name": name,
                 "phonenumber": phonenumber,
                 "avatar": "",
