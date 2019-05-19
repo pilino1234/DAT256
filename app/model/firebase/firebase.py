@@ -1,10 +1,12 @@
+import os
 
 from google.cloud import firestore as fs, storage  # type: ignore
 
 from model.firebase.firebase_credentials import FirebaseCredentials
 from model.firebase.firebase_exception import FirebaseException
 
-webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
+
 
 class Firebase:
     """Stores the common firebase db and storage bucket instance."""
@@ -33,10 +35,6 @@ class Firebase:
         return Firebase._bucket
 
     @staticmethod
-    def create_bucket(credentials: FirebaseCredentials, project: str = "carrepsa"):
-        client = storage.Client(project=project, credentials=credentials)
-        print("oh")
-        print(client)
-        for bucket in client.list_buckets():
-            print("Prepare yourself")
-            print(bucket)
+    def create_bucket():
+        client = storage.Client()
+        Firebase._bucket = client.get_bucket("carrepsa.appspot.com")
