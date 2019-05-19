@@ -4,6 +4,7 @@ from kivy.storage.jsonstore import JsonStore
 from kivy.uix.screenmanager import Screen
 
 from model.firebase.auth import Auth
+from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/screens/auth_screen.kv")
 
@@ -18,8 +19,9 @@ class AuthScreen(Screen):
 
         if credential_store.exists('tokens'):
             try:
-                Auth.sign_in_with_tokens(**credential_store.get('tokens'))
+                user_id = Auth.sign_in_with_tokens(**credential_store.get('tokens'))
 
+                UserMeGetter.set_me(user_id)
                 app = App.get_running_app()
                 app.is_authenticated = True
             except Exception as error:

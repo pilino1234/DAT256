@@ -1,13 +1,9 @@
-from kivy.app import App
-
 from model.firebase.firebase import Firebase
 from model.firebase.firebase_credentials import FirebaseCredentials
 from model.firebase.firestore import Firestore
 from kivy.storage.jsonstore import JsonStore
 import requests
 import json
-
-from model.user_me_getter import UserMeGetter
 
 credential_store = JsonStore('credentials.json')
 
@@ -23,6 +19,8 @@ class Auth:
         Firebase.create_bucket()
 
         credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token, user_id=user_id)
+
+        return user_id
 
     @staticmethod
     def sign_in(mail, password):

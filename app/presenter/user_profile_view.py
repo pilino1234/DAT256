@@ -6,7 +6,6 @@ from kivymd.button import MDRaisedButton
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 
-from model.user import User
 from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/user_profile_view.kv")
@@ -117,26 +116,22 @@ class UserProfileView(RelativeLayout):
             self.remove_widget(self.widget_input)
             return
 
-        # TODO: This should do more of it's stuff in the model/firebase
-        # TODO : @Mr. Portal
+        user_me = UserMeGetter.user
 
         if self.field_editing == "Name":
-            self.user_me.name = text
+            user_me.update(name=text)
         if self.field_editing == "Phone":
-            self.user_me.phonenumber = text
+            user_me.update(phonenumber=text)
         if self.field_editing == "Mail":
-            self.user_me.mail = text
+            user_me.update(mail=text)
         if self.field_editing == "avatar":
-            self.user_me.avatar = text
-
+            user_me.update(avatar=text)
         if self.field_editing == "deposit":
             amount = int(text)
             self.user_me.deposit(amount)
-
         if self.field_editing == "withdraw":
             amount = int(text)
-            if amount <= self.user_me.balance:
-                self.user_me.withdraw(amount)
+            self.user_me.withdraw(amount)
 
         self.update_fields()
         self.remove_widget(self.widget_input)  # Remove the edit widget

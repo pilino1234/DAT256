@@ -14,16 +14,23 @@ class User:
         self.avatar = avatar
         self.balance = balance
         self.rating = rating
-        self._delivery_reservations: List[DeliveryRequest] = packages
+        self.packages: List[DeliveryRequest] = packages
 
-    def update(self, name: str, mail: str, phonenumber: str, avatar: str,
-               balance: int, packages: List):
-        self.name = name
-        self.mail = mail
-        self.phonenumber = phonenumber
-        self.avatar = avatar
-        self.balance = balance
-        self._delivery_reservations: List[DeliveryRequest] = packages
+    def update(self, **kwargs):
+        if 'name' in kwargs:
+            self.name = kwargs['name']
+        if 'mail' in kwargs:
+            self.mail = kwargs['mail']
+        if 'phonenumber' in kwargs:
+            self.phonenumber = kwargs['phonenumber']
+        if 'avatar' in kwargs:
+            self.avatar = kwargs['avatar']
+        if 'balance' in kwargs:
+            self.balance = kwargs['balance']
+        if 'packages' in kwargs:
+            self.packages: List[DeliveryRequest] = kwargs['packages']
+
+        # TODO: write to firebase here
 
     def deposit(self, amount: int):
         """
@@ -36,6 +43,7 @@ class User:
         """
         if amount > 0:
             self.balance += amount
+        self.update()
 
     def withdraw(self, amount: int):
         """
@@ -49,6 +57,7 @@ class User:
         """
         if 0 < amount <= self.balance:
             self.balance -= amount
+        self.update()
 
     def lock_delivery_amount(self, delivery: DeliveryRequest):
         """
@@ -57,8 +66,8 @@ class User:
         :param delivery: The delivery request for which the payment amount should be locked.
         :type delivery: DeliveryRequest
         """
-        self._delivery_reservations.append(delivery)
         self.balance -= delivery.reward
+        self.update()
 
     def __eq__(self, other):
         """Checks equality between users using their mail."""
