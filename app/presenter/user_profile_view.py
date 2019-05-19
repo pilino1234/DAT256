@@ -7,6 +7,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 
 from model.user import User
+from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/user_profile_view.kv")
 
@@ -42,13 +43,7 @@ class UserProfileView(RelativeLayout):
     avatar_edit_widget = ""
     _back_button_handler = ObjectProperty(None)
 
-    user_me = User(
-        name="Jiggly Puff",
-        mail="jiggly@puff.com",
-        phone="0706123123",
-        avatar="something image related here, not used atm",
-        balance=1498)
-
+    user_me = UserMeGetter.user
     user_viewing = user_me
 
     def __init__(self, **kwargs):
@@ -68,7 +63,7 @@ class UserProfileView(RelativeLayout):
                                     self.user_viewing == self.user_me)
         self.ids.scroll_view_container.add_widget(self.name_field)
 
-        self.phone_field = MenuField("Phone", self.user_viewing.phone,
+        self.phone_field = MenuField("Phone", self.user_viewing.phonenumber,
                                      self.user_viewing == self.user_me)
         self.ids.scroll_view_container.add_widget(self.phone_field)
 
@@ -88,7 +83,7 @@ class UserProfileView(RelativeLayout):
     def update_fields(self):
         """Update displayed information from the user data."""
         self.name_field.set_data(self.user_viewing.name)
-        self.phone_field.set_data(self.user_viewing.phone)
+        self.phone_field.set_data(self.user_viewing.phonenumber)
         self.mail_field.set_data(self.user_viewing.mail)
         self.balance_field.set_data(str(self.user_viewing.balance) + " SEK")
 
@@ -103,7 +98,7 @@ class UserProfileView(RelativeLayout):
             self.widget_input.ids.text_input.text = self.user_viewing.mail
         if field == "Phone":
             self.widget_input.ids.title.text = field
-            self.widget_input.ids.text_input.text = self.user_viewing.phone
+            self.widget_input.ids.text_input.text = self.user_viewing.phonenumber
         if field == "deposit":
             self.widget_input.ids.title.text = "Deposit Money"
             self.widget_input.ids.text_input.text = "0"
@@ -124,7 +119,7 @@ class UserProfileView(RelativeLayout):
         if self.field_editing == "Name":
             self.user_me.name = text
         if self.field_editing == "Phone":
-            self.user_me.phone = text
+            self.user_me.phonenumber = text
         if self.field_editing == "Mail":
             self.user_me.mail = text
         if self.field_editing == "avatar":
