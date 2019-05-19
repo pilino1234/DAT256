@@ -21,9 +21,6 @@ class Auth:
                                           refresh_token=refresh_token)
         Firebase.create_db(credentials=credentials)
         Firebase.create_bucket()
-        app = App.get_running_app()
-        app.is_authenticated = True
-        UserMeGetter.set_me(user_id)
 
         credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token, user_id=user_id)
 
@@ -39,19 +36,19 @@ class Auth:
         sign_in_request = requests.post(sign_in_url, data=sign_in_payload)
         sign_in_data = json.loads(sign_in_request.content.decode())
 
+        user_id = None
         if sign_in_request.ok:
             id_token = sign_in_data['idToken']
             user_id = sign_in_data['localId']
             refresh_token = sign_in_data['refreshToken']
 
             Auth.sign_in_with_tokens(id_token, refresh_token, user_id)
-
-        return sign_in_request.ok
+        return user_id
 
     @staticmethod
     def sign_up(mail, password, name, phonenumber):
         sign_up_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + webApiKey
-        sign_up_payload = {"mail": mail, "password": password, "returnSecureToken": True}
+        sign_up_payload = {"email": mail, "password": password, "returnSecureToken": True}
         sign_up_request = requests.post(sign_up_url, data=sign_up_payload)
         sign_up_data = json.loads(sign_up_request.content.decode())
 

@@ -1,3 +1,4 @@
+import google
 from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.lang import Builder
@@ -49,8 +50,11 @@ class DeliveryList(RelativeLayout):
     def _filter_content(self, walk, car, truck, fragile):
         """Filters the delivery list."""
         self.previous_search_params = [walk, car, truck, fragile]
-        delivery_requests = DeliveryRequestGetter.query(
-            u'status', u'==', Status.AVAILABLE)
+        try:
+            delivery_requests = DeliveryRequestGetter.query(
+                u'status', u'==', Status.AVAILABLE)
+        except google.api_core.exceptions.Unauthenticated:
+            return
 
         origin = self.filter_widget.from_suggester.currently_used_suggestion
         destination = self.filter_widget.to_suggester.currently_used_suggestion

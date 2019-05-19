@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
 from model.firebase.auth import Auth
+from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/auth/login.kv")
 
@@ -13,7 +14,12 @@ class Login(BoxLayout):
     def authenticate(self):
         email = self.ids.email_tf.text
         password = self.ids.password_tf.text
-        result = Auth.sign_in(email, password)
+        user_id = Auth.sign_in(email, password)
 
-        if not result:
+        if not user_id:
             print("Something went wrong")
+        else:
+            app = App.get_running_app()
+            app.is_authenticated = True
+
+            UserMeGetter.set_me(user_id)

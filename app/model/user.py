@@ -6,15 +6,24 @@ from model.delivery_request import DeliveryRequest
 class User:
     """Represents a user's account."""
 
-    def update(self, name: str, mail: str, phonenumber: str, avatar: str,
-               balance: int):
+    def __init__(self, name: str, mail: str, phonenumber: str, avatar: str,
+                 balance: int, rating: float, packages: List):
         self.name = name
         self.mail = mail
         self.phonenumber = phonenumber
         self.avatar = avatar
         self.balance = balance
+        self.rating = rating
+        self._delivery_reservations: List[DeliveryRequest] = packages
 
-        self._delivery_reservations: List[DeliveryRequest] = []
+    def update(self, name: str, mail: str, phonenumber: str, avatar: str,
+               balance: int, packages: List):
+        self.name = name
+        self.mail = mail
+        self.phonenumber = phonenumber
+        self.avatar = avatar
+        self.balance = balance
+        self._delivery_reservations: List[DeliveryRequest] = packages
 
     def deposit(self, amount: int):
         """
