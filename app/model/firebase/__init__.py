@@ -10,4 +10,4 @@ if credential_store.exists('tokens'):
     except Exception as error:
         print(error)
         print("Deleting credentials.json since it may be corrupted")
-        # credential_store.delete('tokens')
+        credential_store.delete('tokens')

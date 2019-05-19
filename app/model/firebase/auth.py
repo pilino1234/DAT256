@@ -13,14 +13,14 @@ credential_store = JsonStore('credentials.json')
 
 webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
 
-class Auth:
 
+class Auth:
     @staticmethod
     def sign_in_with_tokens(id_token, refresh_token, user_id):
         credentials = FirebaseCredentials(token=id_token,
                                           refresh_token=refresh_token)
         Firebase.create_db(credentials=credentials)
-        # Firebase.create_bucket(credentials=credentials)
+        Firebase.create_bucket()
         app = App.get_running_app()
         app.is_authenticated = True
         UserMeGetter.set_me(user_id)
@@ -39,19 +39,14 @@ class Auth:
         sign_in_request = requests.post(sign_in_url, data=sign_in_payload)
         sign_in_data = json.loads(sign_in_request.content.decode())
 
-        if sign_in_request.ok == True:
+        if sign_in_request.ok:
             id_token = sign_in_data['idToken']
             user_id = sign_in_data['localId']
             refresh_token = sign_in_data['refreshToken']
 
             Auth.sign_in_with_tokens(id_token, refresh_token, user_id)
 
-            return True
-
-        print(sign_in_request.status_code)
-        print(sign_in_request.reason)
-
-        return False
+        return sign_in_request.ok
 
     @staticmethod
     def sign_up(mail, password, name, phonenumber):
@@ -60,7 +55,7 @@ class Auth:
         sign_up_request = requests.post(sign_up_url, data=sign_up_payload)
         sign_up_data = json.loads(sign_up_request.content.decode())
 
-        if sign_up_request.ok == True:
+        if sign_up_request.ok:
             token = sign_up_data['idToken']
             refresh_token = sign_up_data['refreshToken']
             user_id = sign_up_data['localId']
@@ -79,7 +74,7 @@ class Auth:
             })
             batch.commit()
 
-        elif sign_up_request.ok == False:
+        else:
             error_data = json.loads(sign_up_request.content.decode())
             error_message = error_data["error"]['message']
             print(error_data)
