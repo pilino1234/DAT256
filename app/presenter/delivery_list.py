@@ -17,7 +17,6 @@ from kivy.app import App
 
 from typing import Callable
 
-from model.firebase.firestore import Firestore
 from presenter.delivery_request_detail import DeliveryRequestDetail
 from presenter.utils.suggester import LocationSuggester
 
