@@ -1,5 +1,5 @@
 from google.auth.credentials import Credentials
-from google.auth import _helpers
+
 
 class FirebaseCredentials(Credentials):
     """Firebase Credentials, stores the authentication tokens"""
@@ -20,8 +20,7 @@ class FirebaseCredentials(Credentials):
                 token.
         """
 
-        headers['authorization'] = 'Bearer {}'.format(
-            _helpers.from_bytes(self.token))
+        headers['authorization'] = 'Bearer {}'.format(self.token)
 
     def refresh(self, request):
-        print("nah")
+        pass
