@@ -3,7 +3,6 @@ import threading
 import unittest
 
 from google.cloud.firestore_v1 import DocumentSnapshot
-from nose.tools import raises
 
 from model.delivery_request import Status
 from model.delivery_request_uploader import DeliveryRequestUploader
@@ -48,7 +47,6 @@ class FirestoreTest(unittest.TestCase):
             batch.set(uid, dr_dict)
             batch.delete(uid)
 
-    @raises(ValueError)
     def test_batch_exception(self):
-        with Firestore.batch('packages') as batch:
+        with self.assertRaises(ValueError), Firestore.batch('packages') as batch:
             batch.delete(1524)

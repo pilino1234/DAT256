@@ -43,14 +43,13 @@ class UserProfileView(RelativeLayout):
     avatar_edit_widget = ""
     _back_button_handler = ObjectProperty(None)
 
-    user_me = UserMeGetter.user
-    user_viewing = user_me
-
     def __init__(self, **kwargs):
         """Initializes the user profile."""
         super(RelativeLayout, self).__init__()
         if 'user' in kwargs:
             self.user_viewing = kwargs['user']
+        else:
+            self.user_viewing = UserMeGetter.user
         if 'back_button_handler' in kwargs:
             self._back_button_handler = kwargs['back_button_handler']
         else:
@@ -59,19 +58,21 @@ class UserProfileView(RelativeLayout):
 
     def _init_content(self):
         """Initializes the user profile."""
+        user_me = UserMeGetter.user
+
         self.name_field = MenuField("Name", self.user_viewing.name,
-                                    self.user_viewing == self.user_me)
+                                    self.user_viewing == user_me)
         self.ids.scroll_view_container.add_widget(self.name_field)
 
         self.phone_field = MenuField("Phone", self.user_viewing.phonenumber,
-                                     self.user_viewing == self.user_me)
+                                     self.user_viewing == user_me)
         self.ids.scroll_view_container.add_widget(self.phone_field)
 
         self.mail_field = MenuField("Mail", self.user_viewing.mail,
-                                    self.user_viewing == self.user_me)
+                                    self.user_viewing == user_me)
         self.ids.scroll_view_container.add_widget(self.mail_field)
 
-        if self.user_viewing == self.user_me:
+        if self.user_viewing == user_me:
             self.balance_field = MenuField(
                 "Account Balance",
                 str(self.user_viewing.balance) + " SEK", False)
@@ -115,6 +116,9 @@ class UserProfileView(RelativeLayout):
         if text is None or text == "":
             self.remove_widget(self.widget_input)
             return
+
+        # TODO: This should do more of it's stuff in the model/firebase
+        # TODO : @Mr. Portal
 
         if self.field_editing == "Name":
             self.user_me.name = text
