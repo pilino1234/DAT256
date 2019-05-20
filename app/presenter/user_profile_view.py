@@ -46,8 +46,7 @@ class UserProfileView(RelativeLayout):
                    mail="jiggly@puff.com",
                    phone="0706123123",
                    avatar="something image related here, not used atm",
-                   balance=1498,
-                   rating=4.3)
+                   balance=1498)
 
     user_viewing = user_me
 
@@ -83,11 +82,6 @@ class UserProfileView(RelativeLayout):
             self.ids.scroll_view_container.add_widget(self.balance_field)
             self.balance_field.add_widget(AccountButtons())
 
-        self.rating_field = MenuField("Rating",
-                                      str(self.user_viewing.rating) + " / 5",
-                                      False)
-        self.ids.scroll_view_container.add_widget(self.rating_field)
-
         self.widget_input = AnswerInput()
 
     def update_fields(self):
@@ -96,7 +90,6 @@ class UserProfileView(RelativeLayout):
         self.phone_field.set_data(self.user_viewing.phone)
         self.mail_field.set_data(self.user_viewing.mail)
         self.balance_field.set_data(str(self.user_viewing.balance) + " SEK")
-        self.rating_field.set_data(str(self.user_viewing.rating) + " / 5")
 
     def request_edit(self, field):
         """Called when any of the edit buttons are released."""
