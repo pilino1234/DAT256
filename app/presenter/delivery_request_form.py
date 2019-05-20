@@ -19,8 +19,7 @@ class DeliveryRequestForm(BoxLayout):
     weight = 0
 
     _weights = [
-        'weight_walk_button', 'weight_bike_button', 'weight_car_button',
-        'weight_truck_button'
+        'weight_walk_button', 'weight_car_button', 'weight_truck_button'
     ]
 
     __text_field_ids = [
