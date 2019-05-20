@@ -42,29 +42,16 @@ class DeliveryList(RelativeLayout):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
         self.filter_widget = Filter()
-        Clock.schedule_once(self._fill_content)
+        Clock.schedule_once(lambda x: self.add_widget(self.filter_widget))
 
-    def _fill_content(self, delta_time):
-        delivery_requests = DeliveryRequestGetter.query(
-            u'status', u'==', Status.AVAILABLE)
-
-        for delivery_request in delivery_requests:
-            list_item = ListItem(delivery_request,
-                                 self._transition_to_detail_view)
-            self.ids.available_requests.add_widget(list_item)
-            self.deliveries.append(delivery_request)
-
-        self.delivery_list = self.ids.delivery_list
-        self.add_widget(self.filter_widget)
-
-    def _filter_content(self, walk, car, truck, fragile, distance):
-        """Filters the delivery list depending on checkboxes and distance"""
+    def _filter_content(self, walk, car, truck, fragile, origin, destination):
+        """Filters the delivery list."""
         delivery_requests = DeliveryRequestGetter.query(
             u'status', u'==', Status.AVAILABLE)
         self.ids.available_requests.clear_widgets()
         for delivery_request in delivery_requests:
             if self.passes_filter(delivery_request, walk, car, truck, fragile,
-                                  distance):
+                                  origin, destination):
                 list_item = ListItem(delivery_request,
                                      self._transition_to_detail_view)
                 self.ids.available_requests.add_widget(list_item)
@@ -74,19 +61,16 @@ class DeliveryList(RelativeLayout):
         self.hide_filter()
 
     def passes_filter(self, delivery_request, walk, car, truck, fragile,
-                      distance):
-        """Filters the delivery list depending on checkboxes and distance"""
-        if distance == "":
-            distance = float("inf")
-        arr = [walk, True, car, truck]
+                      origin, destination):
+        """Checks if a delivery request passes the filter."""
+        checks = [walk, car, truck]
 
-        if not arr[delivery_request.weight]:
+        # Pass checkboxes
+        if not checks[delivery_request.weight]:
             return False
 
+        # Matches fragile
         if delivery_request.fragile and not fragile:
-            return False
-
-        if delivery_request.distance_km > float(distance):
             return False
 
         return True
