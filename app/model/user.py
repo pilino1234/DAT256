@@ -15,6 +15,7 @@ class User:
         self.balance = balance
         self.rating = rating
         self.packages = []
+        self.deliveres = []
 
     def update(self, **kwargs):
         if 'name' in kwargs:
@@ -29,6 +30,8 @@ class User:
             self.balance = kwargs['balance']
         if 'packages' in kwargs:
             self.packages: List[DeliveryRequest] = kwargs['packages']
+        if 'deliveres' in kwargs:
+            self.deliveres: List[DeliveryRequest] = kwargs['deliveres']
 
         # print("WRITE TO FIREBASE")
         # TODO: write to firebase here
