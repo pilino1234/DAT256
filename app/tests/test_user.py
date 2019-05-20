@@ -6,16 +6,14 @@ from model.user import User
 
 class UserTest(unittest.TestCase):
     def test_equal(self):
-        u1 = User()
-        u1.update("User1",
+        u1 = User("User1",
                   "email@example.com",
                   "1234567890",
                   "",
                   balance=0,
                   packages=[])
 
-        u2 = User()
-        u2.update("User2",
+        u2 = User("User2",
                   "email@example.com",
                   "0987654321",
                   "avatar_binary_string_stuff",
@@ -27,16 +25,14 @@ class UserTest(unittest.TestCase):
 
     def test_not_equal(self):
 
-        u1 = User()
-        u1.update("User1",
+        u1 = User("User1",
                   "email@example.com",
                   "1234567890",
                   "",
                   balance=0,
                   packages=[])
 
-        u2 = User()
-        u2.update("User1",
+        u2 = User("User1",
                   "different_email@example.com",
                   "1234567890",
                   "",
@@ -47,8 +43,7 @@ class UserTest(unittest.TestCase):
         self.assertFalse(u2 == u1)
 
     def test_deposit(self):
-        user = User()
-        user.update("User1",
+        user = User("User1",
                     "email@example.com",
                     "1234567890",
                     "",
@@ -60,8 +55,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, 100)
 
     def test_deposit_negative(self):
-        user = User()
-        user.update("User1",
+        user = User("User1",
                     "email@example.com",
                     "1234567890",
                     "",
@@ -73,8 +67,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, 50)
 
     def test_withdraw(self):
-        user = User()
-        user.update("User1",
+        user = User("User1",
                     "email@example.com",
                     "1234567890",
                     "",
@@ -86,8 +79,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, 50)
 
     def test_withdraw_negative(self):
-        user = User()
-        user.update("User1",
+        user = User("User1",
                     "email@example.com",
                     "1234567890",
                     "",
@@ -99,8 +91,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, 100)
 
     def test_withdraw_more_than_balance(self):
-        user = User()
-        user.update("User1",
+        user = User("User1",
                     "email@example.com",
                     "1234567890",
                     "",
@@ -112,8 +103,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, 100)
 
     def test_locking_money(self):
-        user = User()
-        user.update("User1",
+        user = User("User1",
                     "email@example.com",
                     "1234567890",
                     "",

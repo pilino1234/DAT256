@@ -68,7 +68,7 @@ class Firestore:
                                Firebase.get_db().collection(path))
 
     @staticmethod
-    def get(path: str) -> CollectionReference:
+    def get(path: str):
         """
         Fetch all items in a path from the Firestore database
 
@@ -76,7 +76,7 @@ class Firestore:
         :type path: str
         :return: An iterable containing the documents in the path.
         """
-        return Firebase.get_db().collection(path).get()
+        return Firebase.get_db().collection(path).stream()
 
     @staticmethod
     def get_raw(path: str):
@@ -123,9 +123,6 @@ class _FirestoreBatch:
 
     def set(self, document: DocumentReference, document_data: dict):
         """Replace document with new document data."""
-
-        print(document)
-
         self._batchRef.set(self._collection.document(document), document_data,
                            False)
 

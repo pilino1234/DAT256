@@ -1,11 +1,19 @@
+import os
 import unittest
 
+from model.firebase.auth import Auth
 from model.firebase.bucket import Bucket
 
 
 class BucketTest(unittest.TestCase):
+    def setUp(self) -> None:
+        mail = os.environ['CARREPSA_CI_EMAIL']   # TODO: travis@carrepsa.ci
+        password = os.environ['CARREPSA_CI_PASS']   # TODO: CIrrepsa
+
+        Auth.sign_in(mail, password)
+
     def test_uploading(self):
-        jigglypuff_blob_name = Bucket.upload("app/assets/jigglypuff.png")
+        jigglypuff_blob_name = Bucket.upload("assets/jigglypuff.png")
         self.assertIsNotNone(jigglypuff_blob_name)
         jigglypuff_string = Bucket.download_as_string(jigglypuff_blob_name)
         self.assertGreater(len(jigglypuff_string), 200)
