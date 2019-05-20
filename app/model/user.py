@@ -7,14 +7,13 @@ class User:
     """Represents a user's account."""
 
     def __init__(self, name: str, mail: str, phone: str, avatar: str,
-                 balance: int, rating: float, **kwargs):
+                 balance: int, **kwargs):
         """Initializes the user using kwargs."""
         self.name = name
         self.mail = mail
         self.phone = phone
         self.avatar = avatar
         self.balance = balance
-        self.rating = rating
 
         self._delivery_reservations: List[DeliveryRequest] = []
 
