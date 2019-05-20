@@ -14,6 +14,7 @@ class User:
         self.avatar = avatar
         self.balance = balance
         self.rating = rating
+        self.packages = []
 
     def update(self, **kwargs):
         if 'name' in kwargs:
