@@ -16,4 +16,4 @@ class DeliveryRequestUploader:
         request_dict = request.to_dict()
 
         with Firestore.batch("packages") as batch:
-            batch.create(request_dict)
+            batch.create_with_random_id(request_dict)

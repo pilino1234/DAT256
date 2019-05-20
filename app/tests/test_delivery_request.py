@@ -1,6 +1,5 @@
 import unittest
 
-from model.delivery_request import DeliveryRequest, Status
 from tests.utils import create_delivery_request
 
 
@@ -21,7 +20,7 @@ class DeliveryRequestTest(unittest.TestCase):
             'fragile': True,
             'status': 0,
             'money_lock': 0,
-            'owner': 'person A',
+            'owner': 'TRAVIS_TEST',
             'assistant': 'person B',
             'image_path': ''
         }
