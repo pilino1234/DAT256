@@ -6,20 +6,20 @@ class Location:
 
     def __init__(self, name: str, longitude: str, latitude: str):
         """Initialize the location"""
-        super(Location, self).__init__(**kwargs)
+        super(Location, self).__init__()
         self.name = name
         self.longitude = longitude
         self.latitude = latitude
 
-    def dist_to(self, other: object) -> float:
+    def dist_to(self, other) -> float:
         """Returns the distance to the other location in km"""
-        p1 = (self.longitude, self.latitude)
-        p2 = (other.longitude, other.latitude)
+        p1 = (self.latitude, self.longitude)
+        p2 = (other.latitude, other.longitude)
         dist_miles = geodesic(p1, p2).miles
         dist_km = dist_miles / 0.62137119223733
         return dist_km
 
-    def is_close_to(self, other: object) -> bool:
+    def is_close_to(self, other) -> bool:
         return self.dist_to(other) < 3.5
 
     def __str__(self):

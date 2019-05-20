@@ -123,8 +123,8 @@ class ListItem(WhiteCardButton):
         self.tap_callback = tap_callback
         self.request = delivery_request
         self.ids.item.text = delivery_request.item
-        self.ids.origin.text = delivery_request.origin
-        self.ids.destination.text = delivery_request.destination
+        self.ids.origin.text = delivery_request.origin.name
+        self.ids.destination.text = delivery_request.destination.name
         self.ids.distance.text = delivery_request.distance_pretty
         self.ids.reward.text = str(delivery_request.reward)
         self.ids.weight.text = delivery_request.weight_text
