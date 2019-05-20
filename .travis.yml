@@ -10,8 +10,6 @@ services:
 stages:
   - name: tests
     if: type == pull_request OR branch IN (master, dev)
-  - name: buildeploy
-    if: (branch IN (master, dev) AND type != pull_request) OR tag is present
 
 jobs:
   include:
@@ -22,17 +20,6 @@ jobs:
       name: "Prospector"
     - script: bash ci/run_nose.sh
       name: "Unit tests"
-    - stage: buildeploy
-      name: "Build Android APK and Deploy to GitHub Release"
-      script: bash ci/build_apk.sh
-      deploy:
-        provider: releases
-        api_key: $GITHUB_RELEASE_TOKEN
-        file_glob: true
-        file: app/bin/*
-        skip_cleanup: true
-        on:
-          all_branches: true # This stage is only triggered for certain branches anyway
 
 script: ignore
 
