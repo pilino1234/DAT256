@@ -15,6 +15,8 @@ class UserMeGetter:
     def set_me(new_user_id: Text):
         if UserMeGetter._user_id is not "":
             Firestore.unsubscribe("users/" + UserMeGetter._user_id)
+            Firestore.unsubscribe("users/" + UserMeGetter._user_id + "/packages")
+            Firestore.unsubscribe("users/" + UserMeGetter._user_id + "/deliveres")
 
         UserMeGetter._user_id = new_user_id
 
