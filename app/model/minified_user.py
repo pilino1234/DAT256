@@ -31,3 +31,11 @@ class MinifiedUser:
         return "User: {name}, {mail}, {phonenumber}".format(
             name=self.name, mail=self.mail, phonenumber=self.phonenumber
         )
+
+    def to_data(self):
+        return {
+            "name": self.name,
+            "mail": self.mail,
+            "phonenumber": self.phonenumber,
+            "uid": self.uid
+        }
