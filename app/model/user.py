@@ -30,7 +30,7 @@ class User:
         if 'packages' in kwargs:
             self.packages: List[DeliveryRequest] = kwargs['packages']
 
-        print("WRITE TO FIREBASE")
+        # print("WRITE TO FIREBASE")
         # TODO: write to firebase here
 
     def deposit(self, amount: int):
