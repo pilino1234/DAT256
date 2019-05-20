@@ -1,9 +1,24 @@
 <Filter>:
+    canvas.before:
+        Color:
+            rgba: 1,1,1, 1
+        Rectangle:
+            # self here refers to the widget i.e BoxLayout
+            pos: self.pos
+            size: self.size
     orientation: 'vertical'
     MDToolbar:
         title:'Search options'
         md_bg_color: app.theme_cls.primary_color
         elevation: 10
+        MDIconButton:
+            id: back_button
+            size_hint: None, None
+            size: 50, 50
+            icon: 'chevron-left'
+            theme_text_color: 'Custom'
+            text_color: 1,1,1, 1
+            on_release: root.parent.hide_filter()
     Widget:
         size_hint_y: .4
     BoxLayout:
@@ -95,7 +110,6 @@
         MDCheckbox:
             id: check_fragile
             size_hint_x: 0.2
-
     Widget:
         size_hint_y: 0.6
     MDFillRoundFlatButton:
