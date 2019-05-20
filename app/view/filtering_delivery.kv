@@ -29,7 +29,7 @@
             size_hint_x: 0.4
         MDTextField:
             hint_text: "(Required)"
-            on_text: root.on_search(self)
+            on_text: root._on_search_from()
             id: input_from
 
     BoxLayout:
@@ -40,7 +40,7 @@
             size_hint_x: 0.4
         MDTextField:
             hint_text: "(Optional)"
-            on_text: root.on_search(self)
+            on_text: root._on_search_to()
             id: input_to
 
     BoxLayout:

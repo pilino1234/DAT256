@@ -9,20 +9,16 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
-from kivymd.menus import MDMenuItem, MDDropdownMenu
-import threading
-
 from typing import Callable
 
 from presenter.delivery_request_detail import DeliveryRequestDetail
+from presenter.utils.suggester import LocationSuggester
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_getter import DeliveryRequestGetter
 
 Builder.load_file("view/delivery_list.kv")
 Builder.load_file("view/filtering_delivery.kv")
-
-from model.map_api import MapAPI
 
 
 class DeliveryList(RelativeLayout):
@@ -209,46 +205,22 @@ class UpdateSpinner(MDUpdateSpinner):
 class Filter(BoxLayout):
     """The filter widget"""
 
-    suggestion_thread = None
-    suggestion_dropdown = None
-    suggestions = []
+    from_suggester = None
+    to_suggester = None
 
-    def on_search(self, comp):
-        if self.suggestion_thread:
-            self.suggestion_thread.cancel()
+    def __init__(self, **kwargs):
+        """Initializes the delivery list"""
+        super(Filter, self).__init__(**kwargs)
+        Clock.schedule_once(lambda x: self._init_content())
 
-        self.suggestion_thread = threading.Timer(
-            0.2, lambda: self.show_suggestions(comp))
-        self.suggestion_thread.start()
+    def _init_content(self):
+        self.from_suggester = LocationSuggester(self.ids.input_from)
+        self.to_suggester = LocationSuggester(self.ids.input_to)
 
-    def show_suggestions(self, comp):
-        suggestion_thread = None
+    def _on_search_from(self):
+        if self.from_suggester is not None:
+            self.from_suggester.on_search()
 
-        if self.suggestion_dropdown:
-            self.suggestion_dropdown.dismiss()
-
-        if len(comp.text) < 2:
-            return
-
-        new_suggestions = MapAPI.get_search_suggestions(comp.text)
-        if new_suggestions == self.suggestions:
-            return
-        self.suggestions = new_suggestions
-
-        search_suggestions = [{
-            'viewclass':
-            'MDMenuItem',
-            'text':
-            s['name'] + ' ' + s['district'],
-            'callback':
-            lambda x: Filter.__apply_suggestion(
-                comp, s['name'] + ' ' + s['district'])
-        } for s in self.suggestions]
-
-        self.suggestion_dropdown = MDDropdownMenu(
-            items=search_suggestions, width_mult=8)
-        self.suggestion_dropdown.open(comp)
-
-    @staticmethod
-    def __apply_suggestion(comp, suggestion):
-        comp.text = suggestion
+    def _on_search_to(self):
+        if self.to_suggester is not None:
+            self.to_suggester.on_search()
