@@ -1,13 +1,15 @@
 from typing import List
 
 from model.delivery_request import DeliveryRequest
+from model.minified_user import MinifiedUser
 
 
 class User:
     """Represents a user's account."""
 
-    def __init__(self, name: str, mail: str, phonenumber: str, avatar: str,
+    def __init__(self, _uid: str, name: str, mail: str, phonenumber: str, avatar: str,
                  balance: int, rating: float):
+        self._uid = _uid
         self.name = name
         self.mail = mail
         self.phonenumber = phonenumber
@@ -83,3 +85,6 @@ class User:
             name = self.name, mail = self.mail, phonenumber = self.phonenumber,
             avatar = self.avatar, balance = self.balance, rating = self.rating
         )
+
+    def to_minified(self):
+        return MinifiedUser(name=self.name, phonenumber=self.phonenumber, mail=self.mail, uid=self._uid)

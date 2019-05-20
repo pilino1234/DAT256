@@ -10,6 +10,7 @@ from model.delivery_request import DeliveryRequest, Status
 from model.firebase.bucket import Bucket
 from model.firebase.firestore import Firestore
 from model.user_getter import UserGetter
+from model.user_me_getter import UserMeGetter
 
 from presenter.user_profile_view import UserProfileView
 
@@ -84,9 +85,8 @@ class DeliveryRequestDetail(BoxLayout):
 
     def accept_delivery(self):
         """Accept the delivery as the current user."""
-        assistant = 'pIAeLAvHXp0KZKWDzTMz'
-        assistant_ref = Firestore.get_raw('users').document(assistant).get()
-        assistant_balance = assistant_ref._data['balance']
+        assistant_balance = UserMeGetter.user.balance
+        assistant = UserMeGetter.user.to_minified()
 
         # Not enough money
         if assistant_balance < self.request.money_lock:
@@ -95,12 +95,12 @@ class DeliveryRequestDetail(BoxLayout):
         with Firestore.batch('packages') as batch:
             batch.update(self.request.uid, {
                 'status': Status.ACCEPTED,
-                'assistant': assistant
+                'assistant': assistant.to_data()
             })
 
         with Firestore.batch('users') as batch:
             batch.update(
-                assistant,
+                assistant.uid,
                 {'balance': assistant_balance - self.request.money_lock})
 
         self._back_button_handler()
