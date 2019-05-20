@@ -1,14 +1,17 @@
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.button import MDIconButton
 from kivymd.textfields import MDTextField
 from kivymd.toast.kivytoast import toast
 
+from presenter.user_profile_view import UserProfileView
+from presenter.utils.suggester import LocationSuggester
+
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
 from model.firebase.bucket import Bucket
 from model.user import User
-from presenter.user_profile_view import UserProfileView
 
 Builder.load_file("view/delivery_request_form.kv")
 
@@ -17,6 +20,8 @@ class DeliveryRequestForm(BoxLayout):
     """Widget to create a delivery request"""
 
     weight = 0
+    from_suggester = None
+    to_suggester = None
 
     _weights = [
         'weight_walk_button', 'weight_car_button', 'weight_truck_button'
@@ -42,6 +47,13 @@ class DeliveryRequestForm(BoxLayout):
         for text_id in self.__text_field_ids:
             text_field: MDTextField = self.ids[text_id]
             text_field.bind(text=self._verify_entries)
+
+        Clock.schedule_once(lambda x: self._init_content())
+
+    def _init_content(self):
+        """Init suggesters"""
+        self.from_suggester = LocationSuggester(self.ids.from_text)
+        self.to_suggester = LocationSuggester(self.ids.dest_text)
 
     def _set_photo_path(self, path: str):
         """Set the file path used by the preview image."""
@@ -135,25 +147,29 @@ class DeliveryRequestForm(BoxLayout):
         if not self._verify_entries():
             return
 
+        if not origin or not destination:
+            # Origin or destination are undefiend
+            return
+
         if self.photo_path:
             firestore_image_path = Bucket.upload(self.photo_path)
         else:
             firestore_image_path = ""
 
-        request = DeliveryRequest(item=self.ids.package_name.text,
-                                  description=self.ids.description_text.text,
-                                  origin=self.ids.from_text.text,
-                                  destination=self.ids.dest_text.text,
-                                  reward=payment_amount,
-                                  weight=self.weight,
-                                  fragile=self.ids.fragile_bool.active,
-                                  status=Status.AVAILABLE,
-                                  money_lock=int(
-                                      self.ids.money_lock_amount.text),
-                                  owner='pIAeLAvHXp0KZKWDzTMz',
-                                  assistant='',
-                                  uid='',
-                                  image_path=firestore_image_path)
+        request = DeliveryRequest(
+            item=self.ids.package_name.text,
+            description=self.ids.description_text.text,
+            origin=self.origin,
+            destination=self.destination,
+            reward=payment_amount,
+            weight=self.weight,
+            fragile=self.ids.fragile_bool.active,
+            status=Status.AVAILABLE,
+            money_lock=int(self.ids.money_lock_amount.text),
+            owner='pIAeLAvHXp0KZKWDzTMz',
+            assistant='',
+            uid='',
+            image_path=firestore_image_path)
 
         user.lock_delivery_amount(request)
 
@@ -164,3 +180,11 @@ class DeliveryRequestForm(BoxLayout):
         self.parent.parent.hide()
 
         self._clear_form()
+
+    def _on_search_from(self):
+        if self.from_suggester is not None:
+            self.from_suggester.on_search()
+
+    def _on_search_to(self):
+        if self.to_suggester is not None:
+            self.to_suggester.on_search()
