@@ -135,7 +135,10 @@ class DeliveryRequestForm(BoxLayout):
         if not self._verify_entries():
             return
 
-        firestore_image_path = Bucket.upload(self.photo_path)
+        if self.photo_path:
+            firestore_image_path = Bucket.upload(self.photo_path)
+        else:
+            firestore_image_path = ""
 
         request = DeliveryRequest(item=self.ids.package_name.text,
                                   description=self.ids.description_text.text,
