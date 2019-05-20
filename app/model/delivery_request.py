@@ -2,6 +2,8 @@ from collections import namedtuple
 from enum import IntEnum
 from typing import Dict, Union
 
+from model.location import Location
+
 
 class Status(IntEnum):
     """Status codes for delivery requests."""  # noqa: D204
@@ -25,8 +27,8 @@ class DeliveryRequest:
                  uid: str,
                  item: str,
                  description: str,
-                 origin: str,
-                 destination: str,
+                 origin: dict,
+                 destination: dict,
                  reward: int,
                  weight: int,
                  fragile: bool,
@@ -40,8 +42,9 @@ class DeliveryRequest:
         self.uid = uid
         self.item = item
         self.description = description
-        self.origin = origin
-        self.destination = destination
+        self.origin = Location(origin.name, origin.longitude, origin.latitude)
+        self.destination = Location(destination.name, destination.longitude,
+                                    destination.latitude)
         self.reward = reward
         self.weight = weight
         self.fragile = fragile
@@ -68,7 +71,7 @@ class DeliveryRequest:
                    fragile=self.fragile, status=self.status,
                    description=self.description, image_path=self.image_path)
 
-    def to_dict(self) -> Dict[str, Union[str, float, int, bool]]:
+    def to_dict(self) -> Dict[str, Union[str, float, int, bool, Location]]:
         """
         Convert a DeliveryRequest object to a dict.
 
@@ -95,12 +98,12 @@ class DeliveryRequest:
     @property
     def distance_pretty(self) -> str:
         """Computes distance between origin and destination in kilometers"""
-        return "7 km"
+        return str(round(self.distance_km, 1)) + " km"
 
     @property
     def distance_km(self) -> float:
         """Computes distance between origin and destination in kilometres"""
-        return float(7)
+        return self.origin.dist_to(self.destination)
 
     @property
     def reward_pretty(self) -> str:

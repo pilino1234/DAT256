@@ -2,6 +2,7 @@ from typing import Text, Any, List
 
 from model.delivery_request import DeliveryRequest, Status
 from model.firebase.firestore import Firestore
+from model.location import Location
 
 
 class DeliveryRequestGetter:
@@ -32,6 +33,12 @@ class DeliveryRequestGetter:
             data = doc.to_dict()
             data['uid'] = doc.id
             data['status'] = Status(data['status'])
+            data['origin'] = Location(data['origin']['name'],
+                                      data['origin']['longitude'],
+                                      data['origin']['latitude'])
+            data['destination'] = Location(data['destination']['name'],
+                                           data['destination']['longitude'],
+                                           data['destination']['latitude'])
             delivery_requests.append(DeliveryRequest(**data))
 
         return delivery_requests
@@ -47,4 +54,10 @@ class DeliveryRequestGetter:
             delivery_request_id).get().to_dict()
         data['uid'] = delivery_request_id
         data['status'] = Status(data['status'])
+        data['origin'] = Location(data['origin']['name'],
+                                  data['origin']['longitude'],
+                                  data['origin']['latitude'])
+        data['destination'] = Location(data['destination']['name'],
+                                       data['destination']['longitude'],
+                                       data['destination']['latitude'])
         return DeliveryRequest(**data)

@@ -147,8 +147,11 @@ class DeliveryRequestForm(BoxLayout):
         if not self._verify_entries():
             return
 
+        origin = self.from_suggester.currently_used_suggestion
+        destination = self.to_suggester.currently_used_suggestion
+
+        # Both origin and destination must be well-defined
         if not origin or not destination:
-            # Origin or destination are undefiend
             return
 
         if self.photo_path:
@@ -159,8 +162,8 @@ class DeliveryRequestForm(BoxLayout):
         request = DeliveryRequest(
             item=self.ids.package_name.text,
             description=self.ids.description_text.text,
-            origin=self.origin,
-            destination=self.destination,
+            origin=origin,
+            destination=destination,
             reward=payment_amount,
             weight=self.weight,
             fragile=self.ids.fragile_bool.active,
