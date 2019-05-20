@@ -141,10 +141,6 @@ class UserProfileView(RelativeLayout):
         self.update_fields()
         self.remove_widget(self.widget_input)  # Remove the edit widget
 
-    def do_avatar_edit(self):
-        """Called when editing the avatar."""
-        print("Open image picker.")
-
 
 class AnswerInput(BoxLayout):
     """A widget that asks the user for input"""
