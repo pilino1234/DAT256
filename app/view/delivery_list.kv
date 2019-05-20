@@ -22,6 +22,13 @@
                 scroll: scroll_view
                 event_update: lambda x: root._update_content(self)
 
+        MDFillRoundFlatButton:
+            text: "    Filter     "
+            pos_hint: {'center_x': 0.5, 'center_y': .15}
+            on_release:
+                root.show_filter()
+
+
 
 <WhiteCardButton>
     canvas.before:
