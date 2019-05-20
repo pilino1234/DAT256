@@ -21,6 +21,7 @@ class UserMeGetter:
         if new_user_id is not "":
             Firestore.subscribe_document("users", new_user_id, UserMeGetter._on_snapshot_user)
             Firestore.subscribe_document_sub_collection("users", new_user_id, "packages", UserMeGetter._on_snapshot_user_packages)
+            Firestore.subscribe_document_sub_collection("users", new_user_id, "deliveres", UserMeGetter._on_snapshot_user_deliveres)
             UserMeGetter.user = UserGetter.get_by_id(new_user_id)
 
     @staticmethod
@@ -39,11 +40,15 @@ class UserMeGetter:
             data['status'] = Status(data['status'])
             delivery_requests.append(DeliveryRequest(**data))
 
-
         UserMeGetter.user.update(packages=delivery_requests)
-
-        print(UserMeGetter.user)
 
     @staticmethod
     def _on_snapshot_user_deliveres(collection_snapshot, _, __):
-        pass
+        delivery_requests = []
+        for doc in collection_snapshot:
+            data = doc.to_dict()
+            data['uid'] = doc.id
+            data['status'] = Status(data['status'])
+            delivery_requests.append(DeliveryRequest(**data))
+
+        UserMeGetter.user.update(deliveres=delivery_requests)

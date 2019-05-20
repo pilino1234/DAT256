@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from model.delivery_request import DeliveryRequest
 from model.delivery_request_getter import DeliveryRequestGetter
+from model.user_me_getter import UserMeGetter
 from presenter.delivery_request_detail import DeliveryRequestDetail
 from model.firebase.firestore import Firestore
 from presenter.delivery_list import ListItem
@@ -26,8 +27,7 @@ class MyDeliveries(BoxLayout):
 
     def _update_content(self):
         """Fetch all deliveries the current owner has accepted"""
-        delivery_requests = DeliveryRequestGetter.query(
-            u'assistant', u'==', u'pIAeLAvHXp0KZKWDzTMz')
+        delivery_requests = UserMeGetter.user.deliveres
 
         # Fill delivery list
         self.ids.my_deliveries.clear_widgets()
