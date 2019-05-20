@@ -109,15 +109,18 @@ class DeliveryRequestForm(BoxLayout):
             # User does not have enough money to pay for this delivery
             return
 
+        origin = self.from_suggester.currently_used_suggestion
+        destination = self.to_suggester.currently_used_suggestion
+
+        # Both origin and destination must be well-defined
         if not origin or not destination:
-            # Origin or destination are undefiend
             return
 
         request = DeliveryRequest(
             item=self.ids.package_name.text,
             description=self.ids.description_text.text,
-            origin=self.origin,
-            destination=self.destination,
+            origin=origin,
+            destination=destination,
             reward=payment_amount,
             weight=self.weight,
             fragile=self.ids.fragile_bool.active,

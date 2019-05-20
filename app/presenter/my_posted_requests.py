@@ -66,7 +66,7 @@ class MyPostedRequest(WhiteCardButton):
         self.request = delivery_request
         self.tap_callback = tap_callback
         self.ids.item.text = delivery_request.item
-        self.ids.origin.text = delivery_request.origin
-        self.ids.destination.text = delivery_request.destination
+        self.ids.origin.text = delivery_request.origin.name
+        self.ids.destination.text = delivery_request.destination.name
         self.ids.reward.text = delivery_request.reward_pretty
         self.ids.status.text = "Status: " + delivery_request.status_text
