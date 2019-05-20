@@ -9,7 +9,6 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
-from kivy.uix.widget import Widget
 
 from typing import Callable
 
@@ -31,7 +30,7 @@ class DeliveryList(RelativeLayout):
 
     delivery_list = ObjectProperty(BoxLayout)
 
-    deliveries = []
+    deliveries = [None]
 
     filter_widget = None
 
@@ -54,13 +53,14 @@ class DeliveryList(RelativeLayout):
         self.delivery_list = self.ids.delivery_list
         self.add_widget(self.filter_widget)
 
-    def _filter_content(self, walk, bike, car, truck, fragile, distance):
-        '''Filters the delivery list depending on checkboxes and distance'''
+    def _filter_content(self, walk, car, truck, fragile, distance):
+        """Filters the delivery list depending on checkboxes and distance"""
         delivery_requests = DeliveryRequestGetter.query(
             u'status', u'==', Status.AVAILABLE)
         self.ids.available_requests.clear_widgets()
         for delivery_request in delivery_requests:
-            if self.passes_filter(delivery_request, walk, bike, car, truck, fragile, distance):
+            if self.passes_filter(delivery_request, walk, car, truck,
+                                  fragile, distance):
                 list_item = ListItem(delivery_request,
                                      self._transition_to_detail_view)
                 self.ids.available_requests.add_widget(list_item)
@@ -69,11 +69,12 @@ class DeliveryList(RelativeLayout):
 
         self.hide_filter()
 
-    def passes_filter(self, delivery_request, walk, bike, car, truck, fragile, distance):
-        '''Filters the delivery list depending on checkboxes and distance'''
+    def passes_filter(self, delivery_request, walk, car, truck, fragile,
+                      distance):
+        """Filters the delivery list depending on checkboxes and distance"""
         if distance == "":
             distance = float("inf")
-        arr = [walk, bike, car, truck]
+        arr = [walk, True, car, truck]
 
         if not arr[delivery_request.weight]:
             return False
@@ -110,9 +111,11 @@ class DeliveryList(RelativeLayout):
         self.add_widget(self.delivery_list)
 
     def show_filter(self):
+        """Show the filter widget"""
         self.add_widget(self.filter_widget)
 
     def hide_filter(self):
+        """Hide the filter widget"""
         self.remove_widget(self.filter_widget)
 
 
@@ -216,4 +219,6 @@ class UpdateSpinner(MDUpdateSpinner):
 
 
 class Filter(BoxLayout):
+    """The filter widget"""
+
     pass
