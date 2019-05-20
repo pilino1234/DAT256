@@ -8,7 +8,7 @@
             size: self.size
     orientation: 'vertical'
     MDToolbar:
-        title:'Search options'
+        title:'Search Packages'
         md_bg_color: app.theme_cls.primary_color
         elevation: 10
         MDIconButton:
@@ -64,17 +64,7 @@
         MDCheckbox:
             size_hint_x: 0.2
             id: check_walk
-    BoxLayout:
-        MDIconButton:
-            icon: 'bike'
-            theme_text_color: 'Custom'
-            text_color: 128/255, 128/255, 128/255, 1
-        MDLabel:
-            text: "Bike"
-            size_hint_x: 0.4
-        MDCheckbox:
-            size_hint_x: 0.2
-            id: check_bike
+            active: True
     BoxLayout:
         MDIconButton:
             icon: 'car'
@@ -115,6 +105,6 @@
     MDFillRoundFlatButton:
         text: "    Search     "
         pos_hint: {'center_x': 0.5, 'center_y': .15}
-        on_release: self.parent.parent._filter_content(self.parent.ids.check_walk.active,self.parent.ids.check_bike.active,self.parent.ids.check_car.active,self.parent.ids.check_truck.active,self.parent.ids.check_fragile.active, self.parent.ids.input_distance.text)
+        on_release: self.parent.parent._filter_content(self.parent.ids.check_walk.active,self.parent.ids.check_car.active,self.parent.ids.check_truck.active,self.parent.ids.check_fragile.active, self.parent.ids.input_distance.text)
     Widget:
         size_hint_y: 1.6
