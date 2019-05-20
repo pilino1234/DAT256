@@ -29,6 +29,8 @@
             size_hint_x: 0.4
         MDTextField:
             hint_text: "(Required)"
+            on_text: root.on_search(self)
+
     BoxLayout:
         Widget:
             size_hint_x:0.1
@@ -37,6 +39,8 @@
             size_hint_x: 0.4
         MDTextField:
             hint_text: "(Optional)"
+            on_text: root.on_search(self)
+
     BoxLayout:
         Widget:
             size_hint_x:0.1
