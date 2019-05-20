@@ -4,3 +4,4 @@ pygame
 google-cloud-firestore==0.32.1
 google-cloud-storage==1.15.0
 pillow
+geopy
