@@ -43,6 +43,15 @@ class Firestore:
         Firestore.refs[path] = Firebase.get_db().collection(collection_path).document(document).on_snapshot(
             callback)
 
+    @staticmethod
+    def subscribe_document_sub_collection(collection_path: str, document: str, sub_collection_path: str, callback: Callable):
+        path = collection_path + "/" + document + "/" + sub_collection_path
+        print(path)
+        Firestore.refs[path] = Firebase.get_db().collection(collection_path).document(document)\
+            .collection(sub_collection_path).on_snapshot(callback)
+
+
+
 
     @staticmethod
     def unsubscribe(path: str):

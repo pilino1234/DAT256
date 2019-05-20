@@ -7,6 +7,7 @@ from typing import Callable
 from model.delivery_request import DeliveryRequest
 from model.delivery_request_getter import DeliveryRequestGetter
 from model.firebase.firestore import Firestore
+from model.user_me_getter import UserMeGetter
 from presenter.delivery_list import WhiteCardButton
 from presenter.delivery_request_detail import DeliveryRequestDetail
 
@@ -24,13 +25,11 @@ class MyPostedRequests(BoxLayout):
         """Initializes the delivery list"""
         super(MyPostedRequests, self).__init__(**kwargs)
         Clock.schedule_once(lambda dt: self._update_content())
-        Firestore.subscribe("packages", lambda *_: self._update_content())
 
     def _update_content(self):
         """Fetch my posted deliveries"""
         self.content = self.ids.content
-        delivery_requests = DeliveryRequestGetter.query(
-            u'owner', u'==', u'pIAeLAvHXp0KZKWDzTMz')
+        delivery_requests = UserMeGetter.user.packages
 
         # Fill delivery list
         self.ids.my_requests.clear_widgets()
