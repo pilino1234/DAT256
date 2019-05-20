@@ -5,6 +5,7 @@ from kivy.metrics import dp
 from kivy.properties import NumericProperty
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
@@ -20,7 +21,7 @@ Builder.load_file("view/delivery_list.kv")
 Builder.load_file("view/filtering_delivery.kv")
 
 
-class DeliveryList(BoxLayout):
+class DeliveryList(RelativeLayout):
     """
     Widget that lists all available delivery requests.
 
@@ -31,9 +32,12 @@ class DeliveryList(BoxLayout):
 
     deliveries = []
 
+    filter_widget = None
+
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
+        self.filter_widget = Filter()
         Clock.schedule_once(self._fill_content)
 
     def _fill_content(self, delta_time):
@@ -47,7 +51,7 @@ class DeliveryList(BoxLayout):
             self.deliveries.append(delivery_request)
 
         self.delivery_list = self.ids.delivery_list
-        self.add_widget(Filter())
+        self.add_widget(self.filter_widget)
 
     def _filter_content(self, walk, bike, car, truck, fragile, distance):
         '''Filters the delivery list depending on checkboxes and distance'''
@@ -62,12 +66,13 @@ class DeliveryList(BoxLayout):
 
         self.delivery_list = self.ids.delivery_list
 
+        self.hide_filter()
+
     def passes_filter(self, delivery_request, walk, bike, car, truck, fragile, distance):
         '''Filters the delivery list depending on checkboxes and distance'''
         if distance == "":
-            distance = 99999999999999
+            distance = float("inf")
         arr = [walk, bike, car, truck]
-        print(arr[delivery_request.weight])
 
         if not arr[delivery_request.weight]:
             return False
@@ -79,8 +84,6 @@ class DeliveryList(BoxLayout):
             return False
 
         return True
-
-
 
     def _update_content(self, spinner):
         self.tick = 0
@@ -104,6 +107,12 @@ class DeliveryList(BoxLayout):
         """Show list of all available deliveries."""
         self.clear_widgets()
         self.add_widget(self.delivery_list)
+
+    def show_filter(self):
+        self.add_widget(self.filter_widget)
+
+    def hide_filter(self):
+        self.remove_widget(self.filter_widget)
 
 
 class WhiteCardButton(MDRaisedButton):
