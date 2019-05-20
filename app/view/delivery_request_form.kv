@@ -24,9 +24,21 @@
             Line:
                 width: 0.5
                 rectangle: self.x, self.y, self.width, 0
+
         BoxLayout:
             size_hint_y:None
             height:Window.height * 1.5
+            orientation: 'vertical'
+
+            MDLabel:
+                font_style: 'H6'
+                padding: 0, 30
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.width, None
+                size_hint: 1, None
+                text: "Request a Delivery"
+
             GridLayout:
                 cols: 3
 
