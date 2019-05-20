@@ -9,6 +9,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
+from kivy.uix.widget import Widget
 
 from typing import Callable
 
