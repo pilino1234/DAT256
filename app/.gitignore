@@ -12,3 +12,5 @@ venv/
 # Buildozer
 .buildozer/
 bin/
+
+keyfile.json
