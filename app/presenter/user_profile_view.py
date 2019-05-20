@@ -1,3 +1,4 @@
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.metrics import dp
@@ -6,6 +7,7 @@ from kivymd.button import MDRaisedButton
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 
+from model.firebase.auth import Auth
 from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/user_profile_view.kv")
@@ -137,7 +139,10 @@ class UserProfileView(RelativeLayout):
         self.remove_widget(self.widget_input)  # Remove the edit widget
 
     def logout(self):
-        print("logout")
+        """Log out the user"""
+        Auth.sign_out()
+        app = App.get_running_app()
+        app.is_authenticated = False
 
 
 class AnswerInput(BoxLayout):
