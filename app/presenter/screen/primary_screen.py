@@ -1,4 +1,3 @@
-from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 
@@ -12,7 +11,3 @@ class PrimaryScreen(Screen):
     Contains everything except authentication.
     """
 
-    def logout(self):
-        """Log out the user"""
-        app = App.get_running_app()
-        app.is_authenticated = False
