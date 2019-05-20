@@ -12,6 +12,8 @@ from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
 from model.firebase.bucket import Bucket
 from model.user import User
+from model.user_me_getter import UserMeGetter
+from presenter.user_profile_view import UserProfileView
 
 Builder.load_file("view/delivery_request_form.kv")
 
@@ -111,7 +113,7 @@ class DeliveryRequestForm(BoxLayout):
             toast("Payment amount must be above $0.")
             return False
 
-        user: User = UserProfileView.user_me
+        user: User = UserMeGetter.user
         if int(payment) > user.balance:
             toast("Your balance ($" + str(user.balance) +
                   ") is insufficient to pay for this delivery.")
@@ -160,20 +162,20 @@ class DeliveryRequestForm(BoxLayout):
         else:
             firestore_image_path = ""
 
-        request = DeliveryRequest(item=self.ids.package_name.text,
-                                  description=self.ids.description_text.text,
-                                  origin=origin.to_dict(),
-                                  destination=destination.to_dict(),
-                                  reward=payment_amount,
-                                  weight=self.weight,
-                                  fragile=self.ids.fragile_bool.active,
-                                  status=Status.AVAILABLE,
-                                  money_lock=int(
-                                      self.ids.money_lock_amount.text),
-                                  owner='pIAeLAvHXp0KZKWDzTMz',
-                                  assistant='',
-                                  uid='',
-                                  image_path=firestore_image_path)
+        request = DeliveryRequest(
+            item=self.ids.package_name.text,
+            description=self.ids.description_text.text,
+            origin=origin.to_dict(),
+            destination=destination.to_dict(),
+            reward=payment_amount,
+            weight=self.weight,
+            fragile=self.ids.fragile_bool.active,
+            status=Status.AVAILABLE,
+            money_lock=int(self.ids.money_lock_amount.text),
+            owner='pIAeLAvHXp0KZKWDzTMz',
+            assistant='',
+            uid='',
+            image_path=firestore_image_path)
 
         user.lock_delivery_amount(request)
 
