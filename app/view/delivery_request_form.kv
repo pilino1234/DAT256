@@ -78,6 +78,7 @@
                         helper_text_mode: 'on_error'
                         write_tab: False
                         pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        on_text: root._on_search_from()
                 HollowIcon:
                     icon: 'map-marker'
                     theme_text_color: 'Custom'
@@ -99,6 +100,7 @@
                         helper_text_mode: 'on_error'
                         write_tab: False
                         pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        on_text: root._on_search_to()
                 HollowIcon:
                     icon: 'map-marker'
                     theme_text_color: 'Custom'
