@@ -17,9 +17,8 @@ class DeliveryRequest:
     _weight_prop = namedtuple('_weight_prop', ['icon', 'text'])
     _weight_props = [
         _weight_prop('walk', "Small"),
-        _weight_prop('bike', "Medium"),
-        _weight_prop('car', "Large"),
-        _weight_prop('truck', "Huge")
+        _weight_prop('car', "Medium"),
+        _weight_prop('truck', "Large")
     ]
 
     def __init__(self,
