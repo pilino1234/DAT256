@@ -36,7 +36,7 @@ class DeliveryRequestForm(BoxLayout):
             button: MDIconButton = self.ids[button_id]
 
             button.bind(
-                on_press=lambda _, bid=button_id: self._set_weight(bid))
+                on_release=lambda _, bid=button_id: self._set_weight(bid))
 
         self._set_weight(self._weights[self.weight])
 
@@ -60,7 +60,7 @@ class DeliveryRequestForm(BoxLayout):
 
     def __unhighlight_weight_button(self, button_id: str):
         button: MDIconButton = self.ids[button_id]
-        button.text_color = [128 / 255, 128 / 255, 128 / 255]
+        button.text_color = [128 / 255, 128 / 255, 128 / 255, 1]
 
     def __highlight_weight_button(self, button_id: str):
         button: MDIconButton = self.ids[button_id]
