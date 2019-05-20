@@ -44,16 +44,20 @@ class DeliveryList(RelativeLayout):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
         self.filter_widget = Filter()
-        if App.get_running_app().is_authenticated:
-            Clock.schedule_once(self._filter_content)
+        Clock.schedule_once(lambda x: self.add_widget(self.filter_widget))
 
     def _filter_content(self, walk, car, truck, fragile):
         """Filters the delivery list."""
+        if not App.get_running_app().is_authenticated:
+            print("User not authenticated")
+            return
+
         self.previous_search_params = [walk, car, truck, fragile]
         try:
             delivery_requests = DeliveryRequestGetter.query(
                 u'status', u'==', Status.AVAILABLE)
         except google.api_core.exceptions.Unauthenticated:
+            print("UNAUTHENTICATED WHEN TRYING TO FETCH PACKAGES")
             return
 
         origin = self.filter_widget.from_suggester.currently_used_suggestion

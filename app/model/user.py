@@ -7,14 +7,13 @@ class User:
     """Represents a user's account."""
 
     def __init__(self, name: str, mail: str, phonenumber: str, avatar: str,
-                 balance: int, rating: float, packages: List):
+                 balance: int, rating: float):
         self.name = name
         self.mail = mail
         self.phonenumber = phonenumber
         self.avatar = avatar
         self.balance = balance
         self.rating = rating
-        self.packages: List[DeliveryRequest] = packages
 
     def update(self, **kwargs):
         if 'name' in kwargs:

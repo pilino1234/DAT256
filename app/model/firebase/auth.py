@@ -5,6 +5,8 @@ from kivy.storage.jsonstore import JsonStore
 import requests
 import json
 
+from model.user_me_getter import UserMeGetter
+
 credential_store = JsonStore('credentials.json')
 
 webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
@@ -77,3 +79,7 @@ class Auth:
             if error_message == "EMAIL_EXISTS":
                 print("finns redan denna mail")
 
+    @staticmethod
+    def sign_out():
+        UserMeGetter.set_me("")
+        credential_store.delete("tokens")
