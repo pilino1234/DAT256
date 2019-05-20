@@ -54,6 +54,7 @@
                 required: True
                 helper_text_mode: 'on_error'
                 write_tab: False
+                on_text: root._on_search_from()
         HollowIcon:
             icon: 'map-marker'
             theme_text_color: 'Custom'
@@ -74,6 +75,8 @@
                 required: True
                 helper_text_mode: 'on_error'
                 write_tab: False
+                on_text: root._on_search_to()
+
         HollowIcon:
             icon: 'map-marker'
             theme_text_color: 'Custom'
