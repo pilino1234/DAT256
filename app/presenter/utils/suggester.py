@@ -11,6 +11,7 @@ class LocationSuggester():
     suggestion_dropdown = None
     suggestions = []
     ignore_text_change = ""
+    currently_used_suggestion = None
 
     def __init__(self, textfield):
         """Initialize the location"""
@@ -49,12 +50,9 @@ class LocationSuggester():
 
         # Create menu items from suggestions
         search_suggestions = [{
-            'viewclass':
-            'MDMenuItem',
-            'text':
-            s['name'] + ' ' + s['district'],
-            'callback':
-            lambda x: self.__apply_suggestion(s['name'] + ' ' + s['district'])
+            'viewclass': 'MDMenuItem',
+            'text': s['name'] + ' ' + s['district'],
+            'callback': lambda x: self.__apply_suggestion(s)
         } for s in self.suggestions]
 
         # Display dropdown with suggestions
@@ -63,5 +61,6 @@ class LocationSuggester():
         self.suggestion_dropdown.open(self.textfield)
 
     def __apply_suggestion(self, suggestion):
-        self.ignore_text_change = suggestion
-        self.textfield.text = suggestion
+        self.currently_used_suggestion = suggestion
+        pretty_suggestion = suggestion['name'] + ' ' + suggestion['district']
+        self.ignore_text_change = self.textfield.text = pretty_suggestion
