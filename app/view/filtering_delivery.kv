@@ -30,6 +30,7 @@
         MDTextField:
             hint_text: "(Required)"
             on_text: root.on_search(self)
+            id: input_from
 
     BoxLayout:
         Widget:
@@ -40,6 +41,7 @@
         MDTextField:
             hint_text: "(Optional)"
             on_text: root.on_search(self)
+            id: input_to
 
     BoxLayout:
         Widget:
@@ -49,7 +51,6 @@
             size_hint_x: 0.4
         MDTextField:
             hint_text: "(Optional)"
-            id: input_distance
 
     MDToolbar:
         title:'Weights'
@@ -109,6 +110,6 @@
     MDFillRoundFlatButton:
         text: "    Search     "
         pos_hint: {'center_x': 0.5, 'center_y': .15}
-        on_release: self.parent.parent._filter_content(self.parent.ids.check_walk.active,self.parent.ids.check_car.active,self.parent.ids.check_truck.active,self.parent.ids.check_fragile.active, self.parent.ids.input_distance.text)
+        on_release: self.parent.parent._filter_content(check_walk.active, check_car.active, check_truck.active, check_fragile.active, input_from.text, input_to.text)
     Widget:
         size_hint_y: 1.6
