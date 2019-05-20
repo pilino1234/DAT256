@@ -145,7 +145,7 @@ class DeliveryRequestForm(BoxLayout):
 
     def _submit_request(self):
         payment_amount: int = int(self.ids.payment_amount.text)
-        user: User = UserProfileView.user_me
+        user: User = UserMeGetter.user
 
         if not self._verify_entries():
             return
@@ -172,8 +172,8 @@ class DeliveryRequestForm(BoxLayout):
             fragile=self.ids.fragile_bool.active,
             status=Status.AVAILABLE,
             money_lock=int(self.ids.money_lock_amount.text),
-            owner='pIAeLAvHXp0KZKWDzTMz',
-            assistant='',
+            owner=UserMeGetter.user.to_minified().to_data(),
+            assistant={},
             uid='',
             image_path=firestore_image_path)
 
