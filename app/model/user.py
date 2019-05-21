@@ -105,13 +105,13 @@ class User:
     def __str__(self):
         """Format a user for printing"""
         return "User: {name}, {mail}, {phonenumber}, Avatar: " \
-               "{avatar}, Balance: {balance}, Rating: {rating}".format(
-                name=self.name,
-                mail=self.mail,
-                phonenumber=self.phonenumber,
-                avatar=self.avatar,
-                balance=self.balance,
-                rating=self.rating)
+               "{avatar}, Balance: {balance}, Rating: {rating}"\
+            .format(name=self.name,
+                    mail=self.mail,
+                    phonenumber=self.phonenumber,
+                    avatar=self.avatar,
+                    balance=self.balance,
+                    rating=self.rating)
 
     def to_minified(self):
         """Returns the user as a MinifiedUser"""
