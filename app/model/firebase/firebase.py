@@ -11,8 +11,8 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
 class Firebase:
     """Stores the common firebase db and storage bucket instance."""
 
-    _db = None
-    _bucket = None
+    _db: fs.Client = None
+    _bucket: storage.Bucket = None
 
     @staticmethod
     def get_db() -> fs.Client:
