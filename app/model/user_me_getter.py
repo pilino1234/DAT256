@@ -36,6 +36,7 @@ class UserMeGetter:
 
     @staticmethod
     def _on_snapshot_user(document_snapshot, _, __):
+        """Callback that is called whenever a users data is updated."""
         if UserMeGetter.user is None:
             return
         document_dict = document_snapshot[0].to_dict()
@@ -43,6 +44,7 @@ class UserMeGetter:
 
     @staticmethod
     def _on_snapshot_user_packages(collection_snapshot, _, __):
+        """Callback that is called whenever a users packages are updated."""
         if UserMeGetter.user is None:
             return
         delivery_requests = []
@@ -56,6 +58,7 @@ class UserMeGetter:
 
     @staticmethod
     def _on_snapshot_user_deliveries(collection_snapshot, _, __):
+        """Callback that is called whenever a users deliveries are updated."""
         if UserMeGetter.user is None:
             return
         delivery_requests = []
