@@ -159,20 +159,20 @@ class DeliveryRequestForm(BoxLayout):
         else:
             firestore_image_path = ""
 
-        request = DeliveryRequest(
-            item=self.ids.package_name.text,
-            description=self.ids.description_text.text,
-            origin=origin.to_dict(),
-            destination=destination.to_dict(),
-            reward=payment_amount,
-            weight=self.weight,
-            fragile=self.ids.fragile_bool.active,
-            status=Status.AVAILABLE,
-            money_lock=int(self.ids.money_lock_amount.text),
-            owner='pIAeLAvHXp0KZKWDzTMz',
-            assistant='',
-            uid='',
-            image_path=firestore_image_path)
+        request = DeliveryRequest(item=self.ids.package_name.text,
+                                  description=self.ids.description_text.text,
+                                  origin=origin.to_dict(),
+                                  destination=destination.to_dict(),
+                                  reward=payment_amount,
+                                  weight=self.weight,
+                                  fragile=self.ids.fragile_bool.active,
+                                  status=Status.AVAILABLE,
+                                  money_lock=int(
+                                      self.ids.money_lock_amount.text),
+                                  owner='pIAeLAvHXp0KZKWDzTMz',
+                                  assistant='',
+                                  uid='',
+                                  image_path=firestore_image_path)
 
         user.lock_delivery_amount(request)
 

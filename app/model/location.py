@@ -20,6 +20,7 @@ class Location:
         return dist_km
 
     def is_close_to(self, other) -> bool:
+        """Checks if the other location is within a specified km radius."""
         return self.dist_to(other) < 5
 
     def __str__(self):
@@ -28,6 +29,7 @@ class Location:
             longitude=self.longitude, latitude=self.latitude, name=self.name)
 
     def to_dict(self):
+        """Returns the location as a dict."""
         return {
             'name': self.name,
             'longitude': self.longitude,
@@ -36,4 +38,5 @@ class Location:
 
     @staticmethod
     def from_dict(dict):
+        """Creates a Location from a dict."""
         return Location(dict['name'], dict['longitude'], dict['latitude'])
