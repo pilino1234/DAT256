@@ -37,6 +37,8 @@ class UserMeGetter:
 
     @staticmethod
     def _on_snapshot_user_packages(collection_snapshot, _, __):
+        if UserMeGetter.user is None:
+            return
         delivery_requests = []
         for doc in collection_snapshot:
             data = doc.to_dict()
@@ -48,6 +50,8 @@ class UserMeGetter:
 
     @staticmethod
     def _on_snapshot_user_deliveries(collection_snapshot, _, __):
+        if UserMeGetter.user is None:
+            return
         delivery_requests = []
         for doc in collection_snapshot:
             data = doc.to_dict()
