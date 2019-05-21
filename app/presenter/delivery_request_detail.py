@@ -9,10 +9,11 @@ from typing import Callable
 from model.delivery_request import DeliveryRequest, Status
 from model.firebase.bucket import Bucket
 from model.firebase.firestore import Firestore
+from model.minified_user import MinifiedUser
 from model.user_getter import UserGetter
 from model.user_me_getter import UserMeGetter
 
-from presenter.user_profile_view import UserProfileView
+from presenter.minified_user_profile_view import MinifiedUserProfileView
 
 Builder.load_file("view/delivery_request_detail.kv")
 
@@ -21,8 +22,8 @@ class DeliveryRequestDetail(BoxLayout):
     """Widget that shows details about a specific delivery request."""
 
     request = ObjectProperty(DeliveryRequest)
-    delivery_assistant = ObjectProperty(None)
-    delivery_owner = ObjectProperty(None)
+    delivery_assistant: MinifiedUser
+    delivery_owner: MinifiedUser
     _detail_view = ObjectProperty(None)
     _back_button_handler = ObjectProperty(None)
 
@@ -30,37 +31,27 @@ class DeliveryRequestDetail(BoxLayout):
                  **kwargs):
         """Initializes a DeliveryRequestDetail"""
         self.request = request
+
+        self.delivery_owner = MinifiedUser(**request.owner)
+
         self._back_button_handler = back_button_handler
-        self.is_owner = self.request.owner == 'pIAeLAvHXp0KZKWDzTMz'
+        self.is_owner = self.delivery_owner.uid == UserMeGetter._user_id
         super(DeliveryRequestDetail, self).__init__(**kwargs)
         self._detail_view = self.ids.detail_view.__self__
         self._setup_user_fields()
         Clock.schedule_once(self._setup_ui)
 
     def _setup_user_fields(self):
-
-        print(self.request.assistant)
-        print(self.request.owner)
-
-        assistant = self.request.assistant
-        owner = self.request.owner
-
         assistant_widget, owner_widget = self.ids.assistant, self.ids.owner
-        if {} in (assistant, owner):
-            assistant_widget.size_hint_x = 1
-            owner_widget.size_hint_x = 1
 
-        if assistant.get('name') is not None:
-            assistant_widget.description = assistant.get('name')
-            self.delivery_assistant = assistant
+        if self.request.assistant.get('name') is not None:
+            self.delivery_assistant = MinifiedUser(**self.request.assistant)
+            assistant_widget.description = self.delivery_assistant.name
         else:
+            owner_widget.size_hint_x = 1
             self.ids.stack.remove_widget(assistant_widget)
 
-        if owner.get('name') is not None:
-            owner_widget.description = owner.get('name')
-            self.delivery_owner = owner
-        else:
-            self.ids.stack.remove_widget(owner_widget)
+        owner_widget.description = self.delivery_owner.name
 
     def _setup_ui(self, _):
         image_source = Bucket.get_url(self.request.image_path)
@@ -145,7 +136,7 @@ class DeliveryRequestDetail(BoxLayout):
         """Show the user profile of a specific user."""
         self.clear_widgets()
         self.add_widget(
-            UserProfileView(
+            MinifiedUserProfileView(
                 user=user,
                 back_button_handler=self._transition_to_detail_view))
 
