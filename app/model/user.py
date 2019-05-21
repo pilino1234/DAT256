@@ -1,6 +1,7 @@
 from typing import List
 
 from model.delivery_request import DeliveryRequest
+from model.firebase.firestore import Firestore
 from model.minified_user import MinifiedUser
 
 
@@ -36,7 +37,16 @@ class User:
             self.deliveres: List[DeliveryRequest] = kwargs['deliveres']
 
         # print("WRITE TO FIREBASE")
-        # TODO: write to firebase here
+        batch = Firestore.batch("users")
+        batch.set(self._uid, {
+            "mail": self.mail,
+            "name": self.name,
+            "phonenumber": self.phonenumber,
+            "avatar": self.avatar,
+            "balance": self.balance,
+            "rating": self.rating,
+        })
+        batch.commit()
 
     def deposit(self, amount: int):
         """
