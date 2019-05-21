@@ -23,28 +23,16 @@ class DeliveryRequest:
         _weight_prop('truck', "Large")
     ]
 
-    def __init__(self,
-                 uid: str,
-                 item: str,
-                 description: str,
-                 origin: dict,
-                 destination: dict,
-                 reward: int,
-                 weight: int,
-                 fragile: bool,
-                 status: Status,
-                 money_lock: int,
-                 owner: str,
-                 assistant: str,
-                 image_path: str = "",
-                 **kwargs):
+    def __init__(self, uid: str, item: str, description: str, origin: Location,
+                 destination: Location, reward: int, weight: int,
+                 fragile: bool, status: Status, money_lock: int, owner: str,
+                 assistant: str, **kwargs):
         """Initializes the delivery list"""
         self.uid = uid
         self.item = item
         self.description = description
-        self.origin = Location(origin.name, origin.longitude, origin.latitude)
-        self.destination = Location(destination.name, destination.longitude,
-                                    destination.latitude)
+        self.origin = origin
+        self.destination = destination
         self.reward = reward
         self.weight = weight
         self.fragile = fragile

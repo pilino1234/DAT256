@@ -40,10 +40,14 @@ class DeliveryList(RelativeLayout):
         self.filter_widget = Filter()
         Clock.schedule_once(lambda x: self.add_widget(self.filter_widget))
 
-    def _filter_content(self, walk, car, truck, fragile, origin, destination):
+    def _filter_content(self, walk, car, truck, fragile):
         """Filters the delivery list."""
         delivery_requests = DeliveryRequestGetter.query(
             u'status', u'==', Status.AVAILABLE)
+
+        origin = self.filter_widget.from_suggester.currently_used_suggestion
+        destination = self.filter_widget.to_suggester.currently_used_suggestion
+
         self.ids.available_requests.clear_widgets()
         for delivery_request in delivery_requests:
             if self.passes_filter(delivery_request, walk, car, truck, fragile,
@@ -67,6 +71,14 @@ class DeliveryList(RelativeLayout):
 
         # Matches fragile
         if delivery_request.fragile and not fragile:
+            return False
+
+        if origin is not None and not delivery_request.origin.is_close_to(
+                origin):
+            return False
+
+        if destination is not None and not delivery_request.destination.is_close_to(
+                destination):
             return False
 
         return True
