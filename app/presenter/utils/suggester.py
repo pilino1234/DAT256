@@ -1,8 +1,8 @@
 import threading
 
-from kivymd.menus import MDDropdownMenu
-from model.map_api import MapAPI
 from model.location import Location
+from model.map_api import MapAPI
+from presenter.dropdown_menu import DropdownMenu
 
 
 class LocationSuggester():
@@ -61,8 +61,8 @@ class LocationSuggester():
         ]
 
         # Display dropdown with suggestions
-        self.suggestion_dropdown = MDDropdownMenu(
-            items=search_suggestions, width_mult=8)
+
+        self.suggestion_dropdown = DropdownMenu(items=search_suggestions)
         self.suggestion_dropdown.open(self.textfield)
 
     def __apply_suggestion(self, suggestion):
