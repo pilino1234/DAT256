@@ -4,7 +4,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.button import MDIconButton
 from kivymd.textfields import MDTextField
 from kivymd.toast.kivytoast import toast
-from typing import Optional
 
 from presenter.utils.suggester import LocationSuggester
 
@@ -113,7 +112,10 @@ class DeliveryRequestForm(BoxLayout):
             toast("Payment amount must be above $0.")
             return False
 
-        user: Optional[User] = UserMeGetter.user
+        user = UserMeGetter.user
+        if user is None:
+            return False
+
         if int(payment) > user.balance:
             toast("Your balance ($" + str(user.balance) +
                   ") is insufficient to pay for this delivery.")

@@ -1,4 +1,3 @@
-
 class MinifiedUser:
     """Represents a public version of a user's account."""
 
