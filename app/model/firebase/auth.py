@@ -76,7 +76,7 @@ class Auth:
             print(error_data)
             print(error_message)
             if error_message == "EMAIL_EXISTS":
-                print("finns redan denna mail")
+                print("This mail is already registered")
 
     @staticmethod
     def sign_out():
