@@ -23,6 +23,9 @@ class Firestore:
             for doc in collection_snapshot:
                 print(u’{} => {}’.format)(doc.id, doc.to_dict()))
 
+        :param path: Full path to a collection
+        :param callback: The function that will be called when an update happens in the collection
+
         """
         Firestore.refs[path] = Firebase.get_db().collection(path).on_snapshot(
             callback)
@@ -38,6 +41,10 @@ class Firestore:
             for doc in document_snapshot:
                 print(u’{} => {}’.format)(doc.id, doc.to_dict()))
 
+        :param collection_path: The collection, e.g. /users
+        :param document: The last bit of the path specifying the document
+        :param callback: The function that will be called when an update happens in the document
+
         """
         path = collection_path + "/" + document
         Firestore.refs[path] = Firebase.get_db().collection(collection_path).document(document).on_snapshot(
@@ -45,12 +52,21 @@ class Firestore:
 
     @staticmethod
     def unsubscribe(path: str):
-        """Unsubscribe from a collection."""
+        """
+        Unsubscribe from a collection.
+        :param path: e.g. /users/asdfdfasfsdfdsasfdasdf/packages
+        :return:
+        """
         if path in Firestore.refs:
             Firestore.refs[path].unsubscribe()
 
     @staticmethod
     def unsubscribe_document(collection_path: str, document: str):
+        """
+
+        :param collection_path: The collection, e.g. /users
+        :param document: The last bit of the path specifying the document
+        """
         path = collection_path + "/" + document
         if path in Firestore.refs:
             Firestore.refs[path].unsubscribe()
