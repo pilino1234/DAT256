@@ -8,8 +8,8 @@ from model.minified_user import MinifiedUser
 class User:
     """Represents a user's account."""
 
-    def __init__(self, _uid: str, name: str, mail: str, phonenumber: str, avatar: str,
-                 balance: int, rating: float):
+    def __init__(self, _uid: str, name: str, mail: str, phonenumber: str,
+                 avatar: str, balance: int, rating: float):
         self._uid = _uid
         self.name = name
         self.mail = mail
@@ -18,7 +18,7 @@ class User:
         self.balance = balance
         self.rating = rating
         self.packages = []
-        self.deliveres = []
+        self.deliveries = []
 
     def update(self, **kwargs):
         if 'name' in kwargs:
@@ -33,20 +33,19 @@ class User:
             self.balance = kwargs['balance']
         if 'packages' in kwargs:
             self.packages: List[DeliveryRequest] = kwargs['packages']
-        if 'deliveres' in kwargs:
-            self.deliveres: List[DeliveryRequest] = kwargs['deliveres']
+        if 'deliveries' in kwargs:
+            self.deliveries: List[DeliveryRequest] = kwargs['deliveries']
 
-        # print("WRITE TO FIREBASE")
-        batch = Firestore.batch("users")
-        batch.set(self._uid, {
-            "mail": self.mail,
-            "name": self.name,
-            "phonenumber": self.phonenumber,
-            "avatar": self.avatar,
-            "balance": self.balance,
-            "rating": self.rating,
-        })
-        batch.commit()
+        with Firestore.batch('users') as batch:
+            batch.set(
+                self._uid, {
+                    "mail": self.mail,
+                    "name": self.name,
+                    "phonenumber": self.phonenumber,
+                    "avatar": self.avatar,
+                    "balance": self.balance,
+                    "rating": self.rating,
+                })
 
     def deposit(self, amount: int):
         """
@@ -92,9 +91,15 @@ class User:
     def __str__(self):
         """Format a user for printing"""
         return "User: {name}, {mail}, {phonenumber}, Avatar: {avatar}, Balance: {balance}, Rating: {rating}".format(
-            name = self.name, mail = self.mail, phonenumber = self.phonenumber,
-            avatar = self.avatar, balance = self.balance, rating = self.rating
-        )
+            name=self.name,
+            mail=self.mail,
+            phonenumber=self.phonenumber,
+            avatar=self.avatar,
+            balance=self.balance,
+            rating=self.rating)
 
     def to_minified(self):
-        return MinifiedUser(name=self.name, phonenumber=self.phonenumber, mail=self.mail, uid=self._uid)
+        return MinifiedUser(name=self.name,
+                            phonenumber=self.phonenumber,
+                            mail=self.mail,
+                            uid=self._uid)

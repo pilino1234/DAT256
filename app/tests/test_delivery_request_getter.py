@@ -2,6 +2,7 @@ import unittest
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_getter import DeliveryRequestGetter
+from model.location import Location
 
 
 class RequestGetterTest(unittest.TestCase):
@@ -9,8 +10,9 @@ class RequestGetterTest(unittest.TestCase):
         delivery_requests = DeliveryRequestGetter.query(
             u'owner', u'==', u'TRAVIS_TEST2')
 
-        self.assertEqual(
-            len(delivery_requests), 1, msg="Expected only 1 match.")
+        self.assertEqual(len(delivery_requests),
+                         1,
+                         msg="Expected only 1 match.")
 
         expected = DeliveryRequest(
             uid='DLpVc0QmbOHzfDo24Hpp',

@@ -15,8 +15,8 @@ from tests.utils import create_delivery_request
 
 class FirestoreTest(unittest.TestCase):
     def setUp(self) -> None:
-        mail = os.environ['CARREPSA_CI_EMAIL']   # TODO: travis@carrepsa.ci
-        password = os.environ['CARREPSA_CI_PASS']   # TODO: CIrrepsa
+        mail = os.environ['CARREPSA_CI_EMAIL']
+        password = os.environ['CARREPSA_CI_PASS']
 
         Auth.sign_in(mail, password)
 
@@ -44,8 +44,7 @@ class FirestoreTest(unittest.TestCase):
             self.assertIsNotNone(delivery_request.get("item"))
 
     def test_put_package(self):
-        delivery_request = utils.create_delivery_request()
-
+        delivery_request = utils.create_delivery_request()  # TODO: add assert
 
     def test_batch_crud(self):
         delivery_request = create_delivery_request()
@@ -60,5 +59,6 @@ class FirestoreTest(unittest.TestCase):
             batch.delete(uid)
 
     def test_batch_exception(self):
-        with self.assertRaises(ValueError), Firestore.batch('packages') as batch:
+        with self.assertRaises(ValueError), Firestore.batch(
+                'packages') as batch:
             batch.delete(1524)

@@ -5,7 +5,6 @@ from kivy.properties import NumericProperty, ObjectProperty
 from kivymd.cards import MDCard
 
 from model.minified_user import MinifiedUser
-from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/minified_user_profile_view.kv")
 
@@ -23,12 +22,13 @@ class Field(MDCard):
 
     _radius = NumericProperty(dp(14))
 
+
 class MinifiedUserProfileView(RelativeLayout):
     """The main view for viewing and editing the user profile."""
 
     _back_button_handler = ObjectProperty(None)
 
-    def __init__(self, user, back_button_handler):
+    def __init__(self, user: MinifiedUser, back_button_handler):
         """Initializes the user profile."""
         super(RelativeLayout, self).__init__()
         self.user_viewing = user
@@ -45,8 +45,6 @@ class MinifiedUserProfileView(RelativeLayout):
 
         self.mail_field = Field("Mail", self.user_viewing.mail)
         self.ids.scroll_view_container.add_widget(self.mail_field)
-
-
 
     def update_fields(self):
         """Update displayed information from the user data."""

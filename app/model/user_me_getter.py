@@ -14,19 +14,25 @@ class UserMeGetter:
     @staticmethod
     def set_me(new_user_id: Text):
         if UserMeGetter._user_id is not "":
-            Firestore.unsubscribe(u'users/{user_id}/'.format(user_id=new_user_id))
-            Firestore.unsubscribe(u'users/{user_id}/packages'.format(user_id=new_user_id))
-            Firestore.unsubscribe(u'users/{user_id}/deliveries'.format(user_id=new_user_id))
+            Firestore.unsubscribe(
+                u'users/{user_id}/'.format(user_id=new_user_id))
+            Firestore.unsubscribe(
+                u'users/{user_id}/packages'.format(user_id=new_user_id))
+            Firestore.unsubscribe(
+                u'users/{user_id}/deliveries'.format(user_id=new_user_id))
 
         UserMeGetter._user_id = new_user_id
 
         if new_user_id is not "":
             UserMeGetter.user = UserGetter.get_by_id(new_user_id)
-            Firestore.subscribe_document("users", new_user_id, UserMeGetter._on_snapshot_user)
-            Firestore.subscribe(u'users/{user_id}/packages'.format(user_id=new_user_id),
-                                UserMeGetter._on_snapshot_user_packages)
-            Firestore.subscribe(u'users/{user_id}/deliveries'.format(user_id = new_user_id),
-                                UserMeGetter._on_snapshot_user_deliveries)
+            Firestore.subscribe_document("users", new_user_id,
+                                         UserMeGetter._on_snapshot_user)
+            Firestore.subscribe(
+                u'users/{user_id}/packages'.format(user_id=new_user_id),
+                UserMeGetter._on_snapshot_user_packages)
+            Firestore.subscribe(
+                u'users/{user_id}/deliveries'.format(user_id=new_user_id),
+                UserMeGetter._on_snapshot_user_deliveries)
 
     @staticmethod
     def _on_snapshot_user(document_snapshot, _, __):
@@ -59,4 +65,4 @@ class UserMeGetter:
             data['status'] = Status(data['status'])
             delivery_requests.append(DeliveryRequest(**data))
 
-        UserMeGetter.user.update(deliveres=delivery_requests)
+        UserMeGetter.user.update(deliveries=delivery_requests)
