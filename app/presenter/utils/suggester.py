@@ -1,6 +1,6 @@
 import threading
 
-from kivymd.menus import MDMenuItem, MDDropdownMenu
+from kivymd.menus import MDDropdownMenu
 from model.map_api import MapAPI
 from model.location import Location
 
@@ -10,7 +10,7 @@ class LocationSuggester():
 
     suggestion_thread = None
     suggestion_dropdown = None
-    suggestions = []
+    suggestions = [Location]
     ignore_text_change = ""
     currently_used_suggestion = None
 
@@ -20,6 +20,7 @@ class LocationSuggester():
         self.textfield = textfield
 
     def on_search(self):
+        """Called when the user is changing their search query."""
         if self.textfield.text == self.ignore_text_change:
             return
 
@@ -32,7 +33,7 @@ class LocationSuggester():
 
     def show_suggestions(self):
         """Show suggestions based on current input in textfield."""
-        suggestion_thread = None
+        self.suggestion_thread = None
 
         # Close previous suggestions
         if self.suggestion_dropdown:
@@ -60,8 +61,8 @@ class LocationSuggester():
         ]
 
         # Display dropdown with suggestions
-        self.suggestion_dropdown = MDDropdownMenu(
-            items=search_suggestions, width_mult=8)
+        self.suggestion_dropdown = MDDropdownMenu(items=search_suggestions,
+                                                  width_mult=8)
         self.suggestion_dropdown.open(self.textfield)
 
     def __apply_suggestion(self, suggestion):
