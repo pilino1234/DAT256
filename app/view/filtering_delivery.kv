@@ -20,91 +20,114 @@
             text_color: 1,1,1, 1
             on_release: root.parent.hide_filter()
     Widget:
-        size_hint_y: .4
+        size_hint_y: .35
     BoxLayout:
-        Widget:
-            size_hint_x:0.1
+        padding: dp(40)
+
         MDLabel:
             text: "From:"
-            size_hint_x: 0.4
+            halign: "right"
+            size_hint_x: 0.1
+        Widget:
+            size_hint_x: 0.1
         MDTextField:
-            hint_text: "(Required)"
             on_text: root._on_search_from()
             id: input_from
+            required: True
+            helper_text_mode: 'on_error'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+        Widget:
+            size_hint_x: 0.1
 
     BoxLayout:
-        Widget:
-            size_hint_x:0.1
+        padding: dp(40)
+
         MDLabel:
             text: "To:"
-            size_hint_x: 0.4
+            halign: "right"
+            size_hint_x: 0.1
+        Widget:
+            size_hint_x: 0.1
         MDTextField:
-            hint_text: "(Optional)"
             on_text: root._on_search_to()
             id: input_to
-
-    BoxLayout:
+            required: True
+            helper_text_mode: 'on_error'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.15}
         Widget:
-            size_hint_x:0.1
-        MDLabel:
-            text: "Distance:"
-            size_hint_x: 0.4
-        MDTextField:
-            hint_text: "(Optional)"
+            size_hint_x: 0.1
+    Widget:
+        size_hint_y: .3
 
     MDToolbar:
-        title:'Weights'
+        title:'Package Types'
         md_bg_color: app.theme_cls.primary_color
         elevation: 10
     Widget:
         size_hint_y: .5
+
     BoxLayout:
+        Widget:
+            width: dp(20)
+            size_hint: (None, None)
         MDIconButton:
             icon: 'walk'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         MDLabel:
-            text: "Walk"
+            text: "Small"
             size_hint_x: 0.4
         MDCheckbox:
-            size_hint_x: 0.2
+            size_hint_x: 0.1
             id: check_walk
             active: True
+
     BoxLayout:
+        Widget:
+            width: dp(20)
+            size_hint: (None, None)
         MDIconButton:
             icon: 'car'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         MDLabel:
-            text: "Car"
+            text: "Big"
             size_hint_x: 0.4
         MDCheckbox:
-            size_hint_x: 0.2
+            size_hint_x: 0.1
             id: check_car
     BoxLayout:
+        Widget:
+            width: dp(20)
+            size_hint: (None, None)
         MDIconButton:
             icon: 'truck'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         MDLabel:
-            text: "Truck"
+            text: "Large"
             size_hint_x: 0.4
         MDCheckbox:
-            size_hint_x: 0.2
+            size_hint_x: 0.1
             id: check_truck
-    Widget:
-        size_hint_y: 0.6
     BoxLayout:
+        Widget:
+            width: dp(20)
+            size_hint: (None, None)
         MDIconButton:
             icon: 'glass-flute'
             theme_text_color: 'Custom'
             text_color: 128/255, 128/255, 128/255, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         MDLabel:
-            text: "Include fragile"
+            text: "Fragile"
             size_hint_x: 0.4
         MDCheckbox:
+            size_hint_x: 0.1
             id: check_fragile
-            size_hint_x: 0.2
     Widget:
         size_hint_y: 0.6
     MDFillRoundFlatButton:
