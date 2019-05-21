@@ -27,7 +27,7 @@ class MyDeliveries(BoxLayout):
 
     def _update_content(self):
         """Fetch all deliveries the current owner has accepted"""
-        delivery_requests = UserMeGetter.user.deliveres
+        delivery_requests = UserMeGetter.user.deliveries
 
         # Fill delivery list
         self.ids.my_deliveries.clear_widgets()

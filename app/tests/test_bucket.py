@@ -7,8 +7,8 @@ from model.firebase.bucket import Bucket
 
 class BucketTest(unittest.TestCase):
     def setUp(self) -> None:
-        mail = os.environ['CARREPSA_CI_EMAIL']   # TODO: travis@carrepsa.ci
-        password = os.environ['CARREPSA_CI_PASS']   # TODO: CIrrepsa
+        mail = os.environ['CARREPSA_CI_EMAIL']
+        password = os.environ['CARREPSA_CI_PASS']
 
         Auth.sign_in(mail, password)
 

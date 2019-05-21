@@ -18,7 +18,8 @@ class Firebase:
     def get_db() -> fs.Client:
         """Fetch the common firebase db instance."""
         if Firebase._db is None:
-            raise FirebaseException("create_db() must be called before get_db()")
+            raise FirebaseException(
+                "create_db() must be called before get_db()")
 
         return Firebase._db
 
@@ -35,7 +36,8 @@ class Firebase:
     def get_bucket() -> storage.Bucket:
         """Fetch the common firebase storage bucket instance"""
         if Firebase._bucket is None:
-            raise FirebaseException("create_bucket() must be called before get_bucket()")
+            raise FirebaseException(
+                "create_bucket() must be called before get_bucket()")
 
         return Firebase._bucket
 

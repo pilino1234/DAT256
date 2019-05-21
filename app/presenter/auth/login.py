@@ -22,4 +22,3 @@ class Login(BoxLayout):
             UserMeGetter.set_me(user_id)
             app = App.get_running_app()
             app.is_authenticated = True
-

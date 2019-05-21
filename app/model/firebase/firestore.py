@@ -31,7 +31,8 @@ class Firestore:
             callback)
 
     @staticmethod
-    def subscribe_document(collection_path: str, document: str, callback: Callable):
+    def subscribe_document(collection_path: str, document: str,
+                           callback: Callable):
         """
         Subscribes to a document, executing callback whenever the collection is updated.
 
@@ -47,8 +48,8 @@ class Firestore:
 
         """
         path = collection_path + "/" + document
-        Firestore.refs[path] = Firebase.get_db().collection(collection_path).document(document).on_snapshot(
-            callback)
+        Firestore.refs[path] = Firebase.get_db().collection(
+            collection_path).document(document).on_snapshot(callback)
 
     @staticmethod
     def unsubscribe(path: str):
@@ -133,7 +134,8 @@ class _FirestoreBatch:
 
     def create(self, document: DocumentReference, document_data: dict):
         """Create a document."""
-        self._batchRef.create(self._collection.document(document), document_data)
+        self._batchRef.create(self._collection.document(document),
+                              document_data)
 
     def set(self, document: DocumentReference, document_data: dict):
         """Replace document with new document data."""

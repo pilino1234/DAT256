@@ -32,7 +32,10 @@ class Auth:
         Firebase.create_db(credentials=credentials)
         Firebase.create_bucket()
 
-        credential_store.put('tokens', id_token=id_token, refresh_token=refresh_token, user_id=user_id)
+        credential_store.put('tokens',
+                             id_token=id_token,
+                             refresh_token=refresh_token,
+                             user_id=user_id)
 
         return user_id
 
@@ -73,7 +76,11 @@ class Auth:
         :return: The user id for the new user
         """
         sign_up_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + webApiKey
-        sign_up_payload = {"email": mail, "password": password, "returnSecureToken": True}
+        sign_up_payload = {
+            "email": mail,
+            "password": password,
+            "returnSecureToken": True
+        }
         sign_up_request = requests.post(sign_up_url, data=sign_up_payload)
         sign_up_data = json.loads(sign_up_request.content.decode())
 
@@ -84,16 +91,16 @@ class Auth:
 
             Auth.sign_in_with_tokens(token, refresh_token, user_id)
 
-            batch = Firestore.batch("users")
-            batch.set(user_id, {
-                "mail": mail,
-                "name": name,
-                "phonenumber": phonenumber,
-                "avatar": "",
-                "balance": 0,
-                "rating": 0,
-            })
-            batch.commit()
+            with Firestore.batch("users") as batch:
+                batch.set(
+                    user_id, {
+                        "mail": mail,
+                        "name": name,
+                        "phonenumber": phonenumber,
+                        "avatar": "",
+                        "balance": 0,
+                        "rating": 0,
+                    })
 
         else:
             error_data = json.loads(sign_up_request.content.decode())
