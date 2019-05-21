@@ -3,7 +3,16 @@
 <DeliveryList>:
     FloatLayout:
         id: delivery_list
+
         BoxLayout:
+            orientation: 'vertical'
+            MDToolbar:
+                title: 'Available Packages'
+                md_bg_color: app.theme_cls.primary_color
+                elevation: 10
+                height: dp(80)
+                left_action_items: [['arrow-left', lambda x: root.show_filter()]]
+
             ScrollView:
                 id: scroll_view
                 do_scroll_x: False
@@ -21,12 +30,6 @@
             UpdateSpinner:
                 scroll: scroll_view
                 event_update: lambda x: root._update_content(self)
-
-        MDFillRoundFlatButton:
-            text: "    Filter     "
-            pos_hint: {'center_x': 0.5, 'center_y': .15}
-            on_release:
-                root.show_filter()
 
 
 

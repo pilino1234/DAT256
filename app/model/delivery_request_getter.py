@@ -31,9 +31,6 @@ class DeliveryRequestGetter:
         delivery_requests = []
         for doc in docs:
             data = doc.to_dict()
-            if isinstance(data['origin'], str):
-                continue
-
             data['uid'] = doc.id
             data['status'] = Status(data['status'])
             data['origin'] = Location.from_dict(data['origin'])

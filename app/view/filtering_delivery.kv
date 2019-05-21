@@ -1,4 +1,5 @@
 <Filter>:
+    orientation: 'vertical'
     canvas.before:
         Color:
             rgba: 1,1,1, 1
@@ -6,19 +7,12 @@
             # self here refers to the widget i.e BoxLayout
             pos: self.pos
             size: self.size
-    orientation: 'vertical'
     MDToolbar:
-        title:'Search Packages'
+        title: 'Search Packages'
         md_bg_color: app.theme_cls.primary_color
         elevation: 10
-        MDIconButton:
-            id: back_button
-            size_hint: None, None
-            size: 50, 50
-            icon: 'chevron-left'
-            theme_text_color: 'Custom'
-            text_color: 1,1,1, 1
-            on_release: root.parent.hide_filter()
+        height: dp(80)
+
     Widget:
         size_hint_y: .35
     BoxLayout:
@@ -130,9 +124,12 @@
             id: check_fragile
     Widget:
         size_hint_y: 0.6
-    MDFillRoundFlatButton:
+    MDRaisedButton:
+        id: search_button
+        write_tab: False
         text: "    Search     "
         pos_hint: {'center_x': 0.5, 'center_y': .15}
         on_release: self.parent.parent._filter_content(check_walk.active, check_car.active, check_truck.active, check_fragile.active)
+        disabled: True
     Widget:
         size_hint_y: 1.6
