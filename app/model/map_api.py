@@ -1,3 +1,4 @@
+from typing import List
 import requests
 
 
@@ -8,7 +9,7 @@ class MapAPI:
     base_url = 'http://dev.virtualearth.net/REST/v1/'
 
     @staticmethod
-    def get_search_suggestions(query: str) -> [str]:
+    def get_search_suggestions(query: str) -> List[dict]:
         """Based on a query return a list of similar real life locations as suggestions."""
         query = MapAPI.base_url + 'Locations/Sweden+' + query + '?o=json&key=' + MapAPI.api_key
         response = requests.get(query.replace(" ", "+")).json()
