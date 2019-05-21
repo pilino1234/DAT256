@@ -51,11 +51,13 @@ class LocationSuggester():
         self.suggestions = new_suggestions
 
         # Create menu items from suggestions
-        search_suggestions = [{
-            'viewclass': 'MDMenuItem',
-            'text': s['name'] + ' ' + s['district'],
-            'callback': lambda x: self.__apply_suggestion(s)
-        } for s in self.suggestions]
+        search_suggestions = [
+            {
+                'viewclass': 'MDMenuItem',
+                'text': s['name'] + ' ' + s['district'],
+                'callback': lambda _, _s=s: self.__apply_suggestion(_s)
+            } for s in self.suggestions
+        ]
 
         # Display dropdown with suggestions
         self.suggestion_dropdown = MDDropdownMenu(

@@ -31,14 +31,13 @@ class DeliveryRequestGetter:
         delivery_requests = []
         for doc in docs:
             data = doc.to_dict()
+            if isinstance(data['origin'], str):
+                continue
+
             data['uid'] = doc.id
             data['status'] = Status(data['status'])
-            data['origin'] = Location(data['origin']['name'],
-                                      data['origin']['longitude'],
-                                      data['origin']['latitude'])
-            data['destination'] = Location(data['destination']['name'],
-                                           data['destination']['longitude'],
-                                           data['destination']['latitude'])
+            data['origin'] = Location.from_dict(data['origin'])
+            data['destination'] = Location.from_dict(data['destination'])
             delivery_requests.append(DeliveryRequest(**data))
 
         return delivery_requests
@@ -54,10 +53,6 @@ class DeliveryRequestGetter:
             delivery_request_id).get().to_dict()
         data['uid'] = delivery_request_id
         data['status'] = Status(data['status'])
-        data['origin'] = Location(data['origin']['name'],
-                                  data['origin']['longitude'],
-                                  data['origin']['latitude'])
-        data['destination'] = Location(data['destination']['name'],
-                                       data['destination']['longitude'],
-                                       data['destination']['latitude'])
+        data['origin'] = Location.from_dict(data['origin'])
+        data['destination'] = Location.from_dict(data['destination'])
         return DeliveryRequest(**data)
