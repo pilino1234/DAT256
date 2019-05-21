@@ -94,7 +94,8 @@ class UserTest(unittest.TestCase):
                                   status=Status.AVAILABLE,
                                   money_lock=0,
                                   owner="",
-                                  assistant="")
+                                  assistant="",
+                                  image_path="")
 
         self.assertEqual(user.balance, 100)
         user.lock_delivery_amount(request)
