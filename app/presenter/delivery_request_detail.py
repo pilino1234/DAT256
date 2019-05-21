@@ -38,22 +38,26 @@ class DeliveryRequestDetail(BoxLayout):
         Clock.schedule_once(self._setup_ui)
 
     def _setup_user_fields(self):
-        assistant = UserGetter.get_by_id(self.request.assistant)
-        owner = UserGetter.get_by_id(self.request.owner)
+
+        print(self.request.assistant)
+        print(self.request.owner)
+
+        assistant = self.request.assistant
+        owner = self.request.owner
 
         assistant_widget, owner_widget = self.ids.assistant, self.ids.owner
-        if None in (assistant, owner):
+        if {} in (assistant, owner):
             assistant_widget.size_hint_x = 1
             owner_widget.size_hint_x = 1
 
-        if assistant is not None:
-            assistant_widget.description = assistant.name
+        if assistant.get('name') is not None:
+            assistant_widget.description = assistant.get('name')
             self.delivery_assistant = assistant
         else:
             self.ids.stack.remove_widget(assistant_widget)
 
-        if owner is not None:
-            owner_widget.description = owner.name
+        if owner.get('name') is not None:
+            owner_widget.description = owner.get('name')
             self.delivery_owner = owner
         else:
             self.ids.stack.remove_widget(owner_widget)
