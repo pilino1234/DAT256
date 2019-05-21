@@ -24,6 +24,11 @@ class Firebase:
 
     @staticmethod
     def create_db(credentials: FirebaseCredentials, project: str = "carrepsa"):
+        """
+        Creates the database reference to Firebase
+        :param credentials: Credentials that has tokens and refresh_token
+        :param project: The Firebase project
+        """
         Firebase._db = fs.Client(project=project, credentials=credentials)
 
     @staticmethod
@@ -36,5 +41,6 @@ class Firebase:
 
     @staticmethod
     def create_bucket():
+        """Creates bucket reference to Firebase storage"""
         client = storage.Client()
         Firebase._bucket = client.get_bucket("carrepsa.appspot.com")
