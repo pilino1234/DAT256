@@ -1,0 +1,44 @@
+#:import Card kivymd.cards.MDCard
+#:import MDRaisedButton kivymd.button.MDRaisedButton
+
+<Field>:
+    size_hint: (1, None)
+    height: dp(100)
+
+    RelativeLayout:
+        MDLabel:
+            id: field_title
+            pos: dp(20), self.parent.height/5
+            font_style: 'H5'
+            theme_text_color: 'Primary'
+            text: "Title"
+
+        MDLabel:
+            id: field_data
+            pos: dp(20), -self.parent.height/5
+            font_style: 'Subtitle1'
+            theme_text_color: 'Primary'
+            text: "text"
+
+<MinifiedUserProfileView>:
+    id: user_profile_view
+    ScrollView:
+        id:scroll_view
+        do_scroll_x: False
+        do_scroll_y: True
+        BoxLayout:
+            height: self.minimum_height
+            id: scroll_view_container
+            padding: dp(30)
+            spacing: dp(30)
+            orientation: 'vertical'
+            size_hint_y: None
+
+            MDIconButton:
+                id: back_button
+                size_hint: None, None
+                size: dp(50), dp(50)
+                icon: 'chevron-left'
+                theme_text_color: 'Custom'
+                text_color: 0.5, 0.5, 0.5, 1
+                on_release: root._back_button_handler()
