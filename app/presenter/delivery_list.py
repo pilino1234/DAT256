@@ -29,10 +29,9 @@ class DeliveryList(RelativeLayout):
     """
 
     delivery_list = ObjectProperty(BoxLayout)
-
     deliveries = [None]
-
     filter_widget = None
+    previous_search_params = None
 
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
@@ -42,6 +41,7 @@ class DeliveryList(RelativeLayout):
 
     def _filter_content(self, walk, car, truck, fragile):
         """Filters the delivery list."""
+        self.previous_search_params = [walk, car, truck, fragile]
         delivery_requests = DeliveryRequestGetter.query(
             u'status', u'==', Status.AVAILABLE)
 
@@ -91,7 +91,7 @@ class DeliveryList(RelativeLayout):
 
         Clock.schedule_once(close_spinner, 2)
         self.ids.available_requests.clear_widgets()
-        self._fill_content(0)
+        self._filter_content(*self.previous_search_params)
 
     def _transition_to_detail_view(self, request: DeliveryRequest):
         """Show detail view for selected delivery request."""
@@ -108,6 +108,7 @@ class DeliveryList(RelativeLayout):
 
     def show_filter(self):
         """Show the filter widget"""
+        self.ids.available_requests.clear_widgets()
         self.add_widget(self.filter_widget)
 
     def hide_filter(self):
@@ -228,11 +229,20 @@ class Filter(BoxLayout):
     def _init_content(self):
         self.from_suggester = LocationSuggester(self.ids.input_from)
         self.to_suggester = LocationSuggester(self.ids.input_to)
+        self._update_search_button()
 
     def _on_search_from(self):
         if self.from_suggester is not None:
             self.from_suggester.on_search()
+            self._update_search_button()
 
     def _on_search_to(self):
         if self.to_suggester is not None:
             self.to_suggester.on_search()
+            self._update_search_button()
+
+    def _update_search_button(self):
+        from_ok = self.from_suggester.currently_used_suggestion is not None
+        to_ok = self.to_suggester.currently_used_suggestion is not None
+        enable = not (from_ok or to_ok)
+        self.ids.search_button.disabled = enable
