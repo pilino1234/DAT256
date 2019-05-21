@@ -40,7 +40,6 @@ class UserMeGetter:
         delivery_requests = []
         for doc in collection_snapshot:
             data = doc.to_dict()
-            print(data)
             data['uid'] = doc.id
             data['status'] = Status(data['status'])
             delivery_requests.append(DeliveryRequest(**data))
