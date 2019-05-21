@@ -141,8 +141,7 @@ class UserProfileView(RelativeLayout):
     def logout(self):
         """Log out the user"""
         Auth.sign_out()
-        app = App.get_running_app()
-        app.is_authenticated = False
+        App.get_running_app().is_authenticated = False
 
 
 class AnswerInput(BoxLayout):
