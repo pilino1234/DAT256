@@ -23,8 +23,7 @@ class AuthScreen(Screen):
                     **credential_store.get('tokens'))
 
                 UserMeGetter.set_me(user_id)
-                app = App.get_running_app()
-                app.is_authenticated = True
+                App.get_running_app().is_authenticated = True
             except Exception as error:
                 print(error)
                 print("Deleting credentials.json since it may be corrupted")

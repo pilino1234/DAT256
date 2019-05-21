@@ -58,7 +58,7 @@ class User:
         """
         if amount > 0:
             self.balance += amount
-        self.update()
+            self.update()
 
     def withdraw(self, amount: int):
         """
