@@ -14,19 +14,19 @@ class UserMeGetter:
     @staticmethod
     def set_me(new_user_id: Text):
         if UserMeGetter._user_id is not "":
-            Firestore.unsubscribe("users/" + UserMeGetter._user_id)
-            Firestore.unsubscribe("users/" + UserMeGetter._user_id + "/packages")
-            Firestore.unsubscribe("users/" + UserMeGetter._user_id + "/deliveres")
+            Firestore.unsubscribe(u'users/{user_id}/'.format(user_id=new_user_id))
+            Firestore.unsubscribe(u'users/{user_id}/packages'.format(user_id=new_user_id))
+            Firestore.unsubscribe(u'users/{user_id}/deliveries'.format(user_id=new_user_id))
 
         UserMeGetter._user_id = new_user_id
 
-        print(new_user_id, " hej hej")
         if new_user_id is not "":
-            print("Hej")
-            Firestore.subscribe_document("users", new_user_id, UserMeGetter._on_snapshot_user)
-            Firestore.subscribe("users/" + new_user_id + "/packages", UserMeGetter._on_snapshot_user_packages)
-            Firestore.subscribe("users/" + new_user_id + "/deliveres", UserMeGetter._on_snapshot_user_deliveres)
             UserMeGetter.user = UserGetter.get_by_id(new_user_id)
+            Firestore.subscribe_document("users", new_user_id, UserMeGetter._on_snapshot_user)
+            Firestore.subscribe(u'users/{user_id}/packages'.format(user_id=new_user_id),
+                                UserMeGetter._on_snapshot_user_packages)
+            Firestore.subscribe(u'users/{user_id}/deliveries'.format(user_id = new_user_id),
+                                UserMeGetter._on_snapshot_user_deliveries)
 
     @staticmethod
     def _on_snapshot_user(document_snapshot, _, __):
@@ -37,8 +37,6 @@ class UserMeGetter:
 
     @staticmethod
     def _on_snapshot_user_packages(collection_snapshot, _, __):
-        print("OMG UPDATE UPDATE UPDATE")
-        print(collection_snapshot)
         delivery_requests = []
         for doc in collection_snapshot:
             data = doc.to_dict()
@@ -50,7 +48,7 @@ class UserMeGetter:
         UserMeGetter.user.update(packages=delivery_requests)
 
     @staticmethod
-    def _on_snapshot_user_deliveres(collection_snapshot, _, __):
+    def _on_snapshot_user_deliveries(collection_snapshot, _, __):
         delivery_requests = []
         for doc in collection_snapshot:
             data = doc.to_dict()
