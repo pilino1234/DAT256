@@ -67,7 +67,6 @@ class Auth:
                 "avatar": "",
                 "balance": 0,
                 "rating": 0,
-                "packages": []
             })
             batch.commit()
 
