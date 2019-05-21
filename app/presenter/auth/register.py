@@ -10,6 +10,7 @@ class Register(BoxLayout):
     """The registration view"""
 
     def register(self):
+        """Callback when pressing sign_up and then uses auth.py to sign up for a new account"""
         email = self.ids.email_tf.text
         password = self.ids.password_tf.text
         password_repeat = self.ids.password_repeat_tf.text

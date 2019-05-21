@@ -12,6 +12,7 @@ class Login(BoxLayout):
     """The login view"""
 
     def authenticate(self):
+        """Callback when the user clicks login, and uses Auth to sign in and set up credentials"""
         email = self.ids.email_tf.text
         password = self.ids.password_tf.text
         user_id = Auth.sign_in(email, password)

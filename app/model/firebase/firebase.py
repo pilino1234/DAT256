@@ -27,6 +27,7 @@ class Firebase:
     def create_db(credentials: FirebaseCredentials, project: str = "carrepsa"):
         """
         Creates the database reference to Firebase
+
         :param credentials: Credentials that has tokens and refresh_token
         :param project: The Firebase project
         """

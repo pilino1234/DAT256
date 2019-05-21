@@ -13,14 +13,14 @@ webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
 
 
 class Auth:
-    """
-    Manages authentication and account creation with Firebase
-    """
+    """Manages authentication and account creation with Firebase"""
 
     @staticmethod
     def sign_in_with_tokens(id_token, refresh_token, user_id):
         """
-        Creates database and bucket for Firebase. Also updates credential store with the given tokens
+        Creates database and bucket for Firebase.
+
+        Also updates credential store with the given tokens
 
         :param id_token: The JWT token from Firebase
         :param refresh_token: A refresh_token from Firebase used to renew tokens
@@ -43,11 +43,13 @@ class Auth:
     def sign_in(mail, password):
         """
         Authenticate the user to firebase using mail and password
+
         :param mail: An valid mail
         :param password: A valid password with at least 8 in length
         :return: The user id for the signed in user
         """
-        sign_in_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=" + webApiKey
+        sign_in_url = "https://www.googleapis.com/identitytoolkit" \
+                      "/v3/relyingparty/verifyPassword?key=" + webApiKey
         sign_in_payload = {
             "email": mail,
             "password": password,
@@ -69,13 +71,15 @@ class Auth:
     def sign_up(mail, password, name, phonenumber):
         """
         Creates an account with the given data. Saves to firebase. Doesn't sign in.
+
         :param mail: A valid mail
         :param password: A valid password at least 8 in length
         :param name: The name of the new user
         :param phonenumber: The phonenumber of the new user
         :return: The user id for the new user
         """
-        sign_up_url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" + webApiKey
+        sign_up_url = "https://www.googleapis.com/identitytoolkit" \
+                      "/v3/relyingparty/signupNewUser?key=" + webApiKey
         sign_up_payload = {
             "email": mail,
             "password": password,
@@ -114,6 +118,7 @@ class Auth:
     def sign_out():
         """
         Signs out from UserMeGetter and clears credential store.
+
         :return:
         """
         UserMeGetter.set_me("")

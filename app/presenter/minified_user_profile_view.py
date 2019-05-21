@@ -13,11 +13,13 @@ class Field(MDCard):
     """Widget that alters MDRaisedButton to a blank card-looking button with a drop shadow."""
 
     def __init__(self, title: str, data: str, **kwargs):
+        """Initializes Field with title and data"""
         super().__init__(**kwargs)
         self.ids.field_title.text = title
         self.ids.field_data.text = data
 
     def set_data(self, data: str):
+        """Updates the data in Field"""
         self.ids.field_data.text = data
 
     _radius = NumericProperty(dp(14))

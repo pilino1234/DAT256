@@ -1,13 +1,16 @@
+
 class MinifiedUser:
     """Represents a public version of a user's account."""
 
     def __init__(self, name: str, mail: str, phonenumber: str, uid: str):
+        """Initializes a minified user with name, phonenumber, mail and uid"""
         self.name = name
         self.mail = mail
         self.phonenumber = phonenumber
         self.uid = uid
 
     def update(self, **kwargs):
+        """Updates the given parameters for the minified user. Doesn't update to Firebase"""
         if 'name' in kwargs:
             self.name = kwargs['name']
         if 'mail' in kwargs:
@@ -27,6 +30,7 @@ class MinifiedUser:
             name=self.name, mail=self.mail, phonenumber=self.phonenumber)
 
     def to_dict(self):
+        """Returns the minified user as a dict"""
         return {
             "name": self.name,
             "mail": self.mail,

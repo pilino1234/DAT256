@@ -17,6 +17,7 @@ class SlidingPopup(FloatLayout):
         Clock.schedule_once(self.init_ui, 0)
 
     def init_ui(self, _):
+        """Initializes the ui for sliding popup"""
         self.bg: BackgroundDim = self.ids.background_dim
         self.bg.on_release = lambda: self.hide()
         self.card: Widget = self.ids.popup_card
