@@ -19,7 +19,8 @@ class AuthScreen(Screen):
 
         if credential_store.exists('tokens'):
             try:
-                user_id = Auth.sign_in_with_tokens(**credential_store.get('tokens'))
+                user_id = Auth.sign_in_with_tokens(
+                    **credential_store.get('tokens'))
 
                 UserMeGetter.set_me(user_id)
                 app = App.get_running_app()

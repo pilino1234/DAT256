@@ -16,5 +16,5 @@ class Register(BoxLayout):
         name = self.ids.name_tf.text
         phonenumber = self.ids.phonenumber_tf.text
 
-        if(password == password_repeat):
+        if password == password_repeat:
             Auth.sign_up(email, password, name, phonenumber)
