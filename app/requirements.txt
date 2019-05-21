@@ -1,7 +1,7 @@
 kivy
 git+http://github.com/HeaTTheatR/KivyMD@08692d7b51927ffab7124972c6214fb36492bc85#egg=kivymd
 pygame
-google-cloud-firestore==0.32.1
-google-cloud-storage==1.15.0
+google-cloud-firestore==1.2.0
+google-cloud-storage==1.16.0
 pillow
 geopy
