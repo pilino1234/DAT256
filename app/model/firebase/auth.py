@@ -54,10 +54,10 @@ class Auth:
             "returnSecureToken": True
         }
         sign_in_request = requests.post(sign_in_url, data=sign_in_payload)
-        sign_in_data = json.loads(sign_in_request.content.decode())
 
         user_id = None
         if sign_in_request.ok:
+            sign_in_data = json.loads(sign_in_request.content.decode())
             id_token = sign_in_data['idToken']
             user_id = sign_in_data['localId']
             refresh_token = sign_in_data['refreshToken']
@@ -82,9 +82,9 @@ class Auth:
             "returnSecureToken": True
         }
         sign_up_request = requests.post(sign_up_url, data=sign_up_payload)
-        sign_up_data = json.loads(sign_up_request.content.decode())
 
         if sign_up_request.ok:
+            sign_up_data = json.loads(sign_up_request.content.decode())
             token = sign_up_data['idToken']
             refresh_token = sign_up_data['refreshToken']
             user_id = sign_up_data['localId']

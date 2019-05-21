@@ -90,7 +90,7 @@ class DeliveryRequestDetail(BoxLayout):
         with Firestore.batch('packages') as batch:
             batch.update(self.request.uid, {
                 'status': Status.ACCEPTED,
-                'assistant': assistant.to_data()
+                'assistant': assistant.to_dict()
             })
 
         with Firestore.batch('users') as batch:

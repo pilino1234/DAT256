@@ -5,7 +5,6 @@ from kivymd.button import MDIconButton
 from kivymd.textfields import MDTextField
 from kivymd.toast.kivytoast import toast
 
-from presenter.user_profile_view import UserProfileView
 from presenter.utils.suggester import LocationSuggester
 
 from model.delivery_request import DeliveryRequest, Status
@@ -13,7 +12,6 @@ from model.delivery_request_uploader import DeliveryRequestUploader
 from model.firebase.bucket import Bucket
 from model.user import User
 from model.user_me_getter import UserMeGetter
-from presenter.user_profile_view import UserProfileView
 
 Builder.load_file("view/delivery_request_form.kv")
 
@@ -172,7 +170,7 @@ class DeliveryRequestForm(BoxLayout):
             fragile=self.ids.fragile_bool.active,
             status=Status.AVAILABLE,
             money_lock=int(self.ids.money_lock_amount.text),
-            owner=UserMeGetter.user.to_minified().to_data(),
+            owner=UserMeGetter.user.to_minified().to_dict(),
             assistant={},
             uid='',
             image_path=firestore_image_path)
