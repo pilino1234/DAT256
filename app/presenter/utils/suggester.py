@@ -2,7 +2,7 @@ import threading
 
 from model.location import Location
 from model.map_api import MapAPI
-from presenter.dropdown_menu import DropdownMenu
+from presenter.utils.dropdown_menu import DropdownMenu
 
 
 class LocationSuggester():
