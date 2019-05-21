@@ -1,10 +1,6 @@
 import google
-from kivy.animation import Animation
-from kivy.clock import Clock
 from kivy.lang import Builder
-from kivy.metrics import dp
 from kivy.properties import NumericProperty
-from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton

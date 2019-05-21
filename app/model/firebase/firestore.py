@@ -55,6 +55,7 @@ class Firestore:
     def unsubscribe(path: str):
         """
         Unsubscribe from a collection.
+
         :param path: e.g. /users/asdfdfasfsdfdsasfdasdf/packages
         :return:
         """
@@ -64,6 +65,7 @@ class Firestore:
     @staticmethod
     def unsubscribe_document(collection_path: str, document: str):
         """
+        Unsubscribe from a document
 
         :param collection_path: The collection, e.g. /users
         :param document: The last bit of the path specifying the document

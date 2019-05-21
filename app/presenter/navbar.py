@@ -27,6 +27,7 @@ class NavBarWithFAB(BoxLayout, ThemableBehavior):
         Clock.schedule_once(self.init_ui, 0)
 
     def init_ui(self, _):
+        """Initializes ui for navbar"""
         self.ids.fab.on_release = self.fab_callback
 
     def _load_posted_requests(self, tab):
