@@ -2,6 +2,7 @@ import threading
 
 from kivymd.menus import MDMenuItem, MDDropdownMenu
 from model.map_api import MapAPI
+from model.location import Location
 
 
 class LocationSuggester():
@@ -39,6 +40,7 @@ class LocationSuggester():
 
         # Avoid vague and empty inputs
         if len(self.textfield.text) < 2:
+            self.currently_used_suggestion = None
             return
 
         new_suggestions = MapAPI.get_search_suggestions(self.textfield.text)
@@ -61,6 +63,6 @@ class LocationSuggester():
         self.suggestion_dropdown.open(self.textfield)
 
     def __apply_suggestion(self, suggestion):
-        self.currently_used_suggestion = suggestion
+        self.currently_used_suggestion = Location.from_dict(suggestion)
         pretty_suggestion = suggestion['name'] + ' ' + suggestion['district']
         self.ignore_text_change = self.textfield.text = pretty_suggestion
