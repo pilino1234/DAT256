@@ -9,18 +9,32 @@ class User:
     """Represents a user's account."""
 
     def __init__(self, _uid: str, name: str, mail: str, phonenumber: str,
-                 avatar: str, balance: int, rating: float):
+                 avatar: str, balance: int):
+        """
+        Initializes a user model with the given parameters
+
+        :param _uid: The user id
+        :param name: The name of the user
+        :param mail: The mail of the user
+        :param phonenumber: The phonenumber of the user
+        :param avatar: The link to the firebase storage image of the user
+        :param balance: The current balance of the user
+        """
         self._uid = _uid
         self.name = name
         self.mail = mail
         self.phonenumber = phonenumber
         self.avatar = avatar
         self.balance = balance
-        self.rating = rating
-        self.packages = []
-        self.deliveries = []
+        self.packages: List[DeliveryRequest] = []
+        self.deliveries: List[DeliveryRequest] = []
 
     def update(self, **kwargs):
+        """
+        Updates the specified props to the user model and firebase
+
+        :param kwargs: Can be name, mail, phonenumber etc
+        """
         if 'name' in kwargs:
             self.name = kwargs['name']
         if 'mail' in kwargs:
@@ -90,15 +104,17 @@ class User:
 
     def __str__(self):
         """Format a user for printing"""
-        return "User: {name}, {mail}, {phonenumber}, Avatar: {avatar}, Balance: {balance}, Rating: {rating}".format(
-            name=self.name,
-            mail=self.mail,
-            phonenumber=self.phonenumber,
-            avatar=self.avatar,
-            balance=self.balance,
-            rating=self.rating)
+        return "User: {name}, {mail}, {phonenumber}, Avatar: " \
+               "{avatar}, Balance: {balance}, Rating: {rating}".format(
+                name=self.name,
+                mail=self.mail,
+                phonenumber=self.phonenumber,
+                avatar=self.avatar,
+                balance=self.balance,
+                rating=self.rating)
 
     def to_minified(self):
+        """Returns the user as a MinifiedUser"""
         return MinifiedUser(name=self.name,
                             phonenumber=self.phonenumber,
                             mail=self.mail,

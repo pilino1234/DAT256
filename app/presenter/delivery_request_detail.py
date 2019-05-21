@@ -10,7 +10,6 @@ from model.delivery_request import DeliveryRequest, Status
 from model.firebase.bucket import Bucket
 from model.firebase.firestore import Firestore
 from model.minified_user import MinifiedUser
-from model.user_getter import UserGetter
 from model.user_me_getter import UserMeGetter
 
 from presenter.minified_user_profile_view import MinifiedUserProfileView
@@ -32,7 +31,7 @@ class DeliveryRequestDetail(BoxLayout):
         """Initializes a DeliveryRequestDetail"""
         self.request = request
 
-        self.delivery_owner = MinifiedUser(**request.owner)
+        self.delivery_owner = request.owner
 
         self._back_button_handler = back_button_handler
         self.is_owner = self.delivery_owner.uid == UserMeGetter._user_id

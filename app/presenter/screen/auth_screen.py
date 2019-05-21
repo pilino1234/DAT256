@@ -13,6 +13,7 @@ class AuthScreen(Screen):
     """The screen containing all authentication related views."""
 
     def __init__(self, **kwargs):
+        """Initializes auth screen, checks if there's a credentials.json and if so, signs in"""
         super(AuthScreen, self).__init__(**kwargs)
 
         credential_store = JsonStore('credentials.json')

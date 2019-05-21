@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.button import MDIconButton
 from kivymd.textfields import MDTextField
 from kivymd.toast.kivytoast import toast
+from typing import Optional
 
 from presenter.utils.suggester import LocationSuggester
 
@@ -38,6 +39,7 @@ class DeliveryRequestForm(BoxLayout):
         Clock.schedule_once(self.init_ui, 0)
 
     def init_ui(self, _):
+        """Initializes ui for delivery_request_form"""
         for button_id in self._weights:
             button: MDIconButton = self.ids[button_id]
             button.bind(
@@ -111,7 +113,7 @@ class DeliveryRequestForm(BoxLayout):
             toast("Payment amount must be above $0.")
             return False
 
-        user: User = UserMeGetter.user
+        user: Optional[User] = UserMeGetter.user
         if int(payment) > user.balance:
             toast("Your balance ($" + str(user.balance) +
                   ") is insufficient to pay for this delivery.")
