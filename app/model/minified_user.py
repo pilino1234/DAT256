@@ -1,10 +1,7 @@
-from typing import List
-
-from model.delivery_request import DeliveryRequest
 
 
 class MinifiedUser:
-    """Represents a user's account."""
+    """Represents a public version of a user's account."""
 
     def __init__(self, name: str, mail: str, phonenumber: str, uid: str):
         self.name = name
@@ -31,7 +28,7 @@ class MinifiedUser:
         return "User: {name}, {mail}, {phonenumber}".format(
             name=self.name, mail=self.mail, phonenumber=self.phonenumber)
 
-    def to_data(self):
+    def to_dict(self):
         return {
             "name": self.name,
             "mail": self.mail,

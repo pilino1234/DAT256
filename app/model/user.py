@@ -72,7 +72,7 @@ class User:
         """
         if 0 < amount <= self.balance:
             self.balance -= amount
-        self.update()
+            self.update()
 
     def lock_delivery_amount(self, delivery: DeliveryRequest):
         """

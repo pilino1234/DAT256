@@ -1,4 +1,4 @@
-from typing import Callable, Dict
+from typing import Callable, Dict, Generator
 
 from google.cloud.firestore_v1.batch import WriteBatch
 from google.cloud.firestore_v1.collection import CollectionReference
@@ -83,7 +83,7 @@ class Firestore:
                                Firebase.get_db().collection(path))
 
     @staticmethod
-    def get(path: str):
+    def get(path: str) -> Generator:
         """
         Fetch all items in a path from the Firestore database
 
