@@ -20,9 +20,20 @@ class Location:
         return dist_km
 
     def is_close_to(self, other) -> bool:
-        return self.dist_to(other) < 3.5
+        return self.dist_to(other) < 5
 
     def __str__(self):
         """Format a delivery request for printing"""
         return "Location: ({longitude}, {latitude}) {name}".format(
-            self.longitude, self.latitude, self.name)
+            longitude=self.longitude, latitude=self.latitude, name=self.name)
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'longitude': self.longitude,
+            'latitude': self.latitude
+        }
+
+    @staticmethod
+    def from_dict(dict):
+        return Location(dict['name'], dict['longitude'], dict['latitude'])

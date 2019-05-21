@@ -119,8 +119,8 @@ class DeliveryRequestForm(BoxLayout):
         request = DeliveryRequest(
             item=self.ids.package_name.text,
             description=self.ids.description_text.text,
-            origin=origin,
-            destination=destination,
+            origin=origin.to_dict(),
+            destination=destination.to_dict(),
             reward=payment_amount,
             weight=self.weight,
             fragile=self.ids.fragile_bool.active,
