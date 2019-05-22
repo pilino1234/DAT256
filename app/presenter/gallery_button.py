@@ -29,8 +29,8 @@ class GalleryButton(MDFloatingActionButton):
         """Opens the file manager window"""
         if not self.manager:
             self.manager = ModalView(size_hint=(1, 1), auto_dismiss=False)
-            self.file_manager = MDFileManager(
-                exit_manager=self.exit_manager, select_path=self.select_path)
+            self.file_manager = MDFileManager(exit_manager=self.exit_manager,
+                                              select_path=self.select_path)
 
             # Monkey patch file selection so that history is not erased
             def select_dir_or_file(path):

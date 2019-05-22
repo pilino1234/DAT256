@@ -10,7 +10,6 @@ class DropdownMenu(MDDropdownMenu):
 
     def display_menu(self, caller: Widget):
         """Displays a dropdown of items, calculates size, position and plays an animation."""
-
         c = caller.to_window(caller.center_x, caller.center_y)
 
         target_width = caller.width

@@ -9,32 +9,38 @@ from model.user_getter import UserGetter
 
 class UserTest(unittest.TestCase):
     def test_equal(self):
-        u1 = User(
-            "", "User1", "email@example.com", "1234567890", "", balance=0)
+        u1 = User("",
+                  "User1",
+                  "email@example.com",
+                  "1234567890",
+                  "",
+                  balance=0)
 
-        u2 = User(
-            "",
-            "User2",
-            "email@example.com",
-            "0987654321",
-            "avatar_binary_string_stuff",
-            balance=10)
+        u2 = User("",
+                  "User2",
+                  "email@example.com",
+                  "0987654321",
+                  "avatar_binary_string_stuff",
+                  balance=10)
 
         self.assertTrue(u1 == u2)
         self.assertTrue(u2 == u1)
 
     def test_not_equal(self):
 
-        u1 = User(
-            "", "User1", "email@example.com", "1234567890", "", balance=0)
+        u1 = User("",
+                  "User1",
+                  "email@example.com",
+                  "1234567890",
+                  "",
+                  balance=0)
 
-        u2 = User(
-            "",
-            "User1",
-            "different_email@example.com",
-            "1234567890",
-            "",
-            balance=0)
+        u2 = User("",
+                  "User1",
+                  "different_email@example.com",
+                  "1234567890",
+                  "",
+                  balance=0)
 
         self.assertFalse(u1 == u2)
         self.assertFalse(u2 == u1)
@@ -69,8 +75,12 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, user_balance)
 
     def test_withdraw_more_than_balance(self):
-        user = User(
-            "", "User1", "email@example.com", "1234567890", "", balance=100)
+        user = User("",
+                    "User1",
+                    "email@example.com",
+                    "1234567890",
+                    "",
+                    balance=100)
 
         self.assertEqual(user.balance, 100)
         user.withdraw(1000000)
