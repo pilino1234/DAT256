@@ -2,7 +2,7 @@ from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
-from model.delivery_request import DeliveryRequest
+from model.delivery_request import DeliveryRequest, Status
 from model.user_me_getter import UserMeGetter
 from presenter.delivery_request_detail import DeliveryRequestDetail
 from model.firebase.firestore import Firestore
@@ -33,6 +33,10 @@ class MyDeliveries(BoxLayout):
         # Fill delivery list
         self.ids.my_deliveries.clear_widgets()
         for req in delivery_requests:
+            if req.status == Status.DELIVERED:
+                print("Ignoring delivered package in my deliveries")
+                continue
+
             self.ids.my_deliveries.add_widget(
                 ListItem(req, self._transition_to_detail_view))
 
