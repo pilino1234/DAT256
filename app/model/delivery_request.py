@@ -23,8 +23,8 @@ class DeliveryRequest:
         _weight_prop('truck', "Large")
     ]
 
-    def __init__(self, uid: str, item: str, description: str, origin: Location,
-                 destination: Location, reward: int, weight: int,
+    def __init__(self, uid: str, item: str, description: str, origin: dict,
+                 destination: dict, reward: int, weight: int,
                  fragile: bool, status: Status, money_lock: int,
                  owner: MinifiedUser, assistant: MinifiedUser, image_path: str,
                  **kwargs):
@@ -32,8 +32,8 @@ class DeliveryRequest:
         self.uid = uid
         self.item = item
         self.description = description
-        self.origin = origin
-        self.destination = destination
+        self.origin = Location(**origin)
+        self.destination = Location(**destination)
         self.reward = reward
         self.weight = weight
         self.fragile = fragile
@@ -92,6 +92,11 @@ class DeliveryRequest:
     @property
     def distance_km(self) -> float:
         """Computes distance between origin and destination in kilometres"""
+        print("DEBUG")
+        print(self.origin)
+        print(self.destination)
+        print("Origin: ", type(self.origin))
+        print("Destination: ", type(self.destination))
         return self.origin.dist_to(self.destination)
 
     @property
