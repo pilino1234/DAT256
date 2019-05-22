@@ -27,12 +27,12 @@
 
         BoxLayout:
             size_hint_y:None
-            height:Window.height * 1.5
+            height: grid.minimum_height + form_title.height + 10
             orientation: 'vertical'
 
             MDLabel:
+                id: form_title
                 font_style: 'H6'
-                padding: 0, 30
                 halign: 'center'
                 valign: 'bottom'
                 text_size: self.width, None
@@ -40,75 +40,90 @@
                 text: "Request a Delivery"
 
             GridLayout:
+                id: grid
                 cols: 3
 
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(80)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
                         text: "Package: "
                         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 BoxLayout:
-                    padding: (20, 0)
+                    size_hint_y: None
+                    height: dp(80)
                     MDTextField:
                         id: package_name
                         required: True
                         helper_text_mode: 'on_error'
                         write_tab: False
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 Widget:
-                    size_hint_x: None
-                    width: 60
+                    size_hint: None, None
+                    width: dp(60)
+                    height: dp(80)
 
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(80)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
                         text: "From: "
                         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 BoxLayout:
-                    padding: (20, 0)
+                    size_hint_y: None
+                    height: dp(80)
                     MDTextField:
                         id: from_text
                         required: True
                         helper_text_mode: 'on_error'
                         write_tab: False
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                         on_text: root._on_search_from()
                 HollowIcon:
+                    size_hint_y: None
+                    padding: [0, dp(20), 0, 0]
                     icon: 'map-marker'
                     theme_text_color: 'Custom'
                     text_color: 212/255, 144/255, 0/255, 1
+                    height: dp(80)
 
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(80)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
                         text: "To: "
                         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 BoxLayout:
-                    padding: (20, 0)
+                    size_hint_y: None
+                    height: dp(80)
                     MDTextField:
                         id: dest_text
                         required: True
                         helper_text_mode: 'on_error'
                         write_tab: False
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                         on_text: root._on_search_to()
                 HollowIcon:
+                    size_hint_y: None
+                    padding: [0, dp(20), 0, 0]
                     icon: 'map-marker'
                     theme_text_color: 'Custom'
                     text_color: 152/255, 224/255, 232/255, 1
+                    height: dp(80)
 
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(100)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
@@ -116,9 +131,10 @@
                         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
 
                 BoxLayout:
-                    size_hint_x: 1
-                    padding: (30, 0)
+                    size_hint: 1, None
+                    padding: (10, 0)
                     spacing: 10
+                    height: dp(100)
 
                     MDIconButton:
                         id: weight_walk_button
@@ -142,30 +158,38 @@
 
 
                 HollowIcon:
+                    size_hint_y: None
+                    padding: [0, dp(30), 0, 0]
                     icon: 'dumbbell'
                     theme_text_color: 'Custom'
                     text_color: 0/255, 0/255, 0/255, 1
+                    height: dp(100)
 
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(80)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
                         text: "Payment: "
                         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 BoxLayout:
-                    padding: (20, 0)
+                    size_hint_y: None
+                    height: dp(80)
                     MDTextField:
                         id: payment_amount
                         required: True
                         helper_text_mode: 'on_error'
                         input_filter: 'int'
                         write_tab: False
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 MDIconButton:
+                    size_hint_y: None
+                    padding: [0, 30, 0, 0]
                     theme_text_color: 'Custom'
                     text_color: 255/255, 255/255, 255/255, 1
+                    height: dp(80)
                     HollowIcon:
                         icon: 'currency-usd'
                         theme_text_color: 'Custom'
@@ -174,24 +198,30 @@
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(80)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
                         text: "Money lock: "
                         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 BoxLayout:
-                    padding: (20, 0)
+                    size_hint_y: None
+                    height: dp(80)
                     MDTextField:
                         id: money_lock_amount
                         input_filter: 'int'
                         required: True
-                        helper_text: "Money lock is the deposit you require until the package is delivered"
+                        helper_text: "The deposit you require until the package is delivered"
                         helper_text_mode: 'persistent'
                         write_tab: False
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
                 MDIconButton:
+                    size_hint_y: None
+                    padding: [0, 30, 0, 0]
                     theme_text_color: 'Custom'
                     text_color: 255/255, 255/255, 255/255, 1
+                    height: dp(80)
+
                     HollowIcon:
                         icon: 'currency-usd'
                         theme_text_color: 'Custom'
@@ -200,6 +230,7 @@
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(80)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
@@ -207,34 +238,41 @@
                         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
 
                 BoxLayout:
-                    size_hint_x: 1
-                    padding: (30, 0)
+                    size_hint: 1, None
+                    padding: [dp(20), dp(30), 0, 0]
+                    height: dp(80)
 
                     MDSwitch:
                         id: fragile_bool
                         size_hint: (None, None)
                         width: 40
-                        height: 60
+                        height: 40
 
 
                 Widget:
-                    size_hint_x: None
+                    size_hint: None, None
                     width: 60
+                    height: dp(80)
 
                 RelativeLayout:
                     size_hint: (None, None)
                     width: dp(100)
+                    height: dp(180)
                     MDLabel:
                         halign: "right"
                         theme_text_color: 'Primary'
                         text: "Photo: "
-                        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
 
                 AsyncImage:
+                    height: dp(150)
+                    size_hint_y: None
                     id: photo_preview
                     source: root.photo_path
 
                 GalleryButton:
+
+                    size_hint_y: None
                     id: 'gallery_button'
                     icon: 'camera'
                     path_selected_callback: root._set_photo_path
@@ -245,18 +283,24 @@
                     pos_hint: {'right':0}
 
                 RelativeLayout:
-                    size_hint: (None, None)
+                    size_hint: None, None
                     width: dp(100)
+                    height: dp(120)
 
-                    MDLabel:
-                        halign: "right"
-                        theme_text_color: 'Primary'
-                        text: "Description: "
-                        pos_hint: {'bottom': 1}
+                    BoxLayout:
+                        size_hint: 1, None
+                        height: desc_label.texture_size[1]
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.22}
+
+                        MDLabel:
+                            id: desc_label
+                            halign: "right"
+                            theme_text_color: 'Primary'
+                            text: "Description: "
 
                 BoxLayout:
-                    Widget:
-                        size_hint_x: 0.02
+                    height: dp(120)
+                    size_hint_y: None
 
                     MDTextField:
                         required: True
@@ -268,11 +312,12 @@
                         multiline: True
                         foreground_color: 212/255, 144/255, 0/255, 1
                         size_hint_x: 0.8
-                        pos_hint: {'y': 0.15}
+                        pos_hint: {'center_x': 0.5, 'bottom': 1}
 
                 Widget:
-                    size_hint_x: None
+                    size_hint: None, None
                     width: 70
+                    height: dp(120)
 
     MDRaisedButton:
         id: request_button
