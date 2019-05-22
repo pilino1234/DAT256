@@ -95,6 +95,9 @@ class DeliveryList(RelativeLayout):
         return True
 
     def _update_content(self, spinner):
+        if self.previous_search_params is None:
+            return
+
         self.tick = 0
 
         def close_spinner(interval):
