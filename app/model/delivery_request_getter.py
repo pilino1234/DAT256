@@ -25,7 +25,7 @@ class DeliveryRequestGetter:
         :param value: The value which each entry is being compared to.
         """
         docs = Firestore.get_raw('packages').where(field_path, op_str,
-                                                   value).get()
+                                                   value).stream()
 
         delivery_requests = []
         for doc in docs:

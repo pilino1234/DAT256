@@ -130,6 +130,6 @@ class User:
     def to_minified(self):
         """Returns the user as a MinifiedUser"""
         return MinifiedUser(name=self.name,
-                            phonenumber=self.phonenumber,
                             mail=self.mail,
+                            phonenumber=self.phonenumber,
                             uid=self._uid)

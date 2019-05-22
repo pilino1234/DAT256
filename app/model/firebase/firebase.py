@@ -21,12 +21,7 @@ class Firebase:
 
     @staticmethod
     def create_db():
-        """
-        Creates the database reference to Firebase
-
-        :param credentials: Credentials that has tokens and refresh_token
-        :param project: The Firebase project
-        """
+        """Creates the database reference to Firebase"""
         Firebase._db = fs.Client()
 
     @staticmethod
