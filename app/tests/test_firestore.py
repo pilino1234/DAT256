@@ -59,6 +59,6 @@ class FirestoreTest(unittest.TestCase):
             batch.delete(uid)
 
     def test_batch_exception(self):
-        with self.assertRaises(ValueError), Firestore.batch(
+        with self.assertRaises(TypeError), Firestore.batch(
                 'packages') as batch:
             batch.delete(1524)

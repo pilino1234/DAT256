@@ -1,6 +1,6 @@
 from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
+from kivy.uix.boxlayout import BoxLayout
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest, Status
