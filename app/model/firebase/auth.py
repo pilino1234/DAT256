@@ -27,7 +27,7 @@ class Auth:
         :return The user id for the signed in user
         """
         Firebase.create_db()
-        # Firebase.create_bucket()
+        Firebase.create_bucket()
 
         credential_store.put('tokens',
                              id_token=id_token,
