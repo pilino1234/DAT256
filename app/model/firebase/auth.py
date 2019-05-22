@@ -102,8 +102,7 @@ class Auth:
                         "name": name,
                         "phonenumber": phonenumber,
                         "avatar": "",
-                        "balance": 0,
-                        "rating": 0,
+                        "balance": 0
                     })
 
         else:
