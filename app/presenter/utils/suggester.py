@@ -61,8 +61,8 @@ class LocationSuggester():
         ]
 
         # Display dropdown with suggestions
-        self.suggestion_dropdown = MDDropdownMenu(items=search_suggestions,
-                                                  width_mult=8)
+        self.suggestion_dropdown = MDDropdownMenu(
+            items=search_suggestions, width_mult=8)
         self.suggestion_dropdown.open(self.textfield)
 
     def __apply_suggestion(self, suggestion):
