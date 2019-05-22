@@ -2,7 +2,6 @@ import os
 
 from google.cloud import firestore as fs, storage  # type: ignore
 
-from model.firebase.firebase_credentials import FirebaseCredentials
 from model.firebase.firebase_exception import FirebaseException
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
@@ -24,14 +23,14 @@ class Firebase:
         return Firebase._db
 
     @staticmethod
-    def create_db(credentials: FirebaseCredentials, project: str = "carrepsa"):
+    def create_db():
         """
         Creates the database reference to Firebase
 
         :param credentials: Credentials that has tokens and refresh_token
         :param project: The Firebase project
         """
-        Firebase._db = fs.Client(project=project, credentials=credentials)
+        Firebase._db = fs.Client()
 
     @staticmethod
     def get_bucket() -> storage.Bucket:
