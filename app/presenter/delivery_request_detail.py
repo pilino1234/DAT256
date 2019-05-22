@@ -31,7 +31,7 @@ class DeliveryRequestDetail(BoxLayout):
         """Initializes a DeliveryRequestDetail"""
         self.request = request
 
-        self.delivery_owner = MinifiedUser(**request.owner)
+        self.delivery_owner = request.owner
 
         self._back_button_handler = back_button_handler
         self.is_owner = self.delivery_owner.uid == UserMeGetter._user_id
@@ -43,8 +43,8 @@ class DeliveryRequestDetail(BoxLayout):
     def _setup_user_fields(self):
         assistant_widget, owner_widget = self.ids.assistant, self.ids.owner
 
-        if self.request.assistant.get('name') is not None:
-            self.delivery_assistant = MinifiedUser(**self.request.assistant)
+        if self.request.has_assistant():
+            self.delivery_assistant = self.request.assistant
             assistant_widget.description = self.delivery_assistant.name
         else:
             owner_widget.size_hint_x = 1
