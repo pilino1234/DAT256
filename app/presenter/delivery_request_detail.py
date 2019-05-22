@@ -31,7 +31,7 @@ class DeliveryRequestDetail(BoxLayout):
         """Initializes a DeliveryRequestDetail"""
         self.request = request
 
-        self.delivery_owner = request.owner
+        self.delivery_owner = MinifiedUser(**request.owner)
 
         self._back_button_handler = back_button_handler
         self.is_owner = self.delivery_owner.uid == UserMeGetter._user_id
