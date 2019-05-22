@@ -22,7 +22,8 @@ class MyDeliveries(BoxLayout):
         """Initializes the delivery list"""
         super(MyDeliveries, self).__init__(**kwargs)
         Clock.schedule_once(lambda dt: self._update_content())
-        Firestore.subscribe("users/" + UserMeGetter._user_id + "/deliveries", lambda *_: self._update_content())
+        Firestore.subscribe(u'users/{}/deliveries'.format(
+            UserMeGetter.user), lambda *_: self._update_content())
 
     def _update_content(self):
         """Fetch all deliveries the current owner has accepted"""
