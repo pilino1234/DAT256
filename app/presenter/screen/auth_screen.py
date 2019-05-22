@@ -20,11 +20,7 @@ class AuthScreen(Screen):
 
         if credential_store.exists('tokens'):
             try:
-                user_id = Auth.sign_in_with_tokens(
-                    **credential_store.get('tokens'))
-
-                UserMeGetter.set_me(user_id)
-                App.get_running_app().is_authenticated = True
+                Auth.sign_in_with_tokens(**credential_store.get('tokens'))
             except Exception as error:
                 print(error)
                 print("Deleting credentials.json since it may be corrupted")
