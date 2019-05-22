@@ -179,6 +179,8 @@ class DeliveryRequestForm(BoxLayout):
             uid='',
             image_path=firestore_image_path)
 
+        print(request)
+
         user.lock_delivery_amount(request)
 
         DeliveryRequestUploader.upload(request)

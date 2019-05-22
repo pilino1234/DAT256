@@ -28,11 +28,20 @@ class DeliveryRequest:
                  status: Status, money_lock: int, owner: dict, assistant: dict,
                  image_path: str, **kwargs):
         """Initializes the delivery list"""
+
+        print("origin: ", origin)
+
+        if type(origin) is dict:
+            origin = Location(**origin)
+
+        if type(destination) is dict:
+            destination = Location(**destination)
+
         self.uid = uid
         self.item = item
         self.description = description
-        self.origin = Location(**origin)
-        self.destination = Location(**destination)
+        self.origin = origin
+        self.destination = destination
         self.reward = reward
         self.weight = weight
         self.fragile = fragile
@@ -79,8 +88,8 @@ class DeliveryRequest:
         req_dict.update({'fragile': self.fragile})
         req_dict.update({'status': self.status.value})
         req_dict.update({'money_lock': self.money_lock})
-        req_dict.update({'owner': self.owner})
-        req_dict.update({'assistant': self.assistant})
+        req_dict.update({'owner': self.owner.to_dict()})
+        req_dict.update({'assistant': self.assistant.to_dict() if self.has_assistant() else {}})
         req_dict.update({'image_path': self.image_path})
 
         return req_dict
