@@ -76,8 +76,8 @@ class UserProfileView(RelativeLayout):
 
         if self.user_viewing == user_me:
             self.balance_field = MenuField(
-                "Account Balance",
-                str(self.user_viewing.balance) + " SEK", False)
+                "Account Balance", "$ " + str(self.user_viewing.balance),
+                False)
             self.ids.scroll_view_container.add_widget(self.balance_field)
             self.balance_field.add_widget(AccountButtons())
 
@@ -88,7 +88,7 @@ class UserProfileView(RelativeLayout):
         self.name_field.set_data(self.user_viewing.name)
         self.phone_field.set_data(self.user_viewing.phonenumber)
         self.mail_field.set_data(self.user_viewing.mail)
-        self.balance_field.set_data(str(self.user_viewing.balance) + " SEK")
+        self.balance_field.set_data("$ " + str(self.user_viewing.balance))
 
     def request_edit(self, field):
         """Called when any of the edit buttons are released."""

@@ -166,9 +166,10 @@
                 MDIconButton:
                     theme_text_color: 'Custom'
                     text_color: 255/255, 255/255, 255/255, 1
-                    Label:
-                        text: 'SEK'
-                        color: (0,0,0,1)
+                    HollowIcon:
+                        icon: 'currency-usd'
+                        theme_text_color: 'Custom'
+                        text_color: 212/255, 144/255, 0/255, 1
 
                 RelativeLayout:
                     size_hint: (None, None)
@@ -184,15 +185,17 @@
                         id: money_lock_amount
                         input_filter: 'int'
                         required: True
-                        helper_text_mode: 'on_error'
+                        helper_text: "Money lock is the deposit you require until the package is delivered"
+                        helper_text_mode: 'persistent'
                         write_tab: False
                         pos_hint: {'center_x': 0.5, 'center_y': 0.15}
                 MDIconButton:
                     theme_text_color: 'Custom'
                     text_color: 255/255, 255/255, 255/255, 1
-                    Label:
-                        text: 'SEK'
-                        color: (0,0,0,1)
+                    HollowIcon:
+                        icon: 'currency-usd'
+                        theme_text_color: 'Custom'
+                        text_color: 212/255, 144/255, 0/255, 1
 
                 RelativeLayout:
                     size_hint: (None, None)
