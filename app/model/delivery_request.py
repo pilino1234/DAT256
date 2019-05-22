@@ -28,31 +28,22 @@ class DeliveryRequest:
                  status: Status, money_lock: int, owner: dict, assistant: dict,
                  image_path: str, **kwargs):
         """Initializes the delivery list"""
+        self.uid: str = uid
+        self.item: str = item
+        self.description: str = description
+        self.origin: Location = Location(**origin)
+        self.destination: Location = Location(**destination)
+        self.reward: int = reward
+        self.weight: int = weight
+        self.fragile: bool = fragile
+        self.status: Status = status
+        self.money_lock: int = money_lock
 
-        print("origin: ", origin)
+        self.owner: MinifiedUser = MinifiedUser(**owner)
 
-        if type(origin) is dict:
-            origin = Location(**origin)
-
-        if type(destination) is dict:
-            destination = Location(**destination)
-
-        self.uid = uid
-        self.item = item
-        self.description = description
-        self.origin = origin
-        self.destination = destination
-        self.reward = reward
-        self.weight = weight
-        self.fragile = fragile
-        self.status = status
-        self.money_lock = money_lock
-
-        self.owner = MinifiedUser(**owner)
-
-        if len(assistant.keys()) != 0:
-            self.assistant = MinifiedUser(**assistant)
-        self.image_path = image_path
+        if assistant:
+            self.assistant: MinifiedUser = MinifiedUser(**assistant)
+        self.image_path: str = image_path
 
         self.weight_text = self._weight_props[weight].text
         self.weight_icon = self._weight_props[weight].icon
@@ -81,15 +72,18 @@ class DeliveryRequest:
         req_dict.update({'uid': self.uid})
         req_dict.update({'item': self.item})
         req_dict.update({'description': self.description})
-        req_dict.update({'origin': self.origin})
-        req_dict.update({'destination': self.destination})
+        req_dict.update({'origin': self.origin.to_dict()})
+        req_dict.update({'destination': self.destination.to_dict()})
         req_dict.update({'reward': self.reward})
         req_dict.update({'weight': self.weight})
         req_dict.update({'fragile': self.fragile})
         req_dict.update({'status': self.status.value})
         req_dict.update({'money_lock': self.money_lock})
         req_dict.update({'owner': self.owner.to_dict()})
-        req_dict.update({'assistant': self.assistant.to_dict() if self.has_assistant() else {}})
+        req_dict.update({
+            'assistant':
+            self.assistant.to_dict() if self.has_assistant() else {}
+        })
         req_dict.update({'image_path': self.image_path})
 
         return req_dict
