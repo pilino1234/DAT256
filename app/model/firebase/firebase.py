@@ -2,8 +2,6 @@ import os
 
 from google.cloud import firestore as fs, storage  # type: ignore
 
-from model.firebase.firebase_exception import FirebaseException
-
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "keyfile.json"
 
 

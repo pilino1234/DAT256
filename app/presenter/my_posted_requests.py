@@ -4,7 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from typing import Callable
 
-from model.delivery_request import DeliveryRequest, Status
+from model.delivery_request import DeliveryRequest
 from model.firebase.firestore import Firestore
 from model.user_me_getter import UserMeGetter
 from presenter.delivery_list import WhiteCardButton
