@@ -13,6 +13,7 @@ from kivy.properties import ObjectProperty
 from kivy.app import App
 
 from typing import Callable
+from kivymd.label import MDLabel
 
 from presenter.delivery_request_detail import DeliveryRequestDetail
 from presenter.utils.suggester import LocationSuggester
@@ -61,12 +62,22 @@ class DeliveryList(RelativeLayout):
         destination = self.filter_widget.to_suggester.currently_used_suggestion
 
         self.ids.available_requests.clear_widgets()
+
+        no_content = True
+
         for delivery_request in delivery_requests:
             if self.passes_filter(delivery_request, walk, car, truck, fragile,
                                   origin, destination):
                 list_item = ListItem(delivery_request,
                                      self._transition_to_detail_view)
                 self.ids.available_requests.add_widget(list_item)
+                no_content = False
+
+        # Add no content label if no content is shown
+        if no_content:
+            no_content_label = MDLabel()
+            no_content_label.text = "No deliveries found"
+            self.ids.available_requests.add_widget(no_content_label)
 
         self.delivery_list = self.ids.delivery_list
 

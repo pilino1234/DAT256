@@ -7,6 +7,8 @@ from presenter.delivery_request_detail import DeliveryRequestDetail
 from model.firebase.firestore import Firestore
 from presenter.delivery_list import ListItem
 
+from kivymd.label import MDLabel
+
 Builder.load_file("view/my_deliveries.kv")
 
 
@@ -37,15 +39,19 @@ class MyDeliveries(BoxLayout):
 
         # Fill delivery list
         self.ids.my_deliveries.clear_widgets()
+        no_content = True
         for req in delivery_requests:
             if req.status == Status.DELIVERED:
-                print("Ignoring delivered package in my deliveries")
                 continue
 
-            print(req.item)
-
+            no_content = False
             self.ids.my_deliveries.add_widget(
                 ListItem(req, self._transition_to_detail_view))
+
+        # Add no content label if no content is shown
+        if no_content:
+            no_content_label = MDLabel(text="You currently do not have any packages to deliver. \n Accept deliveries by searching for them.", size_hint_y=7, halign="center", font_style='Subtitle1')
+            self.ids.content.add_widget(no_content_label)
 
         self.content = self.ids.content
         print("------------------------")
