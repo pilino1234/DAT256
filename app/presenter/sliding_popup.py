@@ -27,17 +27,16 @@ class SlidingPopup(FloatLayout):
         """Show the popup"""
         self.bg.fade_in()
         self._visible = True
-        Animation(
-            top_hint=self.card.height_hint,
-            transition="out_cubic",
-            duration=.5).start(self.card)
+        Animation(top_hint=self.card.height_hint,
+                  transition="out_cubic",
+                  duration=.5).start(self.card)
 
     def hide(self):
         """Hide the popup"""
         self.bg.fade_out()
         self._visible = False
-        Animation(
-            top_hint=0, transition="out_cubic", duration=.5).start(self.card)
+        Animation(top_hint=0, transition="out_cubic",
+                  duration=.5).start(self.card)
 
 
 class BackgroundDim(ButtonBehavior, Widget):
@@ -45,8 +44,8 @@ class BackgroundDim(ButtonBehavior, Widget):
 
     def fade_in(self):
         """Darken the background"""
-        Animation(
-            opacity=0.75, transition="out_cubic", duration=.5).start(self)
+        Animation(opacity=0.75, transition="out_cubic",
+                  duration=.5).start(self)
 
     def fade_out(self):
         """Stop dimming the background"""
