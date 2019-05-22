@@ -34,6 +34,7 @@ class DeliveryList(RelativeLayout):
     delivery_list = ObjectProperty(BoxLayout)
     deliveries = [None]
     filter_widget = None
+    showing_filter = True
     previous_search_params = None
 
     def __init__(self, **kwargs):
@@ -97,7 +98,6 @@ class DeliveryList(RelativeLayout):
     def _update_content(self, spinner):
         if self.previous_search_params is None:
             return
-
         self.tick = 0
 
         def close_spinner(interval):
@@ -122,11 +122,19 @@ class DeliveryList(RelativeLayout):
 
     def show_filter(self):
         """Show the filter widget"""
+        if self.showing_filter:
+            return
+        self.showing_filter = True
+
         self.ids.available_requests.clear_widgets()
         self.add_widget(self.filter_widget)
 
     def hide_filter(self):
         """Hide the filter widget"""
+        if not self.showing_filter:
+            return
+        self.showing_filter = False
+
         self.remove_widget(self.filter_widget)
 
 
