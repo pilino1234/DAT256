@@ -92,11 +92,6 @@ class DeliveryRequest:
     @property
     def distance_km(self) -> float:
         """Computes distance between origin and destination in kilometres"""
-        print("DEBUG")
-        print(self.origin)
-        print(self.destination)
-        print("Origin: ", type(self.origin))
-        print("Destination: ", type(self.destination))
         return self.origin.dist_to(self.destination)
 
     @property
