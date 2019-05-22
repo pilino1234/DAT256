@@ -119,12 +119,12 @@ class DeliveryRequestDetail(BoxLayout):
             })
 
         assistant_ref = Firestore.get_raw('users').document(
-            self.request.assistant).get()
+            self.request.assistant.uid).get()
         assistant_balance = assistant_ref._data['balance']
 
         with Firestore.batch('users') as batch:
             batch.update(
-                self.request.assistant, {
+                self.request.assistant.uid, {
                     'balance':
                     assistant_balance + self.request.money_lock +
                     self.request.reward,
