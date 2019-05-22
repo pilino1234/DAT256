@@ -19,7 +19,7 @@ class MapAPI:
 
         results = []
         for res in response['resourceSets'][0]['resources']:
-            if set(('name', 'point', 'address')).issubset(res):
+            if {'name', 'point', 'address'}.issubset(res):
                 entry = {
                     'name': res['name'],
                     'latitude': res['point']['coordinates'][0],
@@ -28,7 +28,7 @@ class MapAPI:
                 }
 
                 address = res['address']
-                if set(('adminDistrict', 'adminDistrict2')).issubset(address):
+                if {'adminDistrict', 'adminDistrict2'}.issubset(address):
                     entry['district'] = "- " + address[
                         'adminDistrict'] + ', ' + address['adminDistrict2']
 

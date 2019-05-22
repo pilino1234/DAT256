@@ -1,5 +1,6 @@
 from typing import Callable, Dict, Generator
 
+from google.cloud.firestore_v1 import Watch
 from google.cloud.firestore_v1.batch import WriteBatch
 from google.cloud.firestore_v1.collection import CollectionReference
 from google.cloud.firestore_v1.document import DocumentReference
@@ -10,7 +11,7 @@ from model.firebase.firebase import Firebase
 class Firestore:
     """Carrepsa Cloud Firestore DB interface."""
 
-    refs: Dict[str, CollectionReference] = {}
+    refs: Dict[str, Watch] = {}
 
     @staticmethod
     def subscribe(path: str, callback: Callable):
@@ -57,7 +58,6 @@ class Firestore:
         Unsubscribe from a collection.
 
         :param path: e.g. /users/asdfdfasfsdfdsasfdasdf/packages
-        :return:
         """
         if path in Firestore.refs:
             Firestore.refs[path].unsubscribe()

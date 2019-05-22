@@ -23,11 +23,10 @@ class UserTest(unittest.TestCase):
                   "avatar_binary_string_stuff",
                   balance=10)
 
-        self.assertTrue(u1 == u2)
-        self.assertTrue(u2 == u1)
+        self.assertEqual(u1, u2)
+        self.assertEqual(u2, u1)
 
     def test_not_equal(self):
-
         u1 = User("",
                   "User1",
                   "email@example.com",
@@ -42,8 +41,8 @@ class UserTest(unittest.TestCase):
                   "",
                   balance=0)
 
-        self.assertFalse(u1 == u2)
-        self.assertFalse(u2 == u1)
+        self.assertNotEqual(u1, u2)
+        self.assertNotEqual(u2, u1)
 
     def test_deposit(self):
         user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
@@ -97,7 +96,7 @@ class UserTest(unittest.TestCase):
                             59.51224, 17.93536).to_dict(),
             destination=Location("Rolsmo 1, SE-360 24 Linneryd, Sweden",
                                  56.64989, 15.16624).to_dict(),
-            reward=50,
+            reward=100,
             weight=2,
             fragile=True,
             status=Status.AVAILABLE,
@@ -111,4 +110,24 @@ class UserTest(unittest.TestCase):
         user_balance = user.balance
         self.assertEqual(user.balance, user_balance)
         user.lock_delivery_amount(request)
-        self.assertEqual(user.balance, user_balance - 50)
+        self.assertEqual(user.balance, user_balance - 100)
+
+    def test_to_string(self):
+        user = User(
+            "", "User1", "email@example.com", "1234567890", "", balance=100)
+
+        expected = "User: User1, email@example.com, 1234567890, Avatar: , Balance: 100"
+
+        self.assertEqual(str(user), expected)
+
+    def test_to_minified(self):
+        user = User(
+            "uid", "User1", "email@example.com", "1234567890", "", balance=100)
+
+        mini_user = user.to_minified()
+
+        self.assertEqual(mini_user.name, "User1")
+        self.assertEqual(mini_user.mail, "email@example.com")
+        self.assertEqual(mini_user.phonenumber, "1234567890")
+        self.assertEqual(mini_user.uid, "uid")
+

@@ -3,13 +3,10 @@ import os
 import threading
 import unittest
 
-from google.cloud.firestore_v1 import DocumentSnapshot
-
 from model.delivery_request import Status
 from model.delivery_request_uploader import DeliveryRequestUploader
 from model.firebase.auth import Auth
 from model.firebase.firestore import Firestore
-from tests import utils
 from tests.utils import create_delivery_request
 
 
@@ -40,14 +37,12 @@ class FirestoreTest(unittest.TestCase):
 
     def test_get_packages(self):
         delivery_requests = Firestore.get("packages")
-        for delivery_request in delivery_requests:  # type: DocumentSnapshot
+        for delivery_request in delivery_requests:
             self.assertIsNotNone(delivery_request.get("item"))
 
-    def test_put_package(self):
-        delivery_request = utils.create_delivery_request()  # TODO: add assert
-
-    def test_batch_crud(self):
+    def test_batching(self):
         delivery_request = create_delivery_request()
+
         with Firestore.batch('packages') as batch:
             dr_dict = delivery_request.to_dict()
             uid = batch.create_with_random_id(dr_dict)
@@ -56,6 +51,10 @@ class FirestoreTest(unittest.TestCase):
                 'assistant': 'pIAeLAvHXp0KZKWDzTMz'
             })
             batch.set(uid, dr_dict)
+
+        self.assertTrue(any(request.to_dict()['uid'] == "TEST" for request in Firestore.get('packages')))
+
+        with Firestore.batch('packages') as batch:
             batch.delete(uid)
 
     def test_batch_exception(self):
