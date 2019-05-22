@@ -14,6 +14,9 @@ class MapAPI:
         query = MapAPI.base_url + 'Locations/Sweden+' + query + '?o=json&key=' + MapAPI.api_key
         response = requests.get(query.replace(" ", "+")).json()
 
+        if len(response['resourceSets']) == 0:
+            return []
+
         results = []
         for res in response['resourceSets'][0]['resources']:
             if set(('name', 'point', 'address')).issubset(res):
