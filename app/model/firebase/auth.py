@@ -96,8 +96,6 @@ class Auth:
             refresh_token = sign_up_data['refreshToken']
             user_id = sign_up_data['localId']
 
-            Auth.sign_in_with_tokens(token, refresh_token, user_id)
-
             with Firestore.batch("users") as batch:
                 batch.set(
                     user_id, {
@@ -108,6 +106,8 @@ class Auth:
                         "balance": 0
                     })
 
+            Auth.sign_in_with_tokens(token, refresh_token, user_id)
+
         else:
             error_data = json.loads(sign_up_request.content.decode())
             error_message = error_data["error"]['message']
@@ -115,6 +115,8 @@ class Auth:
             print(error_message)
             if error_message == "EMAIL_EXISTS":
                 print("This mail is already registered")
+            elif error_message == "WEAK_PASSWORD":
+                print("Passwords must be at least 6 characters long")
 
     @staticmethod
     def sign_out():
