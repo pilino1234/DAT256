@@ -37,7 +37,8 @@ class Auth:
                              user_id=user_id)
 
         UserMeGetter.set_me(user_id)
-        App.get_running_app().is_authenticated = True
+        if App.get_running_app():
+            App.get_running_app().is_authenticated = True
 
         return user_id
 

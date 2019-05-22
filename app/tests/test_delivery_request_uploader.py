@@ -4,6 +4,7 @@ import unittest
 from model.delivery_request_uploader import DeliveryRequestUploader
 from model.firebase.auth import Auth
 from model.firebase.bucket import Bucket
+from model.firebase.firestore import Firestore
 from tests import utils
 
 
