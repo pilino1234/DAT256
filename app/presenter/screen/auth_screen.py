@@ -1,10 +1,8 @@
-from kivy.app import App
 from kivy.lang import Builder
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.screenmanager import Screen
 
 from model.firebase.auth import Auth
-from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/screens/auth_screen.kv")
 

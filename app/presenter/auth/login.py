@@ -1,9 +1,7 @@
-from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 
 from model.firebase.auth import Auth
-from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/auth/login.kv")
 
