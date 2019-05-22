@@ -1,3 +1,5 @@
+from kivy.app import App
+
 from model.firebase.firebase import Firebase
 from model.firebase.firestore import Firestore
 from kivy.storage.jsonstore import JsonStore
@@ -33,6 +35,9 @@ class Auth:
                              id_token=id_token,
                              refresh_token=refresh_token,
                              user_id=user_id)
+
+        UserMeGetter.set_me(user_id)
+        App.get_running_app().is_authenticated = True
 
         return user_id
 

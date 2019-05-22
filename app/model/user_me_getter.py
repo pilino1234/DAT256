@@ -17,7 +17,7 @@ class UserMeGetter:
         """
         Sets up a new subscription for the given user id
 
-        :param new_user_id:
+        :param new_user_id: The signed in user
         """
         if UserMeGetter._user_id is not "":
             Firestore.unsubscribe(
@@ -29,7 +29,7 @@ class UserMeGetter:
 
         UserMeGetter._user_id = new_user_id
 
-        if new_user_id is not "":
+        if new_user_id != "":
             UserMeGetter.user = UserGetter.get_by_id(new_user_id)
             Firestore.subscribe_document("users", new_user_id,
                                          UserMeGetter._on_snapshot_user)

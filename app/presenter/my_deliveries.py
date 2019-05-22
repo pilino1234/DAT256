@@ -23,7 +23,7 @@ class MyDeliveries(BoxLayout):
         super(MyDeliveries, self).__init__(**kwargs)
         Clock.schedule_once(lambda dt: self._update_content())
         Firestore.subscribe(u'users/{}/deliveries'.format(
-            UserMeGetter.user), lambda *_: self._update_content())
+            UserMeGetter._user_id), lambda *_: self._update_content())
 
     def _update_content(self):
         """Fetch all deliveries the current owner has accepted"""
@@ -33,7 +33,7 @@ class MyDeliveries(BoxLayout):
         self.ids.my_deliveries.clear_widgets()
         for req in delivery_requests:
             self.ids.my_deliveries.add_widget(
-                ListItem(req, self._transition_to_detail_view))
+                    ListItem(req, self._transition_to_detail_view))
 
         self.content = self.ids.content
 

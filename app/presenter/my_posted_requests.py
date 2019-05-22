@@ -5,6 +5,7 @@ from kivy.properties import ObjectProperty
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest
+from model.firebase.firestore import Firestore
 from model.user_me_getter import UserMeGetter
 from presenter.delivery_list import WhiteCardButton
 from presenter.delivery_request_detail import DeliveryRequestDetail
@@ -23,9 +24,12 @@ class MyPostedRequests(BoxLayout):
         """Initializes the delivery list"""
         super(MyPostedRequests, self).__init__(**kwargs)
         Clock.schedule_once(lambda dt: self._update_content())
+        Firestore.subscribe(u'users/{}/packages'.format(
+            UserMeGetter._user_id), lambda *_: self._update_content())
 
     def _update_content(self):
         """Fetch my posted deliveries"""
+
         self.content = self.ids.content
         delivery_requests = UserMeGetter.user.packages
 
