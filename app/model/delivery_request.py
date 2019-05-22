@@ -26,7 +26,7 @@ class DeliveryRequest:
     def __init__(self, uid: str, item: str, description: str, origin: dict,
                  destination: dict, reward: int, weight: int,
                  fragile: bool, status: Status, money_lock: int,
-                 owner: MinifiedUser, assistant: MinifiedUser, image_path: str,
+                 owner: dict, assistant: dict, image_path: str,
                  **kwargs):
         """Initializes the delivery list"""
         self.uid = uid
@@ -40,8 +40,10 @@ class DeliveryRequest:
         self.status = status
         self.money_lock = money_lock
 
-        self.owner = owner
-        self.assistant = assistant
+        self.owner = MinifiedUser(**owner)
+
+        if len(assistant.keys()) != 0:
+            self.assistant = MinifiedUser(**assistant)
         self.image_path = image_path
 
         self.weight_text = self._weight_props[weight].text
@@ -98,3 +100,6 @@ class DeliveryRequest:
     def reward_pretty(self) -> str:
         """Pretty formats reward in local currency."""
         return str(self.reward) + " kr"
+
+    def has_assistant(self):
+        return hasattr(self, "assistant")
