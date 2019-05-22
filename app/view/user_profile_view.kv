@@ -1,4 +1,5 @@
 #:import Card kivymd.cards.MDCard
+#:import MDRaisedButton kivymd.button.MDRaisedButton
 
 <GetTextDialog@MDInputDialog>:
     id: text_input
@@ -129,3 +130,8 @@
                             angle_end: 360
                             size: dp(300), dp(300)
                             pos: user_profile_view.size[0]/2-self.size[0]/2, 0
+
+                    MDRaisedButton:
+                        text: "Sign out"
+                        on_release: root.logout()
+                        pos_hint: {'center_x': 0.5, 'center_y': .05}

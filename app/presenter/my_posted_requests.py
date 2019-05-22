@@ -1,12 +1,11 @@
-from kivy.clock import Clock
 from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
+from kivy.uix.boxlayout import BoxLayout
 from typing import Callable
 
-from model.delivery_request import DeliveryRequest
-from model.delivery_request_getter import DeliveryRequestGetter
+from model.delivery_request import DeliveryRequest, Status
 from model.firebase.firestore import Firestore
+from model.user_me_getter import UserMeGetter
 from presenter.delivery_list import WhiteCardButton
 from presenter.delivery_request_detail import DeliveryRequestDetail
 
@@ -23,20 +22,29 @@ class MyPostedRequests(BoxLayout):
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(MyPostedRequests, self).__init__(**kwargs)
-        Clock.schedule_once(lambda dt: self._update_content())
-        Firestore.subscribe("packages", lambda *_: self._update_content())
+        Firestore.subscribe(u'users/{}/packages'.format(UserMeGetter._user_id),
+                            self._update_content)
 
-    def _update_content(self):
+    def _update_content(self, collection_snapshot, _, __):
         """Fetch my posted deliveries"""
         self.content = self.ids.content
-        delivery_requests = DeliveryRequestGetter.query(
-            u'owner', u'==', u'pIAeLAvHXp0KZKWDzTMz')
+        delivery_requests = []
+        for doc in collection_snapshot:
+            data = doc.to_dict()
+            data['uid'] = doc.id
+            data['status'] = Status(data['status'])
+            delivery_requests.append(DeliveryRequest(**data))
+
+        print("UPdating content for user: " + UserMeGetter.user.name)
 
         # Fill delivery list
         self.ids.my_requests.clear_widgets()
         for req in delivery_requests:
+            print(req.item)
             self.ids.my_requests.add_widget(
                 MyPostedRequest(req, self._transition_to_detail_view))
+
+        print("------------------------")
 
     def _transition_to_detail_view(self, request: DeliveryRequest):
         """Show detail view for selected delivery request."""

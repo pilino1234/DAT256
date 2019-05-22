@@ -1,0 +1,23 @@
+#:import AuthScreen presenter.screen.auth_screen
+#:import PrimaryScreen presenter.screen.primary_screen
+#:import SlidingPopup presenter.sliding_popup
+#:import NavBarWithFAB presenter.navbar
+#:import Router presenter.utils.router
+#:import Route presenter.utils.route
+
+
+Router:
+    selected_route: "primary" if app.is_authenticated else "auth"
+
+    Route:
+        path: "auth"
+        AuthScreen:
+
+    Route:
+        path: "primary"
+        PrimaryScreen:
+
+
+
+
+

@@ -5,13 +5,13 @@ from kivymd.button import MDIconButton
 from kivymd.textfields import MDTextField
 from kivymd.toast.kivytoast import toast
 
-from presenter.user_profile_view import UserProfileView
 from presenter.utils.suggester import LocationSuggester
 
 from model.delivery_request import DeliveryRequest, Status
 from model.delivery_request_uploader import DeliveryRequestUploader
 from model.firebase.bucket import Bucket
 from model.user import User
+from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/delivery_request_form.kv")
 
@@ -35,10 +35,12 @@ class DeliveryRequestForm(BoxLayout):
     def __init__(self, **kwargs):
         """Instantiate a form for submitting a delivery request."""
         super(DeliveryRequestForm, self).__init__(**kwargs)
+        Clock.schedule_once(self.init_ui, 0)
 
+    def init_ui(self, _):
+        """Initializes ui for delivery_request_form"""
         for button_id in self._weights:
             button: MDIconButton = self.ids[button_id]
-
             button.bind(
                 on_release=lambda _, bid=button_id: self._set_weight(bid))
 
@@ -110,7 +112,10 @@ class DeliveryRequestForm(BoxLayout):
             toast("Payment amount must be above $0.")
             return False
 
-        user: User = UserProfileView.user_me
+        user = UserMeGetter.user
+        if user is None:
+            return False
+
         if int(payment) > user.balance:
             toast("Your balance ($" + str(user.balance) +
                   ") is insufficient to pay for this delivery.")
@@ -142,7 +147,7 @@ class DeliveryRequestForm(BoxLayout):
 
     def _submit_request(self):
         payment_amount: int = int(self.ids.payment_amount.text)
-        user: User = UserProfileView.user_me
+        user: User = UserMeGetter.user
 
         if not self._verify_entries():
             return
@@ -159,20 +164,22 @@ class DeliveryRequestForm(BoxLayout):
         else:
             firestore_image_path = ""
 
-        request = DeliveryRequest(item=self.ids.package_name.text,
-                                  description=self.ids.description_text.text,
-                                  origin=origin.to_dict(),
-                                  destination=destination.to_dict(),
-                                  reward=payment_amount,
-                                  weight=self.weight,
-                                  fragile=self.ids.fragile_bool.active,
-                                  status=Status.AVAILABLE,
-                                  money_lock=int(
-                                      self.ids.money_lock_amount.text),
-                                  owner='pIAeLAvHXp0KZKWDzTMz',
-                                  assistant='',
-                                  uid='',
-                                  image_path=firestore_image_path)
+        request = DeliveryRequest(
+            item=self.ids.package_name.text,
+            description=self.ids.description_text.text,
+            origin=origin.to_dict(),
+            destination=destination.to_dict(),
+            reward=payment_amount,
+            weight=self.weight,
+            fragile=self.ids.fragile_bool.active,
+            status=Status.AVAILABLE,
+            money_lock=int(self.ids.money_lock_amount.text),
+            owner=UserMeGetter.user.to_minified().to_dict(),
+            assistant={},
+            uid='',
+            image_path=firestore_image_path)
+
+        print(request)
 
         user.lock_delivery_amount(request)
 

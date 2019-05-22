@@ -2,6 +2,7 @@ from collections import namedtuple
 from enum import IntEnum
 
 from model.location import Location
+from model.minified_user import MinifiedUser
 
 
 class Status(IntEnum):
@@ -22,25 +23,27 @@ class DeliveryRequest:
         _weight_prop('truck', "Large")
     ]
 
-    def __init__(self, uid: str, item: str, description: str, origin: Location,
-                 destination: Location, reward: int, weight: int,
-                 fragile: bool, status: Status, money_lock: int, owner: str,
-                 assistant: str, image_path: str, **kwargs):
+    def __init__(self, uid: str, item: str, description: str, origin: dict,
+                 destination: dict, reward: int, weight: int, fragile: bool,
+                 status: Status, money_lock: int, owner: dict, assistant: dict,
+                 image_path: str, **kwargs):
         """Initializes the delivery list"""
-        self.uid = uid
-        self.item = item
-        self.description = description
-        self.origin = origin
-        self.destination = destination
-        self.reward = reward
-        self.weight = weight
-        self.fragile = fragile
-        self.status = status
-        self.money_lock = money_lock
+        self.uid: str = uid
+        self.item: str = item
+        self.description: str = description
+        self.origin: Location = Location(**origin)
+        self.destination: Location = Location(**destination)
+        self.reward: int = reward
+        self.weight: int = weight
+        self.fragile: bool = fragile
+        self.status: Status = status
+        self.money_lock: int = money_lock
 
-        self.owner = owner
-        self.assistant = assistant
-        self.image_path = image_path
+        self.owner: MinifiedUser = MinifiedUser(**owner)
+
+        if assistant:
+            self.assistant: MinifiedUser = MinifiedUser(**assistant)
+        self.image_path: str = image_path
 
         self.weight_text = self._weight_props[weight].text
         self.weight_icon = self._weight_props[weight].icon
@@ -69,15 +72,18 @@ class DeliveryRequest:
         req_dict.update({'uid': self.uid})
         req_dict.update({'item': self.item})
         req_dict.update({'description': self.description})
-        req_dict.update({'origin': self.origin})
-        req_dict.update({'destination': self.destination})
+        req_dict.update({'origin': self.origin.to_dict()})
+        req_dict.update({'destination': self.destination.to_dict()})
         req_dict.update({'reward': self.reward})
         req_dict.update({'weight': self.weight})
         req_dict.update({'fragile': self.fragile})
         req_dict.update({'status': self.status.value})
         req_dict.update({'money_lock': self.money_lock})
-        req_dict.update({'owner': self.owner})
-        req_dict.update({'assistant': self.assistant})
+        req_dict.update({'owner': self.owner.to_dict()})
+        req_dict.update({
+            'assistant':
+            self.assistant.to_dict() if self.has_assistant() else {}
+        })
         req_dict.update({'image_path': self.image_path})
 
         return req_dict
@@ -96,3 +102,7 @@ class DeliveryRequest:
     def reward_pretty(self) -> str:
         """Pretty formats reward in local currency."""
         return str(self.reward) + " kr"
+
+    def has_assistant(self):
+        """Checks if the delivery request has an assistant"""
+        return hasattr(self, "assistant")

@@ -24,6 +24,6 @@ class UserGetter:
             return None
         data = Firestore.get_raw('users').document(user_id).get().to_dict()
         if data is not None:
-            return User(**data)
+            return User(_uid=user_id, **data)
         else:
             return None

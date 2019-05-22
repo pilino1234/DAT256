@@ -1,3 +1,4 @@
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.metrics import dp
@@ -6,7 +7,8 @@ from kivymd.button import MDRaisedButton
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 
-from model.user import User
+from model.firebase.auth import Auth
+from model.user_me_getter import UserMeGetter
 
 Builder.load_file("view/user_profile_view.kv")
 
@@ -42,40 +44,37 @@ class UserProfileView(RelativeLayout):
     avatar_edit_widget = ""
     _back_button_handler = ObjectProperty(None)
 
-    user_me = User(name="Jiggly Puff",
-                   mail="jiggly@puff.com",
-                   phone="0706123123",
-                   avatar="something image related here, not used atm",
-                   balance=1498)
-
-    user_viewing = user_me
-
     def __init__(self, **kwargs):
         """Initializes the user profile."""
         super(RelativeLayout, self).__init__()
         if 'user' in kwargs:
             self.user_viewing = kwargs['user']
+        else:
+            self.user_viewing = UserMeGetter.user
         if 'back_button_handler' in kwargs:
             self._back_button_handler = kwargs['back_button_handler']
         else:
             self.ids.scroll_view_container.remove_widget(self.ids.back_button)
+        self.user_viewing.on_update(self.update_fields)
         self._init_content()
 
     def _init_content(self):
         """Initializes the user profile."""
+        user_me = UserMeGetter.user
+
         self.name_field = MenuField("Name", self.user_viewing.name,
-                                    self.user_viewing == self.user_me)
+                                    self.user_viewing == user_me)
         self.ids.scroll_view_container.add_widget(self.name_field)
 
-        self.phone_field = MenuField("Phone", self.user_viewing.phone,
-                                     self.user_viewing == self.user_me)
+        self.phone_field = MenuField("Phone", self.user_viewing.phonenumber,
+                                     self.user_viewing == user_me)
         self.ids.scroll_view_container.add_widget(self.phone_field)
 
         self.mail_field = MenuField("Mail", self.user_viewing.mail,
-                                    self.user_viewing == self.user_me)
+                                    self.user_viewing == user_me)
         self.ids.scroll_view_container.add_widget(self.mail_field)
 
-        if self.user_viewing == self.user_me:
+        if self.user_viewing == user_me:
             self.balance_field = MenuField(
                 "Account Balance",
                 str(self.user_viewing.balance) + " SEK", False)
@@ -87,7 +86,7 @@ class UserProfileView(RelativeLayout):
     def update_fields(self):
         """Update displayed information from the user data."""
         self.name_field.set_data(self.user_viewing.name)
-        self.phone_field.set_data(self.user_viewing.phone)
+        self.phone_field.set_data(self.user_viewing.phonenumber)
         self.mail_field.set_data(self.user_viewing.mail)
         self.balance_field.set_data(str(self.user_viewing.balance) + " SEK")
 
@@ -102,7 +101,7 @@ class UserProfileView(RelativeLayout):
             self.widget_input.ids.text_input.text = self.user_viewing.mail
         if field == "Phone":
             self.widget_input.ids.title.text = field
-            self.widget_input.ids.text_input.text = self.user_viewing.phone
+            self.widget_input.ids.text_input.text = self.user_viewing.phonenumber
         if field == "deposit":
             self.widget_input.ids.title.text = "Deposit Money"
             self.widget_input.ids.text_input.text = "0"
@@ -120,26 +119,30 @@ class UserProfileView(RelativeLayout):
             self.remove_widget(self.widget_input)
             return
 
-        if self.field_editing == "Name":
-            self.user_me.name = text
-        if self.field_editing == "Phone":
-            self.user_me.phone = text
-        if self.field_editing == "Mail":
-            self.user_me.mail = text
-        if self.field_editing == "avatar":
-            self.user_me.avatar = text
+        user_me = UserMeGetter.user
 
+        if self.field_editing == "Name":
+            user_me.update(name=text)
+        if self.field_editing == "Phone":
+            user_me.update(phonenumber=text)
+        if self.field_editing == "Mail":
+            user_me.update(mail=text)
+        if self.field_editing == "avatar":
+            user_me.update(avatar=text)
         if self.field_editing == "deposit":
             amount = int(text)
-            self.user_me.deposit(amount)
-
+            user_me.deposit(amount)
         if self.field_editing == "withdraw":
             amount = int(text)
-            if amount <= self.user_me.balance:
-                self.user_me.withdraw(amount)
+            user_me.withdraw(amount)
 
         self.update_fields()
         self.remove_widget(self.widget_input)  # Remove the edit widget
+
+    def logout(self):
+        """Log out the user"""
+        Auth.sign_out()
+        App.get_running_app().is_authenticated = False
 
 
 class AnswerInput(BoxLayout):

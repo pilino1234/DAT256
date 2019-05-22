@@ -2,8 +2,9 @@ import datetime
 import random
 import string
 
-from model.firebase import Firebase
 from typing import Optional
+
+from model.firebase.firebase import Firebase
 
 _AUTO_ID_CHARS = string.ascii_letters + string.digits
 
@@ -35,8 +36,8 @@ class Bucket:
 
         if blob is None:
             return None
-        return blob.generate_signed_url(datetime.timedelta(seconds=300),
-                                        method='GET')
+        return blob.generate_signed_url(
+            datetime.timedelta(seconds=300), method='GET')
 
     @staticmethod
     def upload(path_to_file: str):

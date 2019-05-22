@@ -2,3 +2,5 @@
 .coverage
 coverage.xml
 .idea
+keyfile.json
+credentials.json

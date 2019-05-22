@@ -9,9 +9,10 @@ from typing import Callable
 from model.delivery_request import DeliveryRequest, Status
 from model.firebase.bucket import Bucket
 from model.firebase.firestore import Firestore
-from model.user_getter import UserGetter
+from model.minified_user import MinifiedUser
+from model.user_me_getter import UserMeGetter
 
-from presenter.user_profile_view import UserProfileView
+from presenter.minified_user_profile_view import MinifiedUserProfileView
 
 Builder.load_file("view/delivery_request_detail.kv")
 
@@ -20,8 +21,8 @@ class DeliveryRequestDetail(BoxLayout):
     """Widget that shows details about a specific delivery request."""
 
     request = ObjectProperty(DeliveryRequest)
-    delivery_assistant = ObjectProperty(None)
-    delivery_owner = ObjectProperty(None)
+    delivery_assistant: MinifiedUser
+    delivery_owner: MinifiedUser
     _detail_view = ObjectProperty(None)
     _back_button_handler = ObjectProperty(None)
 
@@ -29,33 +30,27 @@ class DeliveryRequestDetail(BoxLayout):
                  **kwargs):
         """Initializes a DeliveryRequestDetail"""
         self.request = request
+
+        self.delivery_owner = request.owner
+
         self._back_button_handler = back_button_handler
-        self.is_owner = self.request.owner == 'pIAeLAvHXp0KZKWDzTMz'
+        self.is_owner = self.delivery_owner.uid == UserMeGetter._user_id
         super(DeliveryRequestDetail, self).__init__(**kwargs)
         self._detail_view = self.ids.detail_view.__self__
         self._setup_user_fields()
         Clock.schedule_once(self._setup_ui)
 
     def _setup_user_fields(self):
-        assistant = UserGetter.get_by_id(self.request.assistant)
-        owner = UserGetter.get_by_id(self.request.owner)
-
         assistant_widget, owner_widget = self.ids.assistant, self.ids.owner
-        if None in (assistant, owner):
-            assistant_widget.size_hint_x = 1
-            owner_widget.size_hint_x = 1
 
-        if assistant is not None:
-            assistant_widget.description = assistant.name
-            self.delivery_assistant = assistant
+        if self.request.has_assistant():
+            self.delivery_assistant = self.request.assistant
+            assistant_widget.description = self.delivery_assistant.name
         else:
+            owner_widget.size_hint_x = 1
             self.ids.stack.remove_widget(assistant_widget)
 
-        if owner is not None:
-            owner_widget.description = owner.name
-            self.delivery_owner = owner
-        else:
-            self.ids.stack.remove_widget(owner_widget)
+        owner_widget.description = self.delivery_owner.name
 
     def _setup_ui(self, _):
         image_source = Bucket.get_url(self.request.image_path)
@@ -84,9 +79,8 @@ class DeliveryRequestDetail(BoxLayout):
 
     def accept_delivery(self):
         """Accept the delivery as the current user."""
-        assistant = 'pIAeLAvHXp0KZKWDzTMz'
-        assistant_ref = Firestore.get_raw('users').document(assistant).get()
-        assistant_balance = assistant_ref._data['balance']
+        assistant_balance = UserMeGetter.user.balance
+        assistant = UserMeGetter.user.to_minified()
 
         # Not enough money
         if assistant_balance < self.request.money_lock:
@@ -95,18 +89,19 @@ class DeliveryRequestDetail(BoxLayout):
         with Firestore.batch('packages') as batch:
             batch.update(self.request.uid, {
                 'status': Status.ACCEPTED,
-                'assistant': assistant
+                'assistant': assistant.to_dict()
             })
 
         with Firestore.batch('users') as batch:
             batch.update(
-                assistant,
+                assistant.uid,
                 {'balance': assistant_balance - self.request.money_lock})
 
         self._back_button_handler()
 
     def confirm_pickup(self):
         """Confirm the delivery as picked up, as the current user."""
+        print("HEJ")
         with Firestore.batch('packages') as batch:
             batch.update(self.request.uid, {
                 'status': Status.TRAVELLING,
@@ -125,12 +120,12 @@ class DeliveryRequestDetail(BoxLayout):
             })
 
         assistant_ref = Firestore.get_raw('users').document(
-            self.request.assistant).get()
+            self.request.assistant.uid).get()
         assistant_balance = assistant_ref._data['balance']
 
         with Firestore.batch('users') as batch:
             batch.update(
-                self.request.assistant, {
+                self.request.assistant.uid, {
                     'balance':
                     assistant_balance + self.request.money_lock +
                     self.request.reward,
@@ -141,7 +136,7 @@ class DeliveryRequestDetail(BoxLayout):
         """Show the user profile of a specific user."""
         self.clear_widgets()
         self.add_widget(
-            UserProfileView(
+            MinifiedUserProfileView(
                 user=user,
                 back_button_handler=self._transition_to_detail_view))
 

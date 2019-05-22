@@ -1,4 +1,4 @@
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, Clock
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.tabs import MDBottomNavigationItem
 from kivymd.theming import ThemableBehavior
@@ -24,6 +24,10 @@ class NavBarWithFAB(BoxLayout, ThemableBehavior):
     def __init__(self, **kwargs):
         """Initialize the navigation bar"""
         super(NavBarWithFAB, self).__init__(**kwargs)
+        Clock.schedule_once(self.init_ui, 0)
+
+    def init_ui(self, _):
+        """Initializes ui for navbar"""
         self.ids.fab.on_release = self.fab_callback
 
     def _load_posted_requests(self, tab):

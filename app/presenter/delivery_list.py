@@ -1,14 +1,17 @@
-from kivy.animation import Animation
-from kivy.clock import Clock
+import google
 from kivy.lang import Builder
-from kivy.metrics import dp
 from kivy.properties import NumericProperty
-from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
 from kivymd.updatespinner import MDUpdateSpinner
+from kivy.metrics import dp
+from kivy.clock import Clock
+from kivy.animation import Animation
+from kivy.properties import ObjectProperty
+from kivy.app import App
+
 from typing import Callable
 
 from presenter.delivery_request_detail import DeliveryRequestDetail
@@ -31,6 +34,7 @@ class DeliveryList(RelativeLayout):
     delivery_list = ObjectProperty(BoxLayout)
     deliveries = [None]
     filter_widget = None
+    showing_filter = True
     previous_search_params = None
 
     def __init__(self, **kwargs):
@@ -41,9 +45,17 @@ class DeliveryList(RelativeLayout):
 
     def _filter_content(self, walk, car, truck, fragile):
         """Filters the delivery list."""
+        if not App.get_running_app().is_authenticated:
+            print("User not authenticated")
+            return
+
         self.previous_search_params = [walk, car, truck, fragile]
-        delivery_requests = DeliveryRequestGetter.query(
-            u'status', u'==', Status.AVAILABLE)
+        try:
+            delivery_requests = DeliveryRequestGetter.query(
+                u'status', u'==', Status.AVAILABLE)
+        except google.api_core.exceptions.Unauthenticated:
+            print("UNAUTHENTICATED WHEN TRYING TO FETCH PACKAGES")
+            return
 
         origin = self.filter_widget.from_suggester.currently_used_suggestion
         destination = self.filter_widget.to_suggester.currently_used_suggestion
@@ -84,6 +96,8 @@ class DeliveryList(RelativeLayout):
         return True
 
     def _update_content(self, spinner):
+        if self.previous_search_params is None:
+            return
         self.tick = 0
 
         def close_spinner(interval):
@@ -108,11 +122,19 @@ class DeliveryList(RelativeLayout):
 
     def show_filter(self):
         """Show the filter widget"""
+        if self.showing_filter:
+            return
+        self.showing_filter = True
+
         self.ids.available_requests.clear_widgets()
         self.add_widget(self.filter_widget)
 
     def hide_filter(self):
         """Hide the filter widget"""
+        if not self.showing_filter:
+            return
+        self.showing_filter = False
+
         self.remove_widget(self.filter_widget)
 
 
