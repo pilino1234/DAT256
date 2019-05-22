@@ -57,8 +57,7 @@ class User:
                     "name": self.name,
                     "phonenumber": self.phonenumber,
                     "avatar": self.avatar,
-                    "balance": self.balance,
-                    "rating": self.rating,
+                    "balance": self.balance
                 })
 
     def deposit(self, amount: int):
@@ -105,13 +104,12 @@ class User:
     def __str__(self):
         """Format a user for printing"""
         return "User: {name}, {mail}, {phonenumber}, Avatar: " \
-               "{avatar}, Balance: {balance}, Rating: {rating}"\
+               "{avatar}, Balance: {balance}"\
             .format(name=self.name,
                     mail=self.mail,
                     phonenumber=self.phonenumber,
                     avatar=self.avatar,
-                    balance=self.balance,
-                    rating=self.rating)
+                    balance=self.balance)
 
     def to_minified(self):
         """Returns the user as a MinifiedUser"""
