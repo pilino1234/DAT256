@@ -24,10 +24,9 @@ class DeliveryRequest:
     ]
 
     def __init__(self, uid: str, item: str, description: str, origin: dict,
-                 destination: dict, reward: int, weight: int,
-                 fragile: bool, status: Status, money_lock: int,
-                 owner: dict, assistant: dict, image_path: str,
-                 **kwargs):
+                 destination: dict, reward: int, weight: int, fragile: bool,
+                 status: Status, money_lock: int, owner: dict, assistant: dict,
+                 image_path: str, **kwargs):
         """Initializes the delivery list"""
         self.uid = uid
         self.item = item
@@ -102,4 +101,5 @@ class DeliveryRequest:
         return str(self.reward) + " kr"
 
     def has_assistant(self):
+        """Checks if the delivery request has an assistant"""
         return hasattr(self, "assistant")
