@@ -29,7 +29,6 @@ class MyPostedRequests(BoxLayout):
 
     def _update_content(self):
         """Fetch my posted deliveries"""
-
         self.content = self.ids.content
         delivery_requests = UserMeGetter.user.packages
 
