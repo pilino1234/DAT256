@@ -28,7 +28,7 @@ class User:
         self.balance = balance
         self.packages: List[DeliveryRequest] = []
         self.deliveries: List[DeliveryRequest] = []
-        self._update_listeners = []
+        self._update_listeners: List[Callable] = []
 
     def update(self, **kwargs):
         """
@@ -102,6 +102,15 @@ class User:
         self.update()
 
     def on_update(self, listener: Callable):
+        """
+        Register a listener on updates to this User.
+
+        Register a listener function to be called whenever this User object is
+        updated from Firebase.
+
+        :param listener: The callable to be executed when an update occurs.
+        :type listener: Callable
+        """
         self._update_listeners.append(listener)
 
     def __eq__(self, other):
