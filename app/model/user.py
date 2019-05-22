@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Callable
 
 from model.delivery_request import DeliveryRequest
 from model.firebase.firestore import Firestore
@@ -28,6 +28,7 @@ class User:
         self.balance = balance
         self.packages: List[DeliveryRequest] = []
         self.deliveries: List[DeliveryRequest] = []
+        self._update_listeners = []
 
     def update(self, **kwargs):
         """
@@ -59,6 +60,9 @@ class User:
                     "avatar": self.avatar,
                     "balance": self.balance
                 })
+
+        for listener in self._update_listeners:
+            listener()
 
     def deposit(self, amount: int):
         """
@@ -96,6 +100,9 @@ class User:
         """
         self.balance -= delivery.reward
         self.update()
+
+    def on_update(self, listener: Callable):
+        self._update_listeners.append(listener)
 
     def __eq__(self, other):
         """Checks equality between users using their mail."""
