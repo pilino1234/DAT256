@@ -11,8 +11,9 @@ class RequestGetterTest(unittest.TestCase):
         delivery_requests = DeliveryRequestGetter.query(
             u'owner.uid', u'==', u'94MTAsYEcpTBGW98MQbjyuGEPUx1')
 
-        self.assertEqual(
-            len(delivery_requests), 1, msg="Expected only 1 match.")
+        self.assertEqual(len(delivery_requests),
+                         1,
+                         msg="Expected only 1 match.")
 
         expected = DeliveryRequest(
             uid='DLpVc0QmbOHzfDo24Hpp',
