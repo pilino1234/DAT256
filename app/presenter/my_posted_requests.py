@@ -9,6 +9,8 @@ from model.user_me_getter import UserMeGetter
 from presenter.delivery_list import WhiteCardButton
 from presenter.delivery_request_detail import DeliveryRequestDetail
 
+from kivymd.label import MDLabel
+
 Builder.load_file("view/my_posted_requests.kv")
 
 
@@ -39,12 +41,16 @@ class MyPostedRequests(BoxLayout):
 
         # Fill delivery list
         self.ids.my_requests.clear_widgets()
+        no_content = True
         for req in delivery_requests:
-            print(req.item)
+            no_content = False
             self.ids.my_requests.add_widget(
                 MyPostedRequest(req, self._transition_to_detail_view))
 
-        print("------------------------")
+        # Add no content label if no content is shown
+        if no_content:
+            no_content_label = MDLabel(text="You currently do not have any posted packages. \n Request deliveries with the package button down below.", size_hint_y=7, halign="center", font_style='Subtitle1')
+            self.ids.content.add_widget(no_content_label)
 
     def _transition_to_detail_view(self, request: DeliveryRequest):
         """Show detail view for selected delivery request."""
