@@ -31,10 +31,11 @@ class Auth:
         Firebase.create_db()
         Firebase.create_bucket()
 
-        credential_store.put('tokens',
-                             id_token=id_token,
-                             refresh_token=refresh_token,
-                             user_id=user_id)
+        credential_store.put(
+            'tokens',
+            id_token=id_token,
+            refresh_token=refresh_token,
+            user_id=user_id)
 
         UserMeGetter.set_me(user_id)
         if App.get_running_app():
