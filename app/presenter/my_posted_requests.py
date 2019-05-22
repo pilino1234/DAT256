@@ -5,6 +5,7 @@ from kivy.properties import ObjectProperty
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest
+from model.location import Location
 from model.user_me_getter import UserMeGetter
 from presenter.delivery_list import WhiteCardButton
 from presenter.delivery_request_detail import DeliveryRequestDetail
@@ -60,10 +61,15 @@ class MyPostedRequest(WhiteCardButton):
         """Initializes the delivery list"""
         super(MyPostedRequest, self).__init__(**kwargs)
 
+        print(delivery_request.origin)
+
+        originLocation = Location(**delivery_request.origin)
+        destinationLocation = Location(**delivery_request.destination)
+
         self.request = delivery_request
         self.tap_callback = tap_callback
         self.ids.item.text = delivery_request.item
-        self.ids.origin.text = delivery_request.origin.name
-        self.ids.destination.text = delivery_request.destination.name
+        self.ids.origin.text = originLocation.name
+        self.ids.destination.text = destinationLocation.name
         self.ids.reward.text = delivery_request.reward_pretty
         self.ids.status.text = "Status: " + delivery_request.status_text
