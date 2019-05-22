@@ -1,5 +1,4 @@
 from model.firebase.firebase import Firebase
-from model.firebase.firebase_credentials import FirebaseCredentials
 from model.firebase.firestore import Firestore
 from kivy.storage.jsonstore import JsonStore
 import requests
@@ -27,10 +26,8 @@ class Auth:
         :param user_id: The user id for the signed in user
         :return The user id for the signed in user
         """
-        credentials = FirebaseCredentials(token=id_token,
-                                          refresh_token=refresh_token)
-        Firebase.create_db(credentials=credentials)
-        Firebase.create_bucket()
+        Firebase.create_db()
+        # Firebase.create_bucket()
 
         credential_store.put('tokens',
                              id_token=id_token,
