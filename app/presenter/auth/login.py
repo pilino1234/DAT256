@@ -19,6 +19,3 @@ class Login(BoxLayout):
 
         if not user_id:
             print("Something went wrong")
-        else:
-            UserMeGetter.set_me(user_id)
-            App.get_running_app().is_authenticated = True
