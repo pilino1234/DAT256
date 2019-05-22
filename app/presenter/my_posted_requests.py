@@ -20,15 +20,22 @@ class MyPostedRequests(BoxLayout):
     Each request is represented with a ListItem.
     """
 
+    first_update = False
+
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(MyPostedRequests, self).__init__(**kwargs)
-        Clock.schedule_once(lambda dt: self._update_content())
+        self._update_content()
+        self.first_update = True
         Firestore.subscribe(u'users/{}/packages'.format(
             UserMeGetter._user_id), lambda *_: self._update_content())
 
     def _update_content(self):
         """Fetch my posted deliveries"""
+        if self.first_update:
+            self.first_update = False
+            return
+
         self.content = self.ids.content
         delivery_requests = UserMeGetter.user.packages
 
