@@ -61,6 +61,10 @@ class DeliveryRequestTest(unittest.TestCase):
             "ard: 10, money_lock: 0, weight: 2, fragile: True, status: 0, description: This a test, feel fre"
             + "e to remove., image_path: ")
 
+    def test_distance_km(self):
+        request = create_delivery_request()
+        self.assertEqual(request.distance_km, 432.6933545083979)
+
     def test_distance_pretty(self):
         request = create_delivery_request()
         self.assertEqual(request.distance_pretty, "432.7 km")
@@ -68,3 +72,7 @@ class DeliveryRequestTest(unittest.TestCase):
     def test_reward_pretty(self):
         request = create_delivery_request()
         self.assertEqual(request.reward_pretty, "10 kr")
+
+    def test_has_assistant(self):
+        request = create_delivery_request()
+        self.assertTrue(request.has_assistant())

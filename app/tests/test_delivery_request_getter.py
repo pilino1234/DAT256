@@ -74,7 +74,7 @@ class RequestGetterTest(unittest.TestCase):
                 mail="travis@carrepsa.ci",
                 name=
                 'Travis CI Account - DON\'T DELETE OR YOULL BREAK THE ENTIRE CI WORKFLOW/UNITTESTS REEEEEEEEEEEEEEEEEEEEEEEE',
-                phonenumber='-inf',
+                phonenumber='0',
                 uid="94MTAsYEcpTBGW98MQbjyuGEPUx1").to_dict(),
             assistant=dict(),
             image_path='')
