@@ -101,7 +101,6 @@ class DeliveryRequestDetail(BoxLayout):
 
     def confirm_pickup(self):
         """Confirm the delivery as picked up, as the current user."""
-        print("HEJ")
         with Firestore.batch('packages') as batch:
             batch.update(self.request.uid, {
                 'status': Status.TRAVELLING,

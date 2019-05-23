@@ -49,7 +49,12 @@ class MyPostedRequests(BoxLayout):
 
         # Add no content label if no content is shown
         if no_content:
-            no_content_label = MDLabel(text="You currently do not have any posted packages. \n Request deliveries with the package button down below.", size_hint_y=7, halign="center", font_style='Subtitle1')
+            no_content_label = MDLabel(
+                text="""You currently do not have any posted packages.\n
+                Request deliveries with the package button down below.             """,
+                size_hint_y=9,
+                halign="center",
+                font_style='Subtitle1')
             self.ids.content.add_widget(no_content_label)
 
     def _transition_to_detail_view(self, request: DeliveryRequest):
