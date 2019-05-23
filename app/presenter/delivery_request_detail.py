@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivymd.button import MDRaisedButton
 from kivy.metrics import dp
+from kivymd.toast import toast
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest, Status
@@ -65,14 +66,17 @@ class DeliveryRequestDetail(BoxLayout):
             if self.request.status == Status.ACCEPTED:
                 button.text = "Confirm Pickup"
                 button.on_release = self.confirm_pickup
+                toast("Delivery picked up. Package is now traveling.")
             elif self.request.status == Status.TRAVELLING:
                 button.text = "Confirm Delivery"
                 button.on_release = self.confirm_delivery
+                toast("Package confirmed as delivered.")
 
         else:
             if self.request.status == Status.AVAILABLE:
                 button.text = "Accept Delivery"
                 button.on_release = self.accept_delivery
+                toast("Delivery accepted. See my deliveries.")
 
         if button.text != "":
             self.ids.stack.add_widget(button)

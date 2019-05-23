@@ -11,6 +11,7 @@ from kivy.clock import Clock
 from kivy.animation import Animation
 from kivy.properties import ObjectProperty
 from kivy.app import App
+from kivymd.toast import toast
 
 from typing import Callable
 from kivymd.label import MDLabel
@@ -75,9 +76,11 @@ class DeliveryList(RelativeLayout):
 
         # Add no content label if no content is shown
         if no_content:
-            no_content_label = MDLabel()
-            no_content_label.text = "No deliveries found"
-            self.ids.available_requests.add_widget(no_content_label)
+            no_content_label = MDLabel(
+                text="No deliveries found. Try searching for something else.",
+                halign="center",
+                font_style='Subtitle1')
+            self.ids.delivery_list.add_widget(no_content_label)
 
         self.delivery_list = self.ids.delivery_list
 
@@ -113,6 +116,7 @@ class DeliveryList(RelativeLayout):
 
         def close_spinner(interval):
             spinner.update = True
+            toast("Search results updated.")
 
         Clock.schedule_once(close_spinner, 2)
         self.ids.available_requests.clear_widgets()
