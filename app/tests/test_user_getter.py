@@ -10,7 +10,7 @@ class UserGetterTest(unittest.TestCase):
         self.assertIsNotNone(user)
         self.assertEqual(
             user.name, "Travis CI Account - DON'T DELETE OR YOULL BREAK THE "
-            "ENTIRE CI WORKFLOW/UNITTESTS REEEEEEEEEEEEEEEEEEEEEEEE")
+            "ENTIRE CI WORKFLOW/UNITTESTS REEEEEEEEEEEEEEEEEEEEEEEEE")
         self.assertEqual(user.mail, "travis@carrepsa.ci")
         self.assertEqual(user.phonenumber, "0")
 
