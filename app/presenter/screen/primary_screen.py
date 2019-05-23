@@ -11,4 +11,12 @@ class PrimaryScreen(Screen):
     Contains everything except authentication.
     """
 
-    pass
+    def go_to_request_delivery(self):
+        self.ids.router.route("main")
+        navbar = self.ids.navbar
+        navbar.ids.my_delieries_btn.on_tab_press()
+        self.ids.sp.show()
+
+    def go_to_make_delivery(self):
+        self.ids.router.route("main")
+
