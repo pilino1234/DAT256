@@ -9,8 +9,8 @@ class LocationTest(unittest.TestCase):
 
         expected = {
             'name': 'test',
-            'longitude': 0,
-            'latitude': 0
+            'latitude': 0,
+            'longitude': 0
         }
 
         self.assertDictEqual(location1.to_dict(), expected)
@@ -18,15 +18,15 @@ class LocationTest(unittest.TestCase):
     def test_from_dict(self):
         data = {
             'name': 'test',
-            'longitude': 0,
-            'latitude': 0
+            'latitude': 0,
+            'longitude': 0
         }
 
         location = Location.from_dict(data)
 
         self.assertEqual(location.name, data['name'])
-        self.assertEqual(location.longitude, data['longitude'])
         self.assertEqual(location.latitude, data['latitude'])
+        self.assertEqual(location.longitude, data['longitude'])
 
     def test_dist_to(self):
         location1 = Location('test', 0.0, 0.0)
