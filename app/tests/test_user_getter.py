@@ -5,7 +5,7 @@ from model.user_getter import UserGetter
 
 class UserGetterTest(unittest.TestCase):
     def test_get_existing_user(self):
-        user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
+        user = UserGetter.get_by_id('xUQeyplJshTzco4vyHHVoytT3FD2')
 
         self.assertIsNotNone(user)
         self.assertEqual(
