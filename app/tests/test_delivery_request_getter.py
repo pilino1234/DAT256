@@ -73,7 +73,7 @@ class RequestGetterTest(unittest.TestCase):
             owner=MinifiedUser(
                 mail="travis@carrepsa.ci",
                 name=
-                'Travis CI Account - DON\'T DELETE OR YOULL BREAK THE ENTIRE CI WORKFLOW/UNITTESTS REEEEEEEEEEEEEEEEEEEEEEEE',
+                'Travis CI Account - DON\'T DELETE OR YOULL BREAK THE ENTIRE CI WORKFLOW/UNITTESTS REEEEEEEEEEEEEEEEEEEEEEEEE',
                 phonenumber='0',
                 uid="xUQeyplJshTzco4vyHHVoytT3FD2").to_dict(),
             assistant=dict(),
