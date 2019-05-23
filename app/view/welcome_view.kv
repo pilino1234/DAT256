@@ -1,0 +1,47 @@
+#:import Router presenter.utils.router
+#:import Card presenter.utils.card
+#:import Login presenter.auth.login
+#:import Register presenter.auth.register
+
+<WelcomeView>:
+    BoxLayout:
+        padding: (10, 10)
+        Card:
+            bg_color: 1, 1, 1,1
+            elevation: 8
+            radius: 8
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: (0, 0, 0, 20)
+                spacing: 10
+
+                MDLabel:
+                    font_style: 'H2'
+                    theme_text_color: 'Primary'
+                    text: "Welcome to Carrepsa!"
+                    halign: 'center'
+                    height: dp(50)
+
+                MDLabel:
+                    font_style: 'Body1'
+                    theme_text_color: 'Primary'
+                    text: "With carrepsa you can deliver packages, or get packages delivered. What do you want to do?"
+                    halign: 'center'
+                    height: dp(100)
+
+                RelativeLayout:
+                    height: dp(150)
+                    MDRaisedButton:
+                        text: "Make a Delivery"
+                        write_tab: False
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        on_release: root.deliver_button_callback()
+
+                RelativeLayout:
+                    height: dp(150)
+                    MDRaisedButton:
+                        text: "Request a Delivery"
+                        write_tab: False
+                        pos_hint: {'center_x': 0.5, 'center_y': .5}
+                        on_release: root.request_delivery_button_callback()
