@@ -29,7 +29,7 @@ pip --quiet install pytest pytest-cov codecov
 
 # Decrypt keyfile
 echo "Decrypting keyfile"
-openssl aes-256-cbc -K $encrypted_931cb05f54dd_key -iv $encrypted_931cb05f54dd_iv -in keyfile.json.enc -out keyfile.json -d
+openssl aes-256-cbc -K $encrypted_931cb05f54dd_key -iv $encrypted_931cb05f54dd_iv -in keyfile-ci.json.enc -out keyfile.json -d
 
 # Run tests
 (

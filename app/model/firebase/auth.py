@@ -1,3 +1,5 @@
+import os
+
 from kivy.app import App
 
 from model.firebase.firebase import Firebase
@@ -10,7 +12,10 @@ from model.user_me_getter import UserMeGetter
 
 credential_store = JsonStore('credentials.json')
 
-webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
+if 'TRAVIS_WEB_API_KEY' in os.environ:
+    webApiKey = os.getenv('TRAVIS_WEB_API_KEY')
+else:
+    webApiKey = "AIzaSyAZyHcBO03Pf9RK0eM3ifYErGG8eP57aTA"  # Web Api Key
 
 
 class Auth:

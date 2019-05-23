@@ -32,7 +32,7 @@ class DeliveryRequestTest(unittest.TestCase):
                 'name': '',
                 'mail': '',
                 'phonenumber': '',
-                'uid': '94MTAsYEcpTBGW98MQbjyuGEPUx1'
+                'uid': 'xUQeyplJshTzco4vyHHVoytT3FD2'
             },
             'assistant': {
                 'name': '',
