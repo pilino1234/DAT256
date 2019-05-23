@@ -15,7 +15,7 @@ jobs:
       script: bash ci/run_yapf.sh
     - script: bash ci/run_prospector.sh
       name: "Prospector"
-    - script: bash ci/run_nose.sh
+    - script: bash ci/run_tests.sh
       name: "Unit tests"
 
 script: ignore

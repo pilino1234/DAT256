@@ -1,5 +1,9 @@
 #!/bin/bash
 
-pip --quiet install nose2
+pip --quiet install pytest
 
-nose2 --start-dir app/
+
+(
+    export KIVY_UNITTEST=1
+    py.test --rootdir=app/ -v
+)

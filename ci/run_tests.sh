@@ -1,5 +1,4 @@
 
-pip --quiet install nose2 codecov
 
 # Kivy deps
 sudo apt-get -qq update > /dev/null
@@ -22,6 +21,14 @@ sudo apt-get -qq install -y \
 pip --quiet install cython==0.28.6
 pip --quiet install -r app/requirements.txt
 
-nose2 --start-dir app/ --with-coverage
-codecov --token=$CODECOV_TOKEN
+# Install unit testing stuff
+pip --quiet install pytest pytest-cov codecov
 
+# Run tests
+(
+    export KIVY_UNITTEST=1
+    py.test --rootdir=app/ -v --cov=./
+)
+
+# Upload coverage data
+codecov --token=$CODECOV_TOKEN
