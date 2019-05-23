@@ -21,4 +21,7 @@ class UploaderTest(unittest.TestCase):
         except Exception:
             return
 
-        self.assertEqual(1, 1, "This assert will only be called if the test doesn't error out earlier.")
+        self.assertEqual(
+            1, 1,
+            "This assert will only be called if the test doesn't error out earlier."
+        )

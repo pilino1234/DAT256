@@ -7,20 +7,12 @@ class LocationTest(unittest.TestCase):
     def test_to_dict(self):
         location1 = Location('test', 0.0, 0.0)
 
-        expected = {
-            'name': 'test',
-            'latitude': 0,
-            'longitude': 0
-        }
+        expected = {'name': 'test', 'longitude': 0, 'latitude': 0}
 
         self.assertDictEqual(location1.to_dict(), expected)
 
     def test_from_dict(self):
-        data = {
-            'name': 'test',
-            'latitude': 0,
-            'longitude': 0
-        }
+        data = {'name': 'test', 'longitude': 0, 'latitude': 0}
 
         location = Location.from_dict(data)
 

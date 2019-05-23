@@ -39,4 +39,5 @@ class Location:
     @staticmethod
     def from_dict(data_dict: dict) -> 'Location':
         """Creates a Location from a dict."""
-        return Location(data_dict['name'], data_dict['latitude'], data_dict['longitude'])
+        return Location(data_dict['name'], data_dict['latitude'],
+                        data_dict['longitude'])
