@@ -93,9 +93,11 @@ class UserTest(unittest.TestCase):
             "item",
             "description\ntext",
             origin=Location(name="Odenvägen 1, SE-194 63 Odenslunda, Sweden",
-                            latitude=59.51224, longitude=17.93536).to_dict(),
+                            latitude=59.51224,
+                            longitude=17.93536).to_dict(),
             destination=Location(name="Rolsmo 1, SE-360 24 Linneryd, Sweden",
-                                 latitude=56.64989, longitude=15.16624).to_dict(),
+                                 latitude=56.64989,
+                                 longitude=15.16624).to_dict(),
             reward=100,
             weight=2,
             fragile=True,
@@ -113,16 +115,24 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, user_balance - 100)
 
     def test_to_string(self):
-        user = User(
-            "", "User1", "email@example.com", "1234567890", "", balance=100)
+        user = User("",
+                    "User1",
+                    "email@example.com",
+                    "1234567890",
+                    "",
+                    balance=100)
 
         expected = "User: User1, email@example.com, 1234567890, Avatar: , Balance: 100"
 
         self.assertEqual(str(user), expected)
 
     def test_to_minified(self):
-        user = User(
-            "uid", "User1", "email@example.com", "1234567890", "", balance=100)
+        user = User("uid",
+                    "User1",
+                    "email@example.com",
+                    "1234567890",
+                    "",
+                    balance=100)
 
         mini_user = user.to_minified()
 
@@ -130,4 +140,3 @@ class UserTest(unittest.TestCase):
         self.assertEqual(mini_user.mail, "email@example.com")
         self.assertEqual(mini_user.phonenumber, "1234567890")
         self.assertEqual(mini_user.uid, "uid")
-

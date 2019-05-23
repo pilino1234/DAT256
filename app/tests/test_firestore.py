@@ -52,7 +52,9 @@ class FirestoreTest(unittest.TestCase):
             })
             batch.set(uid, dr_dict)
 
-        self.assertTrue(any(request.to_dict()['uid'] == "TEST" for request in Firestore.get('packages')))
+        self.assertTrue(
+            any(request.to_dict()['uid'] == "TEST"
+                for request in Firestore.get('packages')))
 
         with Firestore.batch('packages') as batch:
             batch.delete(uid)
