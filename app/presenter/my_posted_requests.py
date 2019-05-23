@@ -1,6 +1,7 @@
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import Clock
 from typing import Callable
 
 from model.delivery_request import DeliveryRequest, Status
@@ -25,9 +26,13 @@ class MyPostedRequests(BoxLayout):
         """Initializes the delivery list"""
         super(MyPostedRequests, self).__init__(**kwargs)
         Firestore.subscribe(u'users/{}/packages'.format(UserMeGetter._user_id),
-                            self._update_content)
+                            self._pre_update_content)
 
-    def _update_content(self, collection_snapshot, _, __):
+    def _pre_update_content(self, collection_snapshot, _, __):
+        Clock.schedule_once(lambda x: self._update_content(collection_snapshot)
+                            )
+
+    def _update_content(self, collection_snapshot):
         """Fetch my posted deliveries"""
         self.content = self.ids.content
         delivery_requests = []
