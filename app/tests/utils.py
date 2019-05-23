@@ -4,10 +4,10 @@ from model.minified_user import MinifiedUser
 
 
 def create_delivery_request():
-    origin = Location("Odenvägen 1, SE-194 63 Odenslunda, Sweden", 59.51224,
-                      17.93536).to_dict()
-    destination = Location("Rolsmo 1, SE-360 24 Linneryd, Sweden", 56.64989,
-                           15.16624).to_dict()
+    origin = Location(name="Odenvägen 1, SE-194 63 Odenslunda, Sweden", latitude=59.51224,
+                      longitude=17.93536).to_dict()
+    destination = Location(name="Rolsmo 1, SE-360 24 Linneryd, Sweden", latitude=56.64989,
+                           longitude=15.16624).to_dict()
     return DeliveryRequest(
         "TEST",
         "item",

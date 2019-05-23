@@ -4,12 +4,12 @@ from geopy.distance import geodesic
 class Location:
     """Represents a geolocation."""
 
-    def __init__(self, name: str, longitude: float, latitude: float):
+    def __init__(self, name: str, latitude: float, longitude: float):
         """Initialize the location"""
         super(Location, self).__init__()
         self.name = name
-        self.longitude = longitude
         self.latitude = latitude
+        self.longitude = longitude
 
     def dist_to(self, other: 'Location') -> float:
         """Returns the distance to the other location in km"""
@@ -25,19 +25,18 @@ class Location:
 
     def __str__(self):
         """Format a delivery request for printing"""
-        return "Location: ({longitude}, {latitude}) {name}".format(
-            longitude=self.longitude, latitude=self.latitude, name=self.name)
+        return "Location: ({latitude}, {longitude}) {name}".format(
+            latitude=self.latitude, longitude=self.longitude, name=self.name)
 
     def to_dict(self) -> dict:
         """Returns the location as a dict."""
         return {
             'name': self.name,
-            'longitude': self.longitude,
-            'latitude': self.latitude
+            'latitude': self.latitude,
+            'longitude': self.longitude
         }
 
     @staticmethod
     def from_dict(data_dict: dict) -> 'Location':
         """Creates a Location from a dict."""
-        return Location(data_dict['name'], data_dict['longitude'],
-                        data_dict['latitude'])
+        return Location(data_dict['name'], data_dict['latitude'], data_dict['longitude'])

@@ -15,13 +15,13 @@ class DeliveryRequestTest(unittest.TestCase):
             'description': 'This a test, feel free to remove.',
             'origin': {
                 'name': 'Odenvägen 1, SE-194 63 Odenslunda, Sweden',
-                'longitude': 59.51224,
-                'latitude': 17.93536
+                'latitude': 59.51224,
+                'longitude': 17.93536
             },
             'destination': {
                 'name': 'Rolsmo 1, SE-360 24 Linneryd, Sweden',
-                'longitude': 56.64989,
-                'latitude': 15.16624
+                'latitude': 56.64989,
+                'longitude': 15.16624
             },
             'reward': 10,
             'weight': 2,
@@ -63,11 +63,11 @@ class DeliveryRequestTest(unittest.TestCase):
 
     def test_distance_km(self):
         request = create_delivery_request()
-        self.assertEqual(request.distance_km, 432.6933545083979)
+        self.assertEqual(request.distance_km, 358.15690351620367)
 
     def test_distance_pretty(self):
         request = create_delivery_request()
-        self.assertEqual(request.distance_pretty, "432.7 km")
+        self.assertEqual(request.distance_pretty, "358.2 km")
 
     def test_reward_pretty(self):
         request = create_delivery_request()
