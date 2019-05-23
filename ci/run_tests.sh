@@ -24,6 +24,9 @@ pip --quiet install -r app/requirements.txt
 # Install unit testing stuff
 pip --quiet install pytest pytest-cov codecov
 
+# Decrypt keyfile
+openssl aes-256-cbc -K $encrypted_931cb05f54dd_key -iv $encrypted_931cb05f54dd_iv -in keyfile.json.enc -out keyfile.json -d
+
 # Run tests
 (
     export KIVY_UNITTEST=1
