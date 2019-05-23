@@ -50,7 +50,12 @@ class MyDeliveries(BoxLayout):
 
         # Add no content label if no content is shown
         if no_content:
-            no_content_label = MDLabel(text="You currently do not have any packages to deliver. \n Accept deliveries by searching for them.", size_hint_y=7, halign="center", font_style='Subtitle1')
+            no_content_label = MDLabel(
+                text="""You currently do not have any packages to deliver.\n
+                Accept deliveries by searching for them.                  """,
+                size_hint_y=9,
+                halign="center",
+                font_style='Subtitle1')
             self.ids.content.add_widget(no_content_label)
 
         self.content = self.ids.content
