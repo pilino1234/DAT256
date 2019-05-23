@@ -1,5 +1,6 @@
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import Clock
 
 from model.delivery_request import DeliveryRequest, Status
 from model.user_me_getter import UserMeGetter
@@ -24,9 +25,13 @@ class MyDeliveries(BoxLayout):
         super(MyDeliveries, self).__init__(**kwargs)
         Firestore.subscribe(
             u'users/{}/deliveries'.format(UserMeGetter._user_id),
-            self._update_content)
+            self._pre_update_content)
 
-    def _update_content(self, collection_snapshot, _, __):
+    def _pre_update_content(self, collection_snapshot, _, __):
+        Clock.schedule_once(lambda x: self._update_content(collection_snapshot)
+                            )
+
+    def _update_content(self, collection_snapshot):
         """Fetch all deliveries the current owner has accepted"""
         delivery_requests = []
         for doc in collection_snapshot:
