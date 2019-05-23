@@ -21,8 +21,6 @@ exports.updateMinifiedUsers = functions.firestore
             uid
         };
 
-        updateMinifiedUsers(newMinifiedUser);
-
         updateMinifiedUsersPackages(
             change.after.ref,
             newMinifiedUser
@@ -85,15 +83,6 @@ function updateUsersPackages(data, packageId){
 
 function updateUserPackage(userId, packageId, packageData){
     admin.firestore().collection('users').doc(userId).collection('packages').doc(packageId).set(packageData);
-}
-
-function updateMinifiedUsers(user){
-    admin.firestore().collection('minified-users').doc(user.uid).set({
-        name: user.name,
-        mail: user.mail,
-        phonenumber: user.phonenumber,
-        uid: user.uid
-    });
 }
 
 function updateMinifiedUsersPackages(ref, data) {
