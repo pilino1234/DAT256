@@ -10,9 +10,9 @@ from model.user_getter import UserGetter
 
 class RequestGetterTest(unittest.TestCase):
     def test_query(self):
-        user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
+        user = UserGetter.get_by_id('xUQeyplJshTzco4vyHHVoytT3FD2')
         delivery_requests = DeliveryRequestGetter.query(
-            u'owner.uid', u'==', u'94MTAsYEcpTBGW98MQbjyuGEPUx1')
+            u'owner.uid', u'==', u'xUQeyplJshTzco4vyHHVoytT3FD2')
 
         self.assertGreaterEqual(len(delivery_requests),
                                 1,
@@ -25,7 +25,7 @@ class RequestGetterTest(unittest.TestCase):
                     batch.delete(dr.uid)
 
         delivery_requests = DeliveryRequestGetter.query(
-            u'owner.uid', u'==', u'94MTAsYEcpTBGW98MQbjyuGEPUx1')
+            u'owner.uid', u'==', u'xUQeyplJshTzco4vyHHVoytT3FD2')
 
         self.assertEqual(len(delivery_requests), 1, msg="Expected 1 match.")
 
@@ -75,7 +75,7 @@ class RequestGetterTest(unittest.TestCase):
                 name=
                 'Travis CI Account - DON\'T DELETE OR YOULL BREAK THE ENTIRE CI WORKFLOW/UNITTESTS REEEEEEEEEEEEEEEEEEEEEEEE',
                 phonenumber='0',
-                uid="94MTAsYEcpTBGW98MQbjyuGEPUx1").to_dict(),
+                uid="xUQeyplJshTzco4vyHHVoytT3FD2").to_dict(),
             assistant=dict(),
             image_path='')
 

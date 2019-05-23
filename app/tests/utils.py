@@ -22,6 +22,6 @@ def create_delivery_request():
         status=Status.AVAILABLE,
         money_lock=0,
         owner=MinifiedUser("", "", "",
-                           "94MTAsYEcpTBGW98MQbjyuGEPUx1").to_dict(),
+                           "xUQeyplJshTzco4vyHHVoytT3FD2").to_dict(),
         assistant=MinifiedUser("", "", "", "").to_dict(),
         image_path="")

@@ -45,14 +45,14 @@ class UserTest(unittest.TestCase):
         self.assertNotEqual(u2, u1)
 
     def test_deposit(self):
-        user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
+        user = UserGetter.get_by_id('xUQeyplJshTzco4vyHHVoytT3FD2')
 
         user_balance = user.balance
         user.deposit(100)
         self.assertEqual(user.balance, user_balance + 100)
 
     def test_deposit_negative(self):
-        user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
+        user = UserGetter.get_by_id('xUQeyplJshTzco4vyHHVoytT3FD2')
 
         user_balance = user.balance
         user.deposit(-100)
@@ -60,14 +60,14 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, user_balance)
 
     def test_withdraw(self):
-        user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
+        user = UserGetter.get_by_id('xUQeyplJshTzco4vyHHVoytT3FD2')
         user.deposit(100)  # Ensure that we have enough money to withdraw
         user_balance = user.balance
         user.withdraw(50)
         self.assertEqual(user.balance, user_balance - 50)
 
     def test_withdraw_negative(self):
-        user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
+        user = UserGetter.get_by_id('xUQeyplJshTzco4vyHHVoytT3FD2')
         user_balance = user.balance
         user.withdraw(-100)
         # Money should not be withdrawn
@@ -86,7 +86,7 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, 100)
 
     def test_locking_money(self):
-        user = UserGetter.get_by_id('94MTAsYEcpTBGW98MQbjyuGEPUx1')
+        user = UserGetter.get_by_id('xUQeyplJshTzco4vyHHVoytT3FD2')
 
         request = DeliveryRequest(
             "id",
