@@ -42,8 +42,6 @@ class MyPostedRequests(BoxLayout):
             data['status'] = Status(data['status'])
             delivery_requests.append(DeliveryRequest(**data))
 
-        print("UPdating content for user: " + UserMeGetter.user.name)
-
         # Fill delivery list
         self.ids.my_requests.clear_widgets()
         no_content = True

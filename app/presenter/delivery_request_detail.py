@@ -77,9 +77,27 @@ class DeliveryRequestDetail(BoxLayout):
                 button.text = "Accept Delivery"
                 button.on_release = self.accept_delivery
                 toast("Delivery accepted. See my deliveries.")
+            elif self.request.status == Status.ACCEPTED \
+                    and self.request.assistant.uid == UserMeGetter._user_id:
+                button.text = "Cancel delivery"
+                button.on_release = self.cancel_delivery_by_assistant
+                toast("Delivery cancelled by assistant")
 
         if button.text != "":
             self.ids.stack.add_widget(button)
+
+    def cancel_delivery_by_assistant(self):
+        """Cancel delivery as the current user, the assistant"""
+        assistant = UserMeGetter.user
+
+        with Firestore.batch('packages') as batch:
+            batch.update(self.request.uid,
+                         {'status': Status.CANCELLED_BY_ASSISTANT})
+
+        with Firestore.batch('users') as batch:
+            batch.update(
+                UserMeGetter._user_id,
+                {'balance': assistant.balance + self.request.money_lock})
 
     def accept_delivery(self):
         """Accept the delivery as the current user."""
