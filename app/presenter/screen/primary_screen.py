@@ -1,3 +1,4 @@
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 
@@ -13,9 +14,15 @@ class PrimaryScreen(Screen):
 
     def go_to_request_delivery(self):
         self.ids.router.route("main")
-        navbar = self.ids.navbar
-        navbar.ids.my_delieries_btn.on_tab_press()
+        Clock.schedule_once(self.open_my_packages_tab, 0)
         self.ids.sp.show()
+
+    def open_my_packages_tab(self, *_):
+        navbar_with_fab = self.ids.navbar
+        my_packages_btn = navbar_with_fab.ids.my_packages_btn
+        navbar_with_fab._load_posted_requests(my_packages_btn)
+        Clock.schedule_once(lambda *_: my_packages_btn.on_tab_press(), 0)
+
 
     def go_to_make_delivery(self):
         self.ids.router.route("main")
