@@ -20,6 +20,8 @@ class MyDeliveries(BoxLayout):
     Each request is represented with a ListItem.
     """
 
+    no_content_label = None
+
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(MyDeliveries, self).__init__(**kwargs)
@@ -53,15 +55,19 @@ class MyDeliveries(BoxLayout):
             self.ids.my_deliveries.add_widget(
                 ListItem(req, self._transition_to_detail_view))
 
+        if self.no_content_label is not None:
+            self.ids.content.remove_widget(self.no_content_label)
+
         # Add no content label if no content is shown
         if no_content:
             no_content_label = MDLabel(
+                id="no_content_label",
                 text="""You currently do not have any packages to deliver.\n
                 Accept deliveries by searching for them.                  """,
                 size_hint_y=9,
                 halign="center",
                 font_style='Subtitle1')
-            self.ids.content.add_widget(no_content_label)
+            self.ids.content.add_widget(self.no_content_label)
 
         self.content = self.ids.content
         print("------------------------")

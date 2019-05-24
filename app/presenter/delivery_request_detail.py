@@ -111,16 +111,18 @@ class DeliveryRequestDetail(BoxLayout):
                 'status': Status.CANCELLED_BY_OWNER,
                 'assistant': {}
             })
-        pass
+
+        toast("Delivery cancelled.")
 
     def cancel_delivery_by_assistant(self):
         """Cancel delivery as the current user, the assistant"""
         assistant = UserMeGetter.user
 
         with Firestore.batch('packages') as batch:
-            batch.update(self.request.uid,
-                         {'status': Status.AVAILABLE,
-                          'assistant': {}})
+            batch.update(self.request.uid, {
+                'status': Status.AVAILABLE,
+                'assistant': {}
+            })
 
         with Firestore.batch('users') as batch:
             batch.update(
