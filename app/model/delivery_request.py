@@ -11,7 +11,6 @@ class Status(IntEnum):
     ACCEPTED = 1
     TRAVELLING = 2
     DELIVERED = 3
-    CANCELLED_BY_ASSISTANT = 4
     CANCELLED_BY_OWNER = 5
 
 
@@ -53,9 +52,7 @@ class DeliveryRequest:
 
     def _to_text(self, status: Status) -> str:
         """Converts status into a pretty text"""
-        if status == Status.CANCELLED_BY_ASSISTANT:
-            return "Cancelled by assistant"
-        elif status == Status.CANCELLED_BY_OWNER:
+        if status == Status.CANCELLED_BY_OWNER:
             return "Cancelled by owner"
         else:
             return status.name.title()
