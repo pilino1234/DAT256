@@ -17,7 +17,7 @@ class Router(RelativeLayout):
         super(Router, self).__init__()
         self._routes = dict()
         self.history = []
-        Clock.schedule_once(self._init_ui, 0)
+        Clock.schedule_once(self._init_ui, 0.1)
 
     def _init_ui(self, _):
         if self.selected_route is not None:
@@ -32,7 +32,7 @@ class Router(RelativeLayout):
         # This is needed because the path property can't be read
         # until the route widget has been initialized.
 
-        Clock.schedule_once(lambda *_: self._add(route), 0)
+        Clock.schedule_once(lambda *_: self._add(route), 0.1)
 
     def _add(self, route):
         """Adds the route unless there is a path conflict"""
