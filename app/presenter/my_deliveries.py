@@ -42,8 +42,6 @@ class MyDeliveries(BoxLayout):
             data['status'] = Status(data['status'])
             delivery_requests.append(DeliveryRequest(**data))
 
-        print("UPdating content for user: " + UserMeGetter.user.name)
-
         # Fill delivery list
         self.ids.my_deliveries.clear_widgets()
         no_content = True
@@ -70,7 +68,6 @@ class MyDeliveries(BoxLayout):
             self.ids.content.add_widget(self.no_content_label)
 
         self.content = self.ids.content
-        print("------------------------")
 
     def _transition_to_detail_view(self, request: DeliveryRequest):
         """Show detail view for selected delivery request."""

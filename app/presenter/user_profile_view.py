@@ -55,7 +55,6 @@ class UserProfileView(RelativeLayout):
             self._back_button_handler = kwargs['back_button_handler']
         else:
             self.ids.scroll_view_container.remove_widget(self.ids.back_button)
-        print(self.user_viewing)
         self.user_viewing.on_update(self.update_fields)
         self._init_content()
 
