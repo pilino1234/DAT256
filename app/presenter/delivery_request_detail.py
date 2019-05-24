@@ -55,19 +55,13 @@ class DeliveryRequestDetail(BoxLayout):
         owner_widget.description = self.delivery_owner.name
 
     def _setup_ui(self, _):
-        image_source = Bucket.get_url(self.request.image_path)
-        photo_widget = self.ids.product_photo
+        self._setup_ui_img()
         button = MDRaisedButton(size_hint=(1, None))
         button_2 = MDRaisedButton(size_hint=(1, None))
-        if image_source:
-            photo_widget.source = image_source
-        else:
-            photo_widget.parent.remove_widget(photo_widget)
-
         if self.is_owner:
 
             if self.request.status == Status.AVAILABLE \
-                or self.request.status == Status.ACCEPTED:
+               or self.request.status == Status.ACCEPTED:
                 button_2.text = "Cancel package"
                 button_2.on_release = self.cancel_delivery_by_owner
             if self.request.status == Status.ACCEPTED:
@@ -96,10 +90,16 @@ class DeliveryRequestDetail(BoxLayout):
             button.size_hint_x = 0.5
             button_2.size_hint_x = 0.5
 
+    def _setup_ui_img(self):
+        image_source = Bucket.get_url(self.request.image_path)
+        photo_widget = self.ids.product_photo
+        if image_source:
+            photo_widget.source = image_source
+        else:
+            photo_widget.parent.remove_widget(photo_widget)
+
     def cancel_delivery_by_owner(self):
         """Cancel delivery as the current user, the owner"""
-        new_status = Status.AVAILABLE
-
         if self.request.status == Status.ACCEPTED:
             assistant_uid = self.request.assistant.uid
             assistant = UserGetter.get_by_id(assistant_uid)
