@@ -14,8 +14,9 @@ class RequestGetterTest(unittest.TestCase):
         delivery_requests = DeliveryRequestGetter.query(
             u'owner.uid', u'==', u'xUQeyplJshTzco4vyHHVoytT3FD2')
 
-        self.assertGreaterEqual(
-            len(delivery_requests), 1, msg="Expected at least 1 match.")
+        self.assertGreaterEqual(len(delivery_requests),
+                                1,
+                                msg="Expected at least 1 match.")
 
         # Clean up DRs
         for dr in delivery_requests:
@@ -32,14 +33,12 @@ class RequestGetterTest(unittest.TestCase):
             uid='DLpVc0QmbOHzfDo24Hpp',
             item='Xbox controller',
             description='I AM USED FOR TESTS. DO NOT REMOVE',
-            origin=Location(
-                "Odenvägen 1, SE-194 63 Odenslunda, Sweden",
-                latitude=59.51224,
-                longitude=17.93536).to_dict(),
-            destination=Location(
-                "Rolsmo 1, SE-360 24 Linneryd, Sweden",
-                latitude=56.64989,
-                longitude=15.16624).to_dict(),
+            origin=Location("Odenvägen 1, SE-194 63 Odenslunda, Sweden",
+                            latitude=59.51224,
+                            longitude=17.93536).to_dict(),
+            destination=Location("Rolsmo 1, SE-360 24 Linneryd, Sweden",
+                                 latitude=56.64989,
+                                 longitude=15.16624).to_dict(),
             reward=123,
             weight=0,
             fragile=False,
@@ -60,14 +59,12 @@ class RequestGetterTest(unittest.TestCase):
             uid='DLpVc0QmbOHzfDo24Hpp',
             item='Xbox controller',
             description='I AM USED FOR TESTS. DO NOT REMOVE',
-            origin=Location(
-                name="Odenvägen 1, SE-194 63 Odenslunda, Sweden",
-                latitude=59.51224,
-                longitude=17.93536).to_dict(),
-            destination=Location(
-                name="Rolsmo 1, SE-360 24 Linneryd, Sweden",
-                latitude=56.64989,
-                longitude=15.16624).to_dict(),
+            origin=Location(name="Odenvägen 1, SE-194 63 Odenslunda, Sweden",
+                            latitude=59.51224,
+                            longitude=17.93536).to_dict(),
+            destination=Location(name="Rolsmo 1, SE-360 24 Linneryd, Sweden",
+                                 latitude=56.64989,
+                                 longitude=15.16624).to_dict(),
             reward=123,
             weight=0,
             fragile=False,

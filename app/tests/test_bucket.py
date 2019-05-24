@@ -21,9 +21,8 @@ class BucketTest(unittest.TestCase):
         allowed_characters = string.ascii_letters + string.digits
         self.assertTrue(all(letter in allowed_characters for letter in auto))
 
-    @unittest.skipUnless(
-        os.path.exists("app/assets/jigglypuff.png"),
-        "Could not find assets for test")
+    @unittest.skipUnless(os.path.exists("app/assets/jigglypuff.png"),
+                         "Could not find assets for test")
     def test_upload_download_get_url_and_delete(self):
         jigglypuff_blob_name = Bucket.upload("app/assets/jigglypuff.png")
         self.assertIsNotNone(jigglypuff_blob_name)
