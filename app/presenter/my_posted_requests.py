@@ -42,6 +42,9 @@ class MyPostedRequests(BoxLayout):
             data = doc.to_dict()
             data['uid'] = doc.id
             data['status'] = Status(data['status'])
+            if data['status'] == Status.CANCELLED_BY_OWNER:
+                continue
+
             delivery_requests.append(DeliveryRequest(**data))
 
         # Fill delivery list
