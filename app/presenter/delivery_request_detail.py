@@ -114,9 +114,9 @@ class DeliveryRequestDetail(BoxLayout):
                     'assistant': {}
                 })
 
-            with Firestore.batch('users/' + assistant_uid + "/deliveries") as batch:
+            with Firestore.batch('users/' + assistant_uid +
+                                 "/deliveries") as batch:
                 batch.delete(self.request.uid)
-
 
         elif self.request.status == Status.AVAILABLE:
             with Firestore.batch('packages') as batch:
@@ -147,7 +147,14 @@ class DeliveryRequestDetail(BoxLayout):
                 UserMeGetter._user_id,
                 {'balance': assistant.balance + self.request.money_lock})
 
-        with Firestore.batch('users/' + UserMeGetter._user_id + "/deliveries") as batch:
+        owner_uid = self.request.assistant.uid
+        owner = UserGetter.get_by_id(owner_uid)
+        with Firestore.batch('users') as batch:
+            batch.update(owner_uid,
+                         {'balance': owner.balance + self.request.reward})
+
+        with Firestore.batch('users/' + UserMeGetter._user_id +
+                             "/deliveries") as batch:
             batch.delete(self.request.uid)
 
         toast("Delivery cancelled.")
