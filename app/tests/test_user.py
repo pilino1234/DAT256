@@ -9,37 +9,31 @@ from model.user_getter import UserGetter
 
 class UserTest(unittest.TestCase):
     def test_equal(self):
-        u1 = User("",
-                  "User1",
-                  "email@example.com",
-                  "1234567890",
-                  "",
-                  balance=0)
+        u1 = User(
+            "", "User1", "email@example.com", "1234567890", "", balance=0)
 
-        u2 = User("",
-                  "User2",
-                  "email@example.com",
-                  "0987654321",
-                  "avatar_binary_string_stuff",
-                  balance=10)
+        u2 = User(
+            "",
+            "User2",
+            "email@example.com",
+            "0987654321",
+            "avatar_binary_string_stuff",
+            balance=10)
 
         self.assertEqual(u1, u2)
         self.assertEqual(u2, u1)
 
     def test_not_equal(self):
-        u1 = User("",
-                  "User1",
-                  "email@example.com",
-                  "1234567890",
-                  "",
-                  balance=0)
+        u1 = User(
+            "", "User1", "email@example.com", "1234567890", "", balance=0)
 
-        u2 = User("",
-                  "User1",
-                  "different_email@example.com",
-                  "1234567890",
-                  "",
-                  balance=0)
+        u2 = User(
+            "",
+            "User1",
+            "different_email@example.com",
+            "1234567890",
+            "",
+            balance=0)
 
         self.assertNotEqual(u1, u2)
         self.assertNotEqual(u2, u1)
@@ -74,12 +68,8 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, user_balance)
 
     def test_withdraw_more_than_balance(self):
-        user = User("",
-                    "User1",
-                    "email@example.com",
-                    "1234567890",
-                    "",
-                    balance=100)
+        user = User(
+            "", "User1", "email@example.com", "1234567890", "", balance=100)
 
         self.assertEqual(user.balance, 100)
         user.withdraw(1000000)
@@ -92,12 +82,14 @@ class UserTest(unittest.TestCase):
             "id",
             "item",
             "description\ntext",
-            origin=Location(name="Odenvägen 1, SE-194 63 Odenslunda, Sweden",
-                            latitude=59.51224,
-                            longitude=17.93536).to_dict(),
-            destination=Location(name="Rolsmo 1, SE-360 24 Linneryd, Sweden",
-                                 latitude=56.64989,
-                                 longitude=15.16624).to_dict(),
+            origin=Location(
+                name="Odenvägen 1, SE-194 63 Odenslunda, Sweden",
+                latitude=59.51224,
+                longitude=17.93536).to_dict(),
+            destination=Location(
+                name="Rolsmo 1, SE-360 24 Linneryd, Sweden",
+                latitude=56.64989,
+                longitude=15.16624).to_dict(),
             reward=100,
             weight=2,
             fragile=True,
@@ -115,24 +107,16 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user.balance, user_balance - 100)
 
     def test_to_string(self):
-        user = User("",
-                    "User1",
-                    "email@example.com",
-                    "1234567890",
-                    "",
-                    balance=100)
+        user = User(
+            "", "User1", "email@example.com", "1234567890", "", balance=100)
 
         expected = "User: User1, email@example.com, 1234567890, Avatar: , Balance: 100"
 
         self.assertEqual(str(user), expected)
 
     def test_to_minified(self):
-        user = User("uid",
-                    "User1",
-                    "email@example.com",
-                    "1234567890",
-                    "",
-                    balance=100)
+        user = User(
+            "uid", "User1", "email@example.com", "1234567890", "", balance=100)
 
         mini_user = user.to_minified()
 
