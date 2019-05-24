@@ -11,6 +11,7 @@ class Status(IntEnum):
     ACCEPTED = 1
     TRAVELLING = 2
     DELIVERED = 3
+    CANCELLED_BY_ASSISTANT = 4
 
 
 class DeliveryRequest:
@@ -48,6 +49,13 @@ class DeliveryRequest:
         self.weight_text = self._weight_props[weight].text
         self.weight_icon = self._weight_props[weight].icon
         self.status_text = self.status.name.title()
+
+    def _to_text(self, status: Status) -> str:
+        """Converts status into a pretty text"""
+        if status == Status.CANCELLED_BY_ASSISTANT:
+            return "Cancelled by assistant"
+        else:
+            return status.name.title()
 
     def __str__(self):
         """Format a delivery request for printing"""
