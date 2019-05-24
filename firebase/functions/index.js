@@ -26,7 +26,7 @@ exports.updateMinifiedUsers = functions.firestore
             newMinifiedUser
         );
 
-        updateMinifiedUsersDeliveres(
+        updateMinifiedUsersDeliveries(
             change.after.ref,
             newMinifiedUser
         );
@@ -77,12 +77,16 @@ function updateUsersPackages(data, packageId){
 
     updateUserPackage(ownerMinifiedUser.uid, packageId, data);
     if(assistantMinifiedUser !== undefined && assistantMinifiedUser.uid !== null){
-        updateUserPackage(assistantMinifiedUser.uid, packageId, data);
+        updateUserDelivery(assistantMinifiedUser.uid, packageId, data);
     }
 }
 
 function updateUserPackage(userId, packageId, packageData){
     admin.firestore().collection('users').doc(userId).collection('packages').doc(packageId).set(packageData);
+}
+
+function updateUserDelivery(userId, packageId, packageData){
+    admin.firestore().collection('users').doc(userId).collection('deliveries').doc(packageId).set(packageData);
 }
 
 function updateMinifiedUsersPackages(ref, data) {
@@ -99,8 +103,8 @@ function updateMinifiedUsersPackages(ref, data) {
     });
 }
 
-function updateMinifiedUsersDeliveres(ref, data) {
-    ref.collection('deliveres').get().then(querySnapshot => {
+function updateMinifiedUsersDeliveries(ref, data) {
+    ref.collection('deliveries').get().then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
             documentSnapshot.ref.update({assistant: data});
         });
