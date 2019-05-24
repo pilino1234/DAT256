@@ -13,17 +13,17 @@ class PrimaryScreen(Screen):
     """
 
     def go_to_request_delivery(self):
+        """Opens the main view and navvigates to the 'request-delivery' tab"""
         self.ids.router.route("main")
-        Clock.schedule_once(self.open_my_packages_tab, 0)
+        Clock.schedule_once(self._open_my_packages_tab, 0)
         self.ids.sp.show()
 
-    def open_my_packages_tab(self, *_):
+    def _open_my_packages_tab(self, *_):
         navbar_with_fab = self.ids.navbar
         my_packages_btn = navbar_with_fab.ids.my_packages_btn
         navbar_with_fab._load_posted_requests(my_packages_btn)
         Clock.schedule_once(lambda *_: my_packages_btn.on_tab_press(), 0)
 
-
     def go_to_make_delivery(self):
+        """Opens the main view and navigates to the 'search' tab"""
         self.ids.router.route("main")
-
