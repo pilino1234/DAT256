@@ -11,6 +11,7 @@ from model.delivery_request import DeliveryRequest, Status
 from model.firebase.bucket import Bucket
 from model.firebase.firestore import Firestore
 from model.minified_user import MinifiedUser
+from model.user_getter import UserGetter
 from model.user_me_getter import UserMeGetter
 
 from presenter.minified_user_profile_view import MinifiedUserProfileView
@@ -54,32 +55,110 @@ class DeliveryRequestDetail(BoxLayout):
         owner_widget.description = self.delivery_owner.name
 
     def _setup_ui(self, _):
-        image_source = Bucket.get_url(self.request.image_path)
-        photo_widget = self.ids.product_photo
+        self._setup_ui_img()
         button = MDRaisedButton(size_hint=(1, None))
-        if image_source:
-            photo_widget.source = image_source
-        else:
-            photo_widget.parent.remove_widget(photo_widget)
-
+        button_2 = MDRaisedButton(size_hint=(1, None))
         if self.is_owner:
+
+            if self.request.status == Status.AVAILABLE \
+               or self.request.status == Status.ACCEPTED:
+                button_2.text = "Cancel package"
+                button_2.on_release = self.cancel_delivery_by_owner
             if self.request.status == Status.ACCEPTED:
                 button.text = "Confirm Pickup"
                 button.on_release = self.confirm_pickup
-                toast("Delivery picked up. Package is now traveling.")
             elif self.request.status == Status.TRAVELLING:
                 button.text = "Confirm Delivery"
                 button.on_release = self.confirm_delivery
-                toast("Package confirmed as delivered.")
 
         else:
             if self.request.status == Status.AVAILABLE:
                 button.text = "Accept Delivery"
                 button.on_release = self.accept_delivery
-                toast("Delivery accepted. See my deliveries.")
+            elif self.request.status == Status.ACCEPTED \
+                    and self.request.assistant.uid == UserMeGetter._user_id:
+                button.text = "Cancel delivery"
+                button.on_release = self.cancel_delivery_by_assistant
 
         if button.text != "":
             self.ids.stack.add_widget(button)
+
+        if button_2.text != "":
+            self.ids.stack.add_widget(button_2)
+
+        if button.text != "" and button_2.text != "":
+            button.size_hint_x = 0.5
+            button_2.size_hint_x = 0.5
+
+    def _setup_ui_img(self):
+        image_source = Bucket.get_url(self.request.image_path)
+        photo_widget = self.ids.product_photo
+        if image_source:
+            photo_widget.source = image_source
+        else:
+            photo_widget.parent.remove_widget(photo_widget)
+
+    def cancel_delivery_by_owner(self):
+        """Cancel delivery as the current user, the owner"""
+        if self.request.status == Status.ACCEPTED:
+            assistant_uid = self.request.assistant.uid
+            assistant = UserGetter.get_by_id(assistant_uid)
+            with Firestore.batch('users') as batch:
+                batch.update(
+                    assistant_uid,
+                    {'balance': assistant.balance + self.request.money_lock})
+
+            with Firestore.batch('packages') as batch:
+                batch.update(self.request.uid, {
+                    'status': Status.AVAILABLE,
+                    'assistant': {}
+                })
+
+            with Firestore.batch('users/' + assistant_uid +
+                                 "/deliveries") as batch:
+                batch.delete(self.request.uid)
+
+        elif self.request.status == Status.AVAILABLE:
+            with Firestore.batch('packages') as batch:
+                batch.update(self.request.uid, {
+                    'status': Status.CANCELLED_BY_OWNER,
+                })
+
+        with Firestore.batch('users') as batch:
+            batch.update(
+                UserMeGetter._user_id,
+                {'balance': UserMeGetter.user.balance + self.request.reward})
+
+        toast("Delivery cancelled.")
+        self._back_button_handler()
+
+    def cancel_delivery_by_assistant(self):
+        """Cancel delivery as the current user, the assistant"""
+        assistant = UserMeGetter.user
+
+        with Firestore.batch('packages') as batch:
+            batch.update(self.request.uid, {
+                'status': Status.AVAILABLE,
+                'assistant': {}
+            })
+
+        with Firestore.batch('users') as batch:
+            batch.update(
+                UserMeGetter._user_id,
+                {'balance': assistant.balance + self.request.money_lock})
+
+        owner_uid = self.request.assistant.uid
+        owner = UserGetter.get_by_id(owner_uid)
+        with Firestore.batch('users') as batch:
+            batch.update(owner_uid,
+                         {'balance': owner.balance + self.request.reward})
+
+        with Firestore.batch('users/' + UserMeGetter._user_id +
+                             "/deliveries") as batch:
+            batch.delete(self.request.uid)
+
+        toast("Delivery cancelled.")
+        self._back_button_handler()
 
     def accept_delivery(self):
         """Accept the delivery as the current user."""
@@ -88,6 +167,7 @@ class DeliveryRequestDetail(BoxLayout):
 
         # Not enough money
         if assistant_balance < self.request.money_lock:
+            toast("Insufficient balance to accept this delivery.")
             return
 
         with Firestore.batch('packages') as batch:
@@ -101,6 +181,7 @@ class DeliveryRequestDetail(BoxLayout):
                 assistant.uid,
                 {'balance': assistant_balance - self.request.money_lock})
 
+        toast("Delivery accepted. See my deliveries.")
         self._back_button_handler()
 
     def confirm_pickup(self):
@@ -109,6 +190,8 @@ class DeliveryRequestDetail(BoxLayout):
             batch.update(self.request.uid, {
                 'status': Status.TRAVELLING,
             })
+
+        toast("Delivery picked up. Package is now traveling.")
         self._back_button_handler()
 
     def confirm_delivery(self):
@@ -133,6 +216,8 @@ class DeliveryRequestDetail(BoxLayout):
                     assistant_balance + self.request.money_lock +
                     self.request.reward,
                 })
+
+        toast("Package confirmed as delivered.")
         self._back_button_handler()
 
     def _transition_to_user_profile(self, user):

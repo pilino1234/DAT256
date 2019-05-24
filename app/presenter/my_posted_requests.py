@@ -22,6 +22,8 @@ class MyPostedRequests(BoxLayout):
     Each request is represented with a ListItem.
     """
 
+    no_content_label = None
+
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(MyPostedRequests, self).__init__(**kwargs)
@@ -40,9 +42,10 @@ class MyPostedRequests(BoxLayout):
             data = doc.to_dict()
             data['uid'] = doc.id
             data['status'] = Status(data['status'])
-            delivery_requests.append(DeliveryRequest(**data))
+            if data['status'] == Status.CANCELLED_BY_OWNER:
+                continue
 
-        print("UPdating content for user: " + UserMeGetter.user.name)
+            delivery_requests.append(DeliveryRequest(**data))
 
         # Fill delivery list
         self.ids.my_requests.clear_widgets()
@@ -52,15 +55,19 @@ class MyPostedRequests(BoxLayout):
             self.ids.my_requests.add_widget(
                 MyPostedRequest(req, self._transition_to_detail_view))
 
+        if self.no_content_label is not None:
+            self.ids.content.remove_widget(self.no_content_label)
+
         # Add no content label if no content is shown
         if no_content:
-            no_content_label = MDLabel(
+            self.no_content_label = MDLabel(
+                id="no_content_label",
                 text="""You currently do not have any posted packages.\n
                 Request deliveries with the package button down below.             """,
                 size_hint_y=9,
                 halign="center",
                 font_style='Subtitle1')
-            self.ids.content.add_widget(no_content_label)
+            self.ids.content.add_widget(self.no_content_label)
 
     def _transition_to_detail_view(self, request: DeliveryRequest):
         """Show detail view for selected delivery request."""
