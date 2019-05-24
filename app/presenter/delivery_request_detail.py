@@ -98,6 +98,8 @@ class DeliveryRequestDetail(BoxLayout):
 
     def cancel_delivery_by_owner(self):
         """Cancel delivery as the current user, the owner"""
+        new_status = Status.AVAILABLE
+
         if self.request.status == Status.ACCEPTED:
             assistant_uid = self.request.assistant.uid
             assistant = UserGetter.get_by_id(assistant_uid)
@@ -106,11 +108,22 @@ class DeliveryRequestDetail(BoxLayout):
                     assistant_uid,
                     {'balance': assistant.balance + self.request.money_lock})
 
-        with Firestore.batch('packages') as batch:
-            batch.update(self.request.uid, {
-                'status': Status.CANCELLED_BY_OWNER,
-                'assistant': {}
-            })
+            with Firestore.batch('packages') as batch:
+                batch.update(self.request.uid, {
+                    'status': Status.AVAILABLE,
+                    'assistant': {}
+                })
+
+        elif self.request.status == Status.AVAILABLE:
+            with Firestore.batch('packages') as batch:
+                batch.update(self.request.uid, {
+                    'status': Status.CANCELLED_BY_OWNER,
+                })
+
+        with Firestore.batch('users') as batch:
+            batch.update(
+                UserMeGetter._user_id,
+                {'balance': UserMeGetter.user.balance + self.request.reward})
 
         toast("Delivery cancelled.")
         self._back_button_handler()
