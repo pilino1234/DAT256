@@ -55,7 +55,6 @@ class Router(RelativeLayout):
             window = app.root_window
             window.dispatch('on_resize', *window.system_size)
 
-
     def route(self, path: str):
         """Change the route of the router"""
         self._set_current_route(path)
