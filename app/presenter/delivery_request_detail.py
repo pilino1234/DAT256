@@ -11,6 +11,7 @@ from model.delivery_request import DeliveryRequest, Status
 from model.firebase.bucket import Bucket
 from model.firebase.firestore import Firestore
 from model.minified_user import MinifiedUser
+from model.user_getter import UserGetter
 from model.user_me_getter import UserMeGetter
 
 from presenter.minified_user_profile_view import MinifiedUserProfileView
@@ -57,12 +58,18 @@ class DeliveryRequestDetail(BoxLayout):
         image_source = Bucket.get_url(self.request.image_path)
         photo_widget = self.ids.product_photo
         button = MDRaisedButton(size_hint=(1, None))
+        button_2 = MDRaisedButton(size_hint=(1, None))
         if image_source:
             photo_widget.source = image_source
         else:
             photo_widget.parent.remove_widget(photo_widget)
 
         if self.is_owner:
+
+            if self.request.status == Status.AVAILABLE \
+                or self.request.status == Status.ACCEPTED:
+                button_2.text = "Cancel package"
+                button_2.on_release = self.cancel_delivery_by_owner
             if self.request.status == Status.ACCEPTED:
                 button.text = "Confirm Pickup"
                 button.on_release = self.confirm_pickup
@@ -85,6 +92,29 @@ class DeliveryRequestDetail(BoxLayout):
 
         if button.text != "":
             self.ids.stack.add_widget(button)
+
+        if button_2.text != "":
+            self.ids.stack.add_widget(button_2)
+
+        if button.text != "" and button_2.text != "":
+            button.size_hint_x = 0.5
+            button_2.size_hint_x = 0.5
+
+    def cancel_delivery_by_owner(self):
+        """Cancel delivery as the current user, the owner"""
+        if(self.request.status == Status.ACCEPTED):
+            assistant_uid = self.request.assistant.uid
+            assistant = UserGetter.get_by_id(assistant_uid)
+            with Firestore.batch('users') as batch:
+                batch.update(
+                    assistant_uid,
+                    {'balance': assistant.balance + self.request.money_lock})
+
+        with Firestore.batch('packages') as batch:
+            batch.update(self.request.uid,
+                         {'status': Status.CANCELLED_BY_OWNER,
+                          'assistant': {}})
+        pass
 
     def cancel_delivery_by_assistant(self):
         """Cancel delivery as the current user, the assistant"""
