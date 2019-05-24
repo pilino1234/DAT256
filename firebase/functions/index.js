@@ -76,8 +76,10 @@ function updateUsersPackages(data, packageId){
     const assistantMinifiedUser = data.assistant;
 
     updateUserPackage(ownerMinifiedUser.uid, packageId, data);
-    if(assistantMinifiedUser !== undefined && assistantMinifiedUser.uid !== null){
+    try{
         updateUserDelivery(assistantMinifiedUser.uid, packageId, data);
+    }catch(e){
+        console.log("heeej");
     }
 }
 
@@ -92,9 +94,6 @@ function updateUserDelivery(userId, packageId, packageData){
 function updateMinifiedUsersPackages(ref, data) {
     ref.collection('packages').get().then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
-            console.log("Updating package in user");
-            console.log(documentSnapshot.ref.path);
-            console.log(data);
             documentSnapshot.ref.update({owner: data});
         });
         return 0;
