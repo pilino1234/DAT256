@@ -46,12 +46,16 @@ class MyPostedRequests(BoxLayout):
         self.ids.my_requests.clear_widgets()
         no_content = True
         for req in delivery_requests:
+            print("CONTENT")
             no_content = False
             self.ids.my_requests.add_widget(
                 MyPostedRequest(req, self._transition_to_detail_view))
 
+        print("No content?")
+        print(no_content)
         # Add no content label if no content is shown
         if no_content:
+            print("No content!")
             no_content_label = MDLabel(
                 text="""You currently do not have any posted packages.\n
                 Request deliveries with the package button down below.             """,
