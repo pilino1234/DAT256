@@ -83,6 +83,17 @@ class UserProfileView(RelativeLayout):
 
         self.widget_input = AnswerInput()
 
+        self.sign_out_button = MDRaisedButton(
+            text="Sign out",
+            on_release=lambda *_: self.logout(),
+            md_bg_color=[255 / 255, 0 / 255, 0 / 255, 1],
+            pos_hint={
+                'center_x': 0.5,
+                'center_y': .05
+            })
+
+        self.ids.scroll_view_container.add_widget(self.sign_out_button)
+
     def update_fields(self):
         """Update displayed information from the user data."""
         self.name_field.set_data(self.user_viewing.name)
