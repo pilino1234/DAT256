@@ -36,8 +36,8 @@ class Bucket:
 
         if blob is None:
             return None
-        return blob.generate_signed_url(
-            datetime.timedelta(seconds=300), method='GET')
+        return blob.generate_signed_url(datetime.timedelta(seconds=300),
+                                        method='GET')
 
     @staticmethod
     def upload(path_to_file: str):
