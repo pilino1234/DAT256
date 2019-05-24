@@ -1,3 +1,4 @@
+from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty, Clock
 from kivy.uix.relativelayout import RelativeLayout
@@ -17,7 +18,7 @@ class Router(RelativeLayout):
         super(Router, self).__init__()
         self._routes = dict()
         self.history = []
-        Clock.schedule_once(self._init_ui, 0.1)
+        Clock.schedule_once(self._init_ui, 0)
 
     def _init_ui(self, _):
         if self.selected_route is not None:
@@ -32,7 +33,7 @@ class Router(RelativeLayout):
         # This is needed because the path property can't be read
         # until the route widget has been initialized.
 
-        Clock.schedule_once(lambda *_: self._add(route), 0.1)
+        Clock.schedule_once(lambda *_: self._add(route), 0)
 
     def _add(self, route):
         """Adds the route unless there is a path conflict"""
@@ -50,6 +51,10 @@ class Router(RelativeLayout):
         if route_path in self._routes:
             route = self._routes[route_path]
             super(Router, self).add_widget(route)
+            app = App.get_running_app()
+            window = app.root_window
+            window.dispatch('on_resize', *window.system_size)
+
 
     def route(self, path: str):
         """Change the route of the router"""
