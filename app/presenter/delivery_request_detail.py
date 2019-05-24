@@ -113,6 +113,7 @@ class DeliveryRequestDetail(BoxLayout):
             })
 
         toast("Delivery cancelled.")
+        self._back_button_handler()
 
     def cancel_delivery_by_assistant(self):
         """Cancel delivery as the current user, the assistant"""
@@ -129,7 +130,8 @@ class DeliveryRequestDetail(BoxLayout):
                 UserMeGetter._user_id,
                 {'balance': assistant.balance + self.request.money_lock})
 
-        toast("Delivery cancelled by assistant")
+        toast("Delivery cancelled.")
+        self._back_button_handler()
 
     def accept_delivery(self):
         """Accept the delivery as the current user."""
@@ -138,6 +140,7 @@ class DeliveryRequestDetail(BoxLayout):
 
         # Not enough money
         if assistant_balance < self.request.money_lock:
+            toast("Insufficient balance to accept this delivery.")
             return
 
         with Firestore.batch('packages') as batch:
