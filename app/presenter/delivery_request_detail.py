@@ -122,7 +122,8 @@ class DeliveryRequestDetail(BoxLayout):
 
         with Firestore.batch('packages') as batch:
             batch.update(self.request.uid,
-                         {'status': Status.AVAILABLE})
+                         {'status': Status.AVAILABLE,
+                          'assistant': {}})
 
         with Firestore.batch('users') as batch:
             batch.update(
