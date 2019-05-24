@@ -1,8 +1,10 @@
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, Clock
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.tabs import MDBottomNavigationItem
 from kivymd.theming import ThemableBehavior
 from presenter.my_posted_requests import MyPostedRequests
+from presenter.my_deliveries import MyDeliveries
+from presenter.user_profile_view import UserProfileView
 
 from kivy.lang import Builder
 Builder.load_file("view/navbar.kv")
@@ -22,12 +24,26 @@ class NavBarWithFAB(BoxLayout, ThemableBehavior):
     def __init__(self, **kwargs):
         """Initialize the navigation bar"""
         super(NavBarWithFAB, self).__init__(**kwargs)
+        Clock.schedule_once(self.init_ui, 0)
+
+    def init_ui(self, _):
+        """Initializes ui for navbar"""
         self.ids.fab.on_release = self.fab_callback
 
     def _load_posted_requests(self, tab):
         if tab not in self.__tab_loaded:
             self.__tab_loaded.add(tab)
             tab.add_widget(MyPostedRequests())
+
+    def _load_my_deliveries(self, tab):
+        if tab not in self.__tab_loaded:
+            self.__tab_loaded.add(tab)
+            tab.add_widget(MyDeliveries())
+
+    def _load_profile_view(self, tab):
+        if tab not in self.__tab_loaded:
+            self.__tab_loaded.add(tab)
+            tab.add_widget(UserProfileView())
 
 
 class BlankNavItem(MDBottomNavigationItem):

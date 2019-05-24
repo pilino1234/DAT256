@@ -4,13 +4,9 @@ language: python
 
 python: "3.7"
 
-services:
-  - docker
-
 stages:
-  - tests
-  - name: buildeploy
-    if: (branch IN (master, dev) AND type != pull_request) OR tag is present
+  - name: tests
+    if: type == pull_request OR branch IN (master, dev)
 
 jobs:
   include:
@@ -19,19 +15,8 @@ jobs:
       script: bash ci/run_yapf.sh
     - script: bash ci/run_prospector.sh
       name: "Prospector"
-    - script: bash ci/run_nose.sh
+    - script: bash ci/run_tests.sh
       name: "Unit tests"
-    - stage: buildeploy
-      name: "Build Android APK and Deploy to GitHub Release"
-      script: bash ci/build_apk.sh
-      deploy:
-        provider: releases
-        api_key: $GITHUB_RELEASE_TOKEN
-        file_glob: true
-        file: app/bin/*
-        skip_cleanup: true
-        on:
-          all_branches: true # This stage is only triggered for certain branches anyway
 
 script: ignore
 

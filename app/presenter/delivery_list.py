@@ -1,106 +1,156 @@
+import google
 from kivy.lang import Builder
 from kivy.properties import NumericProperty
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivymd.button import MDIconButton, MDRaisedButton
 from kivymd.list import ILeftBodyTouch, OneLineIconListItem
+from kivymd.updatespinner import MDUpdateSpinner
 from kivy.metrics import dp
 from kivy.clock import Clock
-from model.delivery_request import DeliveryRequest
+from kivy.animation import Animation
+from kivy.properties import ObjectProperty
+from kivy.app import App
+from kivymd.toast import toast
+
+from typing import Callable
+from kivymd.label import MDLabel
+
+from presenter.delivery_request_detail import DeliveryRequestDetail
+from presenter.utils.suggester import LocationSuggester
+
+from model.delivery_request import DeliveryRequest, Status
+from model.delivery_request_getter import DeliveryRequestGetter
 
 Builder.load_file("view/delivery_list.kv")
-
-_delivery_requests = [
-    DeliveryRequest("Package1",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=0,
-                    fragile=False,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package2",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=1,
-                    fragile=False,
-                    status=1,
-                    money_lock=0),
-    DeliveryRequest("Package3",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=2,
-                    fragile=True,
-                    status=2,
-                    money_lock=0),
-    DeliveryRequest("Package4",
-                    "Some description.",
-                    "Brunnsparken",
-                    "Frölunda Torg",
-                    reward=20,
-                    weight=3,
-                    fragile=False,
-                    status=3,
-                    money_lock=0),
-    DeliveryRequest("Package5",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=30,
-                    weight=1,
-                    fragile=False,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package6",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=40,
-                    weight=1,
-                    fragile=True,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package7",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=50,
-                    weight=1,
-                    fragile=True,
-                    status=0,
-                    money_lock=0),
-    DeliveryRequest("Package8",
-                    "Some description.",
-                    "Torslanda",
-                    "Chalmers",
-                    reward=60,
-                    weight=1,
-                    fragile=False,
-                    status=0,
-                    money_lock=0),
-]
+Builder.load_file("view/filtering_delivery.kv")
 
 
-class DeliveryList(BoxLayout):
+class DeliveryList(RelativeLayout):
     """
     Widget that lists all available delivery requests.
 
     Each request is represented with a ListItem.
     """
 
+    delivery_list = ObjectProperty(BoxLayout)
+    deliveries = [None]
+    filter_widget = None
+    showing_filter = True
+    previous_search_params = None
+
     def __init__(self, **kwargs):
         """Initializes the delivery list"""
         super(DeliveryList, self).__init__(**kwargs)
-        Clock.schedule_once(self._init_content)
+        self.filter_widget = Filter()
+        Clock.schedule_once(lambda x: self.add_widget(self.filter_widget))
 
-    def _init_content(self, delta_time):
-        """Fill delivery list"""
-        for req in _delivery_requests:
-            self.ids.available_requests.add_widget(ListItem(req))
+    def _filter_content(self, walk, car, truck, fragile):
+        """Filters the delivery list."""
+        if not App.get_running_app().is_authenticated:
+            print("User not authenticated")
+            return
+
+        self.previous_search_params = [walk, car, truck, fragile]
+        try:
+            delivery_requests = DeliveryRequestGetter.query(
+                u'status', u'==', Status.AVAILABLE)
+        except google.api_core.exceptions.Unauthenticated:
+            print("UNAUTHENTICATED WHEN TRYING TO FETCH PACKAGES")
+            return
+
+        origin = self.filter_widget.from_suggester.currently_used_suggestion
+        destination = self.filter_widget.to_suggester.currently_used_suggestion
+
+        self.ids.available_requests.clear_widgets()
+
+        no_content = True
+
+        for delivery_request in delivery_requests:
+            if self.passes_filter(delivery_request, walk, car, truck, fragile,
+                                  origin, destination):
+                list_item = ListItem(delivery_request,
+                                     self._transition_to_detail_view)
+                self.ids.available_requests.add_widget(list_item)
+                no_content = False
+
+        # Add no content label if no content is shown
+        if no_content:
+            no_content_label = MDLabel(
+                text="No deliveries found. Try searching for something else.",
+                halign="center",
+                font_style='Subtitle1')
+            self.ids.delivery_list.add_widget(no_content_label)
+
+        self.delivery_list = self.ids.delivery_list
+
+        self.hide_filter()
+
+    def passes_filter(self, delivery_request, walk, car, truck, fragile,
+                      origin, destination):
+        """Checks if a delivery request passes the filter."""
+        checks = [walk, car, truck]
+
+        # Pass checkboxes
+        if not checks[delivery_request.weight]:
+            return False
+
+        # Matches fragile
+        if delivery_request.fragile and not fragile:
+            return False
+
+        if origin is not None and not delivery_request.origin.is_close_to(
+                origin):
+            return False
+
+        if destination is not None and not delivery_request.destination.is_close_to(
+                destination):
+            return False
+
+        return True
+
+    def _update_content(self, spinner):
+        if self.previous_search_params is None:
+            return
+        self.tick = 0
+
+        def close_spinner(interval):
+            spinner.update = True
+            toast("Search results updated.")
+
+        Clock.schedule_once(close_spinner, 2)
+        self.ids.available_requests.clear_widgets()
+        self._filter_content(*self.previous_search_params)
+
+    def _transition_to_detail_view(self, request: DeliveryRequest):
+        """Show detail view for selected delivery request."""
+        self.clear_widgets()
+        self.add_widget(
+            DeliveryRequestDetail(
+                back_button_handler=self._transition_to_delivery_list,
+                request=request))
+
+    def _transition_to_delivery_list(self):
+        """Show list of all available deliveries."""
+        self.clear_widgets()
+        self.add_widget(self.delivery_list)
+
+    def show_filter(self):
+        """Show the filter widget"""
+        if self.showing_filter:
+            return
+        self.showing_filter = True
+
+        self.ids.available_requests.clear_widgets()
+        self.add_widget(self.filter_widget)
+
+    def hide_filter(self):
+        """Hide the filter widget"""
+        if not self.showing_filter:
+            return
+        self.showing_filter = False
+
+        self.remove_widget(self.filter_widget)
 
 
 class WhiteCardButton(MDRaisedButton):
@@ -112,13 +162,21 @@ class WhiteCardButton(MDRaisedButton):
 class ListItem(WhiteCardButton):
     """Widget that represents all the content of a list item."""
 
-    def __init__(self, delivery_request, **kwargs):
+    request = ObjectProperty(None)
+    tap_callback = ObjectProperty(None)
+
+    def __init__(self, delivery_request: DeliveryRequest,
+                 tap_callback: Callable, **kwargs):
         """Initializes the delivery list"""
         super(ListItem, self).__init__(**kwargs)
-        self.ids.origin.text = delivery_request.origin
-        self.ids.destination.text = delivery_request.destination
-        self.ids.distance.text = delivery_request.get_distance_pretty()
-        self.ids.reward.text = delivery_request.get_reward_pretty()
+
+        self.tap_callback = tap_callback
+        self.request = delivery_request
+        self.ids.item.text = delivery_request.item
+        self.ids.origin.text = delivery_request.origin.name
+        self.ids.destination.text = delivery_request.destination.name
+        self.ids.distance.text = delivery_request.distance_pretty
+        self.ids.reward.text = str(delivery_request.reward)
         self.ids.weight.text = delivery_request.weight_text
         self.ids.weight_icon.icon = delivery_request.weight_icon
 
@@ -159,3 +217,69 @@ class IconWithText(OneLineIconListItem):
 
     def on_touch_up(self, *args):  # noqa: D102
         pass
+
+
+class UpdateSpinner(MDUpdateSpinner):
+    """MDUpdateSpinner, but only shows up when pulling downwards."""
+
+    scroll = ObjectProperty()
+
+    def on_touch_move(self, touch):
+        """Modifies the base method so that the user must pull downards."""
+        if self.scroll.scroll_y < 1:
+            return
+
+        dy = touch.push_attrs_stack[0][1][4]
+        if touch.grab_current is self and not self._spinner_work and dy < 0.0:
+            self._step += 18
+            if self._step > dp(210):
+                self._spinner_work = True
+                self.start_anim_spinner()
+                return
+            self.ids.body_spinner.y -= 18
+
+    def start_anim_spinner(self):
+        """Modifies the base method so that the spinner stays a bit lower when updating."""
+        spinner = self.ids.body_spinner
+        Animation(y=spinner.y + 35, d=.8, t='out_elastic').start(spinner)
+
+        def wait_updates(interval):
+            if self.update:
+                self.transform_hide_anim_spinner()
+                Clock.unschedule(wait_updates)
+
+        Clock.schedule_interval(wait_updates, .1)
+        self.event_update(self)
+
+
+class Filter(BoxLayout):
+    """The filter widget"""
+
+    from_suggester = None
+    to_suggester = None
+
+    def __init__(self, **kwargs):
+        """Initializes the delivery list"""
+        super(Filter, self).__init__(**kwargs)
+        Clock.schedule_once(lambda x: self._init_content())
+
+    def _init_content(self):
+        self.from_suggester = LocationSuggester(self.ids.input_from)
+        self.to_suggester = LocationSuggester(self.ids.input_to)
+        self._update_search_button()
+
+    def _on_search_from(self):
+        if self.from_suggester is not None:
+            self.from_suggester.on_search()
+            self._update_search_button()
+
+    def _on_search_to(self):
+        if self.to_suggester is not None:
+            self.to_suggester.on_search()
+            self._update_search_button()
+
+    def _update_search_button(self):
+        from_ok = self.from_suggester.currently_used_suggestion is not None
+        to_ok = self.to_suggester.currently_used_suggestion is not None
+        enable = not (from_ok or to_ok)
+        self.ids.search_button.disabled = enable

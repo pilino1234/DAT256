@@ -1,28 +1,36 @@
+#:import UpdateSpinner presenter.delivery_list
+
 <DeliveryList>:
-    MDTabbedPanel:
-        MDTab:
-            name: 'list'
-            text: "List"
+    FloatLayout:
+        id: delivery_list
 
-            BoxLayout:
-                ScrollView:
-                    do_scroll_x: False
-                    do_scroll_y: True
+        BoxLayout:
+            orientation: 'vertical'
+            MDToolbar:
+                title: 'Available Packages'
+                md_bg_color: app.theme_cls.primary_color
+                elevation: 10
+                height: dp(80)
+                left_action_items: [['arrow-left', lambda x: root.show_filter()]]
 
-                    BoxLayout:
-                        id: available_requests
-                        size_hint_y: None
-                        height: self.minimum_height
-                        orientation: 'vertical'
-                        padding: 30
-                        spacing: 30
+            ScrollView:
+                id: scroll_view
+                do_scroll_x: False
+                do_scroll_y: True
 
-        MDTab:
-            name: 'map'
-            text: "Map"
+                BoxLayout:
+                    id: available_requests
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    padding: dp(30)
+                    spacing: dp(30)
 
-            MDLabel:
-                text: "Show map here"
+        FloatLayout:
+            UpdateSpinner:
+                scroll: scroll_view
+                event_update: lambda x: root._update_content(self)
+
 
 
 <WhiteCardButton>
@@ -36,10 +44,11 @@
 
 <ListItem>:
     size_hint: (1, None)
-    height: 180
+    height: dp(180)
+    on_release: self.tap_callback(self.request)
 
     RelativeLayout:
-        size: 40, 40
+        size: dp(40), dp(40)
         HollowIcon:
             pos: self.parent.width-self.width, self.parent.height/3
             icon: 'chevron-right'
@@ -48,13 +57,13 @@
 
         MDLabel:
             id: item
-            pos: 20, self.parent.height/4
+            pos: dp(20), self.parent.height/4
             font_style: 'H6'
             theme_text_color: 'Primary'
             text: "Small Cardboard Box"
 
         BoxLayout:
-            pos: 0, 70
+            pos: 0, dp(70)
             orientation: 'horizontal'
 
             IconWithText:
@@ -76,7 +85,7 @@
                     text_color: 152/255, 224/255, 232/255, 1
 
         BoxLayout:
-            pos: 0, 20
+            pos: 0, dp(20)
             orientation: 'horizontal'
 
             IconWithText:

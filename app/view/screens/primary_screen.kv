@@ -1,0 +1,19 @@
+#:import WelcomeView presenter.welcome_view
+
+<PrimaryScreen>
+    Router:
+        id: router
+        selected_route: "welcome"
+        Route:
+            path: "welcome"
+            WelcomeView:
+                deliver_button_callback: root.go_to_make_delivery
+                request_delivery_button_callback: root.go_to_request_delivery
+        Route:
+            path: "main"
+            NavBarWithFAB:
+                id: navbar
+                fab_callback: lambda: root.ids.sp.show()
+
+    SlidingPopup:
+        id: sp

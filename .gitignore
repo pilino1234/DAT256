@@ -1,4 +1,7 @@
 .mypy_cache/
 .coverage
 coverage.xml
-.idea/
+.idea
+keyfile.json
+credentials.json
+

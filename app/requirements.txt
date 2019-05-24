@@ -1,8 +1,7 @@
-cython==0.28.6
-pygame
 kivy
-sphinx
-buildozer
 git+http://github.com/HeaTTheatR/KivyMD@08692d7b51927ffab7124972c6214fb36492bc85#egg=kivymd
-docutils
-pygments
+pygame
+google-cloud-firestore==1.2.0
+google-cloud-storage==1.16.0
+pillow
+geopy

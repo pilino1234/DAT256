@@ -1,4 +1,5 @@
 from kivy.animation import Animation
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.floatlayout import FloatLayout
@@ -13,6 +14,10 @@ class SlidingPopup(FloatLayout):
     def __init__(self, **kwargs):
         """Initializes the sliding popup"""
         super(SlidingPopup, self).__init__(**kwargs)
+        Clock.schedule_once(self.init_ui, 0)
+
+    def init_ui(self, _):
+        """Initializes the ui for sliding popup"""
         self.bg: BackgroundDim = self.ids.background_dim
         self.bg.on_release = lambda: self.hide()
         self.card: Widget = self.ids.popup_card

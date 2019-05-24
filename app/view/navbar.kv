@@ -1,9 +1,7 @@
 #:import BlankNavItem presenter.navbar
-#:import CalculatorWidget presenter.calculator
 #:import DeliveryList presenter.delivery_list
-#:import MyPostedRequests presenter.my_posted_requests
 #:import BlankNavItem presenter.navbar
-#:import DetailView presenter.detail_view
+
 
 <NavBarWithFAB>:
     fab_diameter: 64
@@ -13,35 +11,37 @@
             id: navbar
 
             MDBottomNavigationItem:
-                name: 'map'
-                text: 'Map'
-                icon: 'map-marker'
+                name: 'search'
+                text: 'Search'
+                icon: 'magnify'
 
                 DeliveryList:
 
             MDBottomNavigationItem:
+                id: my_packages_btn
                 name: 'my-packages'
                 text: 'My Packages'
                 icon: 'package'
 
-                DetailView:
+                on_tab_press: root._load_posted_requests(self)
 
             BlankNavItem:
                 icon: 'dots-horizontal'
 
             MDBottomNavigationItem:
+                id: my_deliveries_btn
                 name: 'my-deliveries'
                 text: 'My Deliveries'
-                icon: 'car'
+                icon: 'bike'
 
-                on_tab_press: root._load_posted_requests(self)
+                on_tab_press: root._load_my_deliveries(self)
 
             MDBottomNavigationItem:
                 name: 'my-account'
                 text: 'My Account'
                 icon: 'account-circle'
 
-                CalculatorWidget:
+                on_tab_press: root._load_profile_view(self)
 
         MDFloatingActionButton:
             id: fab

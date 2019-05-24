@@ -8,9 +8,3 @@ venv/
 
 # PyCharm stuff
 .idea/
-
-# Buildozer
-.buildozer/
-bin/
-
-keyfile.json
