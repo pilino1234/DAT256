@@ -41,7 +41,7 @@ Repository root
 │       └── utils
 ├── ci  -- Scripts for the CI pipeline
 ├── documents  -- Documentation of the team's process and reflections
-│   ├── group-reflections  -- The weekly team reflections, and the final reflection
+│   ├── group-reflections  -- The weekly team reflections
 │   ├── individual-reflections  -- The weekly individual reflections for each team member
 │   │   ├── Elias
 │   │   ├── Jacob
@@ -80,7 +80,7 @@ Repository root
 
 ### Reflections
 `documents/group-reflections/`: Team reflections  
-`documents/group-reflections/Final Reflection.pdf`: Final reflection report  
+`documents/Final Reflection.pdf`: Final reflection report  
 `documents/individual-reflections/`: Individual reflections
 
 ### Binaries
