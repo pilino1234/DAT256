@@ -1,0 +1,136 @@
+Statistical information for the repository 'project' was gathered on 2019/06/01.
+The following historical commit information, by author, was found:
+
+Author                     Commits    Insertions      Deletions    % of changes
+Elias Sundqvist                 43          1827            507           16.74
+Jacob Eriksson                  76          2917           2120           36.12
+Jimmy M Andersson               13           606            223            5.94
+Kevin Kullgren                   8           420             59            3.43
+Martin Hilgendorf               67          2025            641           19.12
+Olle Lindgren                    7           477             39            3.70
+Theodor Angergård               63          1267            817           14.94
+
+Below are the number of rows from each author that have survived and are still
+intact in the current revision:
+
+Author                     Rows      Stability          Age       % in comments
+Elias Sundqvist            1153           63.1          2.0                5.12
+Jacob Eriksson             1605           55.0          2.6                5.23
+Jimmy M Andersson           386           63.7          2.2                5.18
+Kevin Kullgren              120           28.6          1.9                0.83
+Martin Hilgendorf          1378           68.0          1.1                4.93
+Olle Lindgren               257           53.9          2.3                5.06
+Theodor Angergård           647           51.1          0.8                8.66
+
+The following history timeline has been gathered from the repository:
+
+Author                  2019W15    2019W16    2019W17    2019W18    2019W19 
+Elias Sundqvist                          +   ++++++++                     . 
+Jacob Eriksson               ++   ---+++++              ----++++   ----++++ 
+Jimmy M Andersson                                            +++          . 
+Kevin Kullgren                                               +++            
+Martin Hilgendorf      ++++++++          .                            -++++ 
+Olle Lindgren                                                            ++ 
+Theodor Angergård                                                         . 
+Modified Rows:              702       1557        118       1128       2795 
+
+Author                  2019W20    2019W21 
+Elias Sundqvist        --++++++     -+++++ 
+Jacob Eriksson              -++    ---++++ 
+Jimmy M Andersson          -+++          . 
+Kevin Kullgren                           . 
+Martin Hilgendorf             .      --+++ 
+Olle Lindgren                            . 
+Theodor Angergård             .   ---+++++ 
+Modified Rows:             1309       6336 
+
+No metrics violations were found in the repository.
+
+The following responsibilities, by author, were found in the current revision of
+the repository (comments are excluded from the line count, if possible):
+
+Elias Sundqvist is mostly responsible for:
+   122 app/view/auth/register.kv
+    70 app/view/auth/login.kv
+    62 app/view/welcome_view.kv
+    57 app/presenter/gallery_button.py
+    54 app/presenter/utils/router.py
+    49 app/presenter/utils/dropdown_menu.py
+    45 app/tests/test_firestore.py
+    42 app/tests/test_delivery_request.py
+    40 app/presenter/sliding_popup.py
+    36 app/view/delivery_request_form.kv
+
+Jacob Eriksson is mostly responsible for:
+   174 app/presenter/delivery_list.py
+   145 app/view/delivery_request_form.kv
+   107 app/presenter/delivery_request_detail.py
+   106 app/view/delivery_list.kv
+    84 app/view/my_posted_requests.kv
+    73 app/presenter/my_posted_requests.py
+    70 app/presenter/delivery_request_form.py
+    67 app/view/delivery_request_detail.kv
+    65 app/view/filtering_delivery.kv
+    58 app/presenter/utils/suggester.py
+
+Jimmy M Andersson is mostly responsible for:
+   116 app/view/delivery_request_detail.kv
+    78 app/view/delivery_request_form.kv
+    75 app/presenter/delivery_request_detail.py
+    26 app/presenter/delivery_list.py
+    21 app/model/user_getter.py
+    13 app/presenter/user_profile_view.py
+     9 app/view/user_profile_view.kv
+     8 app/view/minified_user_profile_view.kv
+     4 app/view/delivery_list.kv
+     4 app/presenter/my_deliveries.py
+
+Kevin Kullgren is mostly responsible for:
+    60 app/view/filtering_delivery.kv
+    36 app/view/delivery_request_form.kv
+    13 app/presenter/delivery_list.py
+     3 app/presenter/user_profile_view.py
+     3 app/model/delivery_request.py
+     2 app/view/delivery_list.kv
+     1 app/view/auth/register.kv
+     1 app/view/auth/login.kv
+
+Martin Hilgendorf is mostly responsible for:
+   297 app/buildozer.spec
+   100 app/presenter/delivery_request_form.py
+    86 app/tests/test_minified_user.py
+    75 app/tests/test_user.py
+    71 app/model/user.py
+    63 app/tests/test_location.py
+    59 ci/build_apk.sh
+    49 app/model/firebase/firestore.py
+    43 ci/run_tests.sh
+    39 app/model/delivery_request.py
+
+Olle Lindgren is mostly responsible for:
+    90 app/view/user_profile_view.kv
+    69 app/presenter/user_profile_view.py
+    23 app/presenter/delivery_list.py
+    18 app/view/minified_user_profile_view.kv
+    11 app/presenter/minified_user_profile_view.py
+    10 app/view/filtering_delivery.kv
+     6 app/presenter/my_deliveries.py
+     5 app/presenter/my_posted_requests.py
+     3 app/model/user.py
+     2 app/view/my_posted_requests.kv
+
+Theodor Angergård is mostly responsible for:
+   114 firebase/functions/index.js
+    90 app/model/firebase/auth.py
+    60 app/model/firebase/firestore.py
+    55 app/presenter/delivery_request_detail.py
+    50 app/model/user_me_getter.py
+    33 app/model/firebase/bucket.py
+    31 app/model/user.py
+    25 app/presenter/minified_user_profile_view.py
+    23 app/model/firebase/firebase.py
+    17 app/model/delivery_request.py
+
+The extensions below were found in the repository history (extensions used
+during statistical analysis are marked):
+* bat iml ini [js] json [kv] md [py] rst rules [sh] [spec] txt xml [yaml] [yml] 
