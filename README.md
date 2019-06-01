@@ -83,8 +83,12 @@ Repository root
 `documents/Final Reflection.pdf`: Final reflection report  
 `documents/individual-reflections/`: Individual reflections
 
+### Git Inspector (gitinspector)
+`documents/gitinspector.log`: The output from running the command `gitinspector.py --grading --file-types=js,kv,py,sh,spec,yaml,yml`. Note the manual specification of several file types to make sure that all work is included (gitinspector does not automatically detect some, for example .kv files that are actual application code.
+
 ### Binaries
 There are no binaries available for this project; the Python code can be run as-is. APK builds were planned and the infrastructure is in place. However, one of our dependencies' dependency does not cross-compile to ARM very easily, and we were not able pursue the development of a so-called [python-for-android](https://github.com/kivy/python-for-android) "recipe" for the `grpcio` library and its dependency on `c-ares` that would be required to solve the problems due to time constraints.
+
 
 ## Authors
 Can be found in the .mailmap file in the repository root.
