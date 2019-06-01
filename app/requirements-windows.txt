@@ -1,3 +1,0 @@
-kivy.deps.sdl2
-kivy.deps.glew
-pypiwin32

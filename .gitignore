@@ -1,7 +1,0 @@
-.mypy_cache/
-.coverage
-coverage.xml
-.idea
-keyfile.json
-credentials.json
-
