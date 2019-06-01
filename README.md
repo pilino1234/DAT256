@@ -7,11 +7,11 @@ The app is built using Python 3.7 (other versions have not been tested, so YMMV)
 The app also requires some python libraries, such as [Kivy](https://github.com/kivy/kivy) as its frontend framework. Kivy, in turn, depends on Cython and PyGame, amongst others. The best and easiest way to install these is to use a [virtual environment](https://virtualenv.pypa.io/en/latest/).
 
 1. Clone the repository and switch to the `app/` directory.
-2. Run `virtualenv venv` to create a new virtual environment in the `venv/` directory
-3. Activate the new virtual environment with `source venv/bin/activate`
-4. Install the dependencies needed for the project: `pip install -r requirements.txt`. 
+1. Run `virtualenv venv` to create a new virtual environment in the `venv/` directory
+1. Activate the new virtual environment with `source venv/bin/activate`
+1. Install the dependencies needed for the project: `pip install -r requirements.txt`.  
 If you are running Windows, also install the requirements in `requirements-windows.txt` with the command `pip install -r requirements-windows.txt`.
-5. If any of the requirements fail to install, make sure that you have the correct dependencies for that library. This varies a lot between different OSes and distributions.
+1. If any of the requirements fail to install, make sure that you have the correct dependencies for that library. This varies a lot between different OSes and distributions.
 
 ### Running the app
 Before running the app, a keyfile is needed so that the app can authenticate to the backend properly. Without it, the app will not start. Contact one of the authors to acquire one.
@@ -79,16 +79,15 @@ Repository root
 `app/tests`: All unit tests
 
 ### Reflections
-`documents/group-reflections/`: Team reflections
-`documents/group-reflections/Final Reflection.pdf`: Final reflection report
+`documents/group-reflections/`: Team reflections  
+`documents/group-reflections/Final Reflection.pdf`: Final reflection report  
 `documents/individual-reflections/`: Individual reflections
 
 ### Binaries
-There are no binaries available for this project; the Python code can be run as-is. APK builds were planned and the infrastructure is in place. However, one of our dependencies' dependency does not cross-compile to ARM very easily, and we did not pursue the development of a so-called [python-for-android](https://github.com/kivy/python-for-android) "recipe" for the `grpcio` library and its dependency on `c-ares` that would be required to solve the problems.
+There are no binaries available for this project; the Python code can be run as-is. APK builds were planned and the infrastructure is in place. However, one of our dependencies' dependency does not cross-compile to ARM very easily, and we were not able pursue the development of a so-called [python-for-android](https://github.com/kivy/python-for-android) "recipe" for the `grpcio` library and its dependency on `c-ares` that would be required to solve the problems due to time constraints.
 
 ## Authors
 Can be found in the .mailmap file in the repository root.
 
 ## Scrum
-The team's use of Scrum is documented partly in the individual and weekly reflections, as well as the sprint retrospectives. The team also made use of a Slack App for handling the Daily Scrums via Slack; the responses 
-
+The team's use of Scrum is documented partly in the individual and weekly reflections, as well as the sprint retrospectives. The team also made use of a Slack App for handling the Daily Scrums via Slack.
