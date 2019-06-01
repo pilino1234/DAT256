@@ -1,0 +1,115 @@
+#:import UpdateSpinner presenter.delivery_list
+
+<DeliveryList>:
+    FloatLayout:
+        id: delivery_list
+
+        BoxLayout:
+            orientation: 'vertical'
+            MDToolbar:
+                title: 'Available Packages'
+                md_bg_color: app.theme_cls.primary_color
+                elevation: 10
+                height: dp(80)
+                left_action_items: [['arrow-left', lambda x: root.show_filter()]]
+
+            ScrollView:
+                id: scroll_view
+                do_scroll_x: False
+                do_scroll_y: True
+
+                BoxLayout:
+                    id: available_requests
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: 'vertical'
+                    padding: dp(30)
+                    spacing: dp(30)
+
+        FloatLayout:
+            UpdateSpinner:
+                scroll: scroll_view
+                event_update: lambda x: root._update_content(self)
+
+
+
+<WhiteCardButton>
+    canvas.before:
+        Color:
+            rgba: 160/255, 160/255, 160/255, 1
+    theme_text_color: 'Custom'
+    text_color: root.theme_cls.primary_color
+    md_bg_color: 255/255, 255/255, 255/255, 1
+    elevation_normal: 4
+
+<ListItem>:
+    size_hint: (1, None)
+    height: dp(180)
+    on_release: self.tap_callback(self.request)
+
+    RelativeLayout:
+        size: dp(40), dp(40)
+        HollowIcon:
+            pos: self.parent.width-self.width, self.parent.height/3
+            icon: 'chevron-right'
+
+    RelativeLayout:
+
+        MDLabel:
+            id: item
+            pos: dp(20), self.parent.height/4
+            font_style: 'H6'
+            theme_text_color: 'Primary'
+            text: "Small Cardboard Box"
+
+        BoxLayout:
+            pos: 0, dp(70)
+            orientation: 'horizontal'
+
+            IconWithText:
+                id: origin
+                text: "Brunnsparken"
+
+                HollowIcon:
+                    icon: 'map-marker'
+                    theme_text_color: 'Custom'
+                    text_color: 243/255, 179/255, 42/255, 1
+
+            IconWithText:
+                id: destination
+                text: "Frölunda Torg"
+
+                HollowIcon:
+                    icon: 'map-marker'
+                    theme_text_color: 'Custom'
+                    text_color: 152/255, 224/255, 232/255, 1
+
+        BoxLayout:
+            pos: 0, dp(20)
+            orientation: 'horizontal'
+
+            IconWithText:
+                id: reward
+                text: "20 kr"
+
+                HollowIcon:
+                    icon: 'currency-usd'
+                    theme_text_color: 'Custom'
+                    text_color: 212/255, 144/255, 0/255, 1
+
+            IconWithText:
+                id: distance
+                text: "8 km"
+
+                HollowIcon:
+                    icon: 'ruler'
+
+            IconWithText:
+                id: weight
+                text: "Small"
+
+                HollowIcon:
+                    id: weight_icon
+                    icon: 'walk'
+                    theme_text_color: 'Custom'
+                    text_color: 107/255, 200/255, 187/255, 1

@@ -1,0 +1,33 @@
+#:import DeliveryRequestForm presenter.delivery_request_form
+#:import Card presenter.utils.card
+
+<SlidingPopupContent@Card>
+    bg_color: 1,1,1,1
+    elevation: 8
+    radius: 8
+
+
+<BackgroundDim>
+    opacity: 0
+    canvas:
+        Color:
+            rgba: 0, 0, 0, self.opacity
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    visible: False
+
+
+<SlidingPopup>:
+    BackgroundDim:
+        id: background_dim
+        size_hint: 1, 1
+        pos_hint: {"top": (0 if self.opacity == 0 else 1), "right": 1}
+    SlidingPopupContent:
+        id: popup_card
+        height_hint: 0.75
+        size_hint: 1, self.height_hint
+        top_hint: 0
+        pos_hint: {"top": self.top_hint, "right": 1}
+
+        DeliveryRequestForm:

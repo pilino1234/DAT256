@@ -1,0 +1,62 @@
+#:import Router presenter.utils.router
+#:import Card presenter.utils.card
+#:import Login presenter.auth.login
+#:import Register presenter.auth.register
+
+<WelcomeView>:
+    BoxLayout:
+        padding: (40, 10)
+        Card:
+            size_hint: (0.7, 0.7)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            padding: (30, 20, 30, 20)
+            bg_color: 1, 1, 1,1
+            elevation: 8
+            radius: 8
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: (0, 0, 0, 20)
+                spacing: 20
+
+                RelativeLayout:
+                    MDLabel:
+                        font_style: 'H3'
+                        theme_text_color: 'Primary'
+                        text: "Welcome to Carrepsa"
+                        halign: 'center'
+                        height: dp(50)
+
+                RelativeLayout:
+                    MDLabel:
+                        font_style: 'H5'
+                        theme_text_color: 'Primary'
+                        text: "With Carrepsa you can deliver packages and get packages delivered."
+                        halign: 'center'
+                        height: dp(100)
+
+                RelativeLayout:
+                    MDLabel:
+                        font_style: 'H5'
+                        theme_text_color: 'Primary'
+                        text: "What do you want to do?"
+                        halign: 'center'
+                        height: dp(100)
+
+                MDRaisedButton:
+                    _font_size: "20"
+                    size_hint: (0.5, 0.3)
+                    text: "Make a Delivery"
+                    write_tab: False
+                    elevation: 10
+                    pos_hint: {'center_x': 0.5}
+                    on_release: root.deliver_button_callback()
+
+                MDRaisedButton:
+                    _font_size: "20"
+                    size_hint: (0.5, 0.3)
+                    text: "Request a Delivery"
+                    write_tab: False
+                    elevation: 10
+                    pos_hint: {'center_x': 0.5}
+                    on_release: root.request_delivery_button_callback()

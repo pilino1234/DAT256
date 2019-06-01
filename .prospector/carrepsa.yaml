@@ -1,0 +1,21 @@
+inherits:
+  - strictness_high
+
+ignore-paths:
+  - docs/
+  - tests/
+  - venv/
+
+pylint:
+  run: false
+
+mypy:
+  run: true
+
+pep257:
+  run: true
+  disable:
+    - D100
+    - D104
+    - D203
+    - D212

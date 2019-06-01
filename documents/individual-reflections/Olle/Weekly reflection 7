@@ -1,0 +1,45 @@
+Since the project is basically over at this point, this will serve as a reflection of my present situation with the project and how I 
+can move forward with app/software development for future projects.
+
+What do I want to learn or understand better?
+A: I feel like I can work with Git and I can easily write code with Kivy and Python, which were my goals at the start of the project.
+	However, the app stopped running on my computer this week and I have not been able to resolve that. I've had similar problems the
+	whole project though.
+
+B: I would like to learn a framework for developing working apps and be able to use it to create useful stuff.
+
+A -> B: For my next project I will probably look into React, as that seems to be the most used framework out there. Hopefully that will
+	mean there will be a large online community present, so that problems I encounter will have been faced by a large amount of 
+	people before. That way googling my error messages and problems will hopefully yield more information on how to solve them. 
+	I will probably take some summer course to that end.
+
+How can I help someone else, or the entire team, to learn something new?
+A: For this project, I've felt that my way to contribute has been by helping people question whether what they are doing is adding 
+	value. I feel like I'm in general pretty good at communicating my knowlege and teaching others what I know. 
+
+B: I would like to be able to contribute more than just making people question what they're dooing.
+
+A -> B: For future projects, I should probably reflect on what I'm good at beforehand and try to steer the project in a way that takes 
+	greater advantage of my skills. Learning is great but I've felt that having to learn kivy/python from scratch has severely hampered 
+	my ability to help others learn. 
+
+What is my contribution towards the team's use of Scrum?
+A: As a product owner, I have been trying to see whether what people are doing is adding value in a way that makes sense to the end 
+	user. I'm have also been working together with kevin on issues which helps us be productive as product owners together.
+
+B: This has worked well. I feel like I know how to work with scrum and will try to do so on future projects. Scrum is awesome.
+
+A -> B: I'm pretty happy with the scrum situation but think I could improve my ability to on beforehand esitmate how difficult tasks 
+	will be.
+
+What is my contribution towards the team's deliveries?
+A: Me and Kevin have been working together a lot, helping each other deliver useful stuff. This last week, however, the app has stopped
+	running on both our computers and we're not able to resolve that despite the others trying to help. Therefore, we are trying to
+	contribute by doing other stuff like preparing the presentation and preparing the group reflection. 
+
+B: For future projects, I would like to be able to contribute a lot more than I have been able to do here.
+
+A -> B: As stated in the first question, I will work with a more established framework. Kivy does not have a large user base nor a 
+	large community, the latter of which is essential when googling and trying to resolve error messages. When encountering problems in 
+	Java for example, googing the issue results in dozens of useful threads on stackoverflow and the like with people previously having 
+	encountered the same problem. I would like to have that for my next project.

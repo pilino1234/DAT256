@@ -1,0 +1,23 @@
+<MyDeliveries>:
+    orientation: 'vertical'
+    MDToolbar:
+        title: 'My Deliveries'
+        md_bg_color: app.theme_cls.primary_color
+        elevation: 10
+        height: dp(80)
+
+    BoxLayout:
+        id: content
+        orientation: 'vertical'
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            BoxLayout:
+                id: my_deliveries
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                padding: 30
+                spacing: 30

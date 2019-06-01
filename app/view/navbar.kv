@@ -1,0 +1,53 @@
+#:import BlankNavItem presenter.navbar
+#:import DeliveryList presenter.delivery_list
+#:import BlankNavItem presenter.navbar
+
+
+<NavBarWithFAB>:
+    fab_diameter: 64
+
+    FloatLayout:
+        MDBottomNavigation:
+            id: navbar
+
+            MDBottomNavigationItem:
+                name: 'search'
+                text: 'Search'
+                icon: 'magnify'
+
+                DeliveryList:
+
+            MDBottomNavigationItem:
+                id: my_packages_btn
+                name: 'my-packages'
+                text: 'My Packages'
+                icon: 'package'
+
+                on_tab_press: root._load_posted_requests(self)
+
+            BlankNavItem:
+                icon: 'dots-horizontal'
+
+            MDBottomNavigationItem:
+                id: my_deliveries_btn
+                name: 'my-deliveries'
+                text: 'My Deliveries'
+                icon: 'bike'
+
+                on_tab_press: root._load_my_deliveries(self)
+
+            MDBottomNavigationItem:
+                name: 'my-account'
+                text: 'My Account'
+                icon: 'account-circle'
+
+                on_tab_press: root._load_profile_view(self)
+
+        MDFloatingActionButton:
+            id: fab
+            x: navbar.width // 2 - dp(root.fab_diameter) // 2
+            y: navbar.children[0].height // 2
+            size: (dp(root.fab_diameter), dp(root.fab_diameter))
+            elevation_normal: 8
+            md_bg_color: (217/255, 217/255, 217/255, 1)
+            icon: 'package-variant'

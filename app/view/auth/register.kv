@@ -1,0 +1,138 @@
+#:import MDFillRoundFlatButton kivymd.button.MDFillRoundFlatButton
+#:import MDTextField kivymd.textfields.MDTextField
+
+<Register>:
+    orientation: "vertical"
+    padding: (0, 0, 0, 20)
+
+    MDIconButton:
+        icon: 'arrow-left'
+        theme_text_color: 'Custom'
+        text_color: 100/255, 100/255, 100/255, 1
+        on_release: root.parent.parent.go_back()
+
+    MDLabel:
+        font_style: 'H2'
+        theme_text_color: 'Primary'
+        text: "Sign Up"
+        halign: 'center'
+
+    GridLayout:
+        cols: 3
+        row_force_default: True
+        row_default_height: 75
+
+        RelativeLayout:
+            size_hint: (None, None)
+            width: 120
+            MDLabel:
+                halign: "right"
+                theme_text_color: 'Primary'
+                text: "Email: "
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+        BoxLayout:
+            padding: (20, 0)
+            MDTextField:
+                id: email_tf
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
+
+        HollowIcon:
+            icon: 'email'
+            theme_text_color: 'Custom'
+            text_color: 50/255, 50/255, 50/255, 1
+
+        RelativeLayout:
+            size_hint: (None, None)
+            width: 120
+            MDLabel:
+                halign: "right"
+                theme_text_color: 'Primary'
+                text: "Password: "
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+        BoxLayout:
+            padding: (20, 0)
+            MDTextField:
+                id: password_tf
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
+
+        HollowIcon:
+            icon: 'lock'
+            theme_text_color: 'Custom'
+            text_color: 50/255, 50/255, 50/255, 1
+
+        RelativeLayout:
+            size_hint: (None, None)
+            width: 120
+            MDLabel:
+                halign: "right"
+                theme_text_color: 'Primary'
+                text: "Password again: "
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+        BoxLayout:
+            padding: (20, 0)
+            MDTextField:
+                id: password_repeat_tf
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
+
+        Widget:
+            size_hint_x: None
+            width: 60
+
+        RelativeLayout:
+            size_hint: (None, None)
+            width: 120
+            MDLabel:
+                halign: "right"
+                theme_text_color: 'Primary'
+                text: "Name: "
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+        BoxLayout:
+            padding: (20, 0)
+            MDTextField:
+                id: name_tf
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
+
+        HollowIcon:
+            icon: 'account-circle'
+            theme_text_color: 'Custom'
+            text_color: 50/255, 50/255, 50/255, 1
+
+        RelativeLayout:
+            size_hint: (None, None)
+            width: 120
+            MDLabel:
+                halign: "right"
+                theme_text_color: 'Primary'
+                text: "Phone Number: "
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+        BoxLayout:
+            padding: (20, 0)
+            MDTextField:
+                id: phonenumber_tf
+                required: True
+                helper_text_mode: 'on_error'
+                write_tab: False
+
+        HollowIcon:
+            icon: 'phone'
+            theme_text_color: 'Custom'
+            text_color: 50/255, 50/255, 50/255, 1
+
+    MDFillRoundFlatButton:
+        id: login_button
+        text: "Sign Up"
+        on_release: root.register()
+        pos_hint: {'center_x': 0.5, 'center_y': .15}
